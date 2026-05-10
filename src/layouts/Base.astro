@@ -17,8 +17,8 @@ const {
 const year = new Date().getFullYear();
 
 const nav = {
-  en: { writing: 'Articles', about: 'About', notes: 'Notes', subscribe: 'Subscribe' },
-  nl: { writing: 'Artikels', about: 'Over mij', notes: 'Notities', subscribe: 'Abonneren' },
+  en: { writing: 'Articles', about: 'About', notes: 'Notes', subscribe: 'Subscribe', speaking: 'Speaking', menu: 'Menu', close: 'Close menu' },
+  nl: { writing: 'Artikels', about: 'Over mij', notes: 'Notities', subscribe: 'Abonneren', speaking: 'Spreken', menu: 'Menu', close: 'Menu sluiten' },
 };
 const t = nav[lang];
 const footerCols = {
@@ -42,9 +42,9 @@ const homePath = lang === 'nl' ? '/nl/' : '/';
     <meta name="theme-color" content="#050510" />
     
     <!-- Language Alternates -->
-    <link rel="alternate" hrefLang="en" href={`${Astro.site}${Astro.url.pathname.replace(/^\/nl/, '')}`} />
-    <link rel="alternate" hrefLang="nl" href={`${Astro.site}${Astro.url.pathname.startsWith('/nl') ? Astro.url.pathname : '/nl' + Astro.url.pathname}`} />
-    <link rel="alternate" hrefLang="x-default" href={`${Astro.site}${Astro.url.pathname.replace(/^\/nl/, '')}`} />
+    <link rel="alternate" hreflang="en" href={`${Astro.site}${Astro.url.pathname.replace(/^\/nl/, '')}`} />
+    <link rel="alternate" hreflang="nl" href={`${Astro.site}${Astro.url.pathname.startsWith('/nl') ? Astro.url.pathname : '/nl' + Astro.url.pathname}`} />
+    <link rel="alternate" hreflang="x-default" href={`${Astro.site}${Astro.url.pathname.replace(/^\/nl/, '')}`} />
     
     <!-- Canonical URL -->
     <link rel="canonical" href={`${Astro.site}${Astro.url.pathname}`} />
@@ -170,16 +170,36 @@ const homePath = lang === 'nl' ? '/nl/' : '/';
       </a>
       <ul class="nav-links">
         <li><a href={`${homePath}#posts`}>{t.writing}</a></li>
-        <li><a href={lang === 'nl' ? '/nl/speaking' : '/speaking'}>{lang === 'nl' ? 'Spreken' : 'Speaking'}</a></li>
+        <li><a href={lang === 'nl' ? '/nl/speaking' : '/speaking'}>{t.speaking}</a></li>
         <li><a href={lang === 'nl' ? '/nl/about' : '/about'}>{t.about}</a></li>
       </ul>
-      <button id="lang-toggle" class="lang-toggle" aria-label="Switch language">
-        <span class={`lang-option ${lang === 'en' ? 'active' : ''}`}>EN</span>
-        <span class="lang-separator">/</span>
-        <span class={`lang-option ${lang === 'nl' ? 'active' : ''}`}>NL</span>
-      </button>
-      <a href="#subscribe" class="nav-cta">{t.subscribe}</a>
+      <div class="nav-actions">
+        <button id="lang-toggle" class="lang-toggle" aria-label="Switch language">
+          <span class={`lang-option ${lang === 'en' ? 'active' : ''}`}>EN</span>
+          <span class="lang-separator">/</span>
+          <span class={`lang-option ${lang === 'nl' ? 'active' : ''}`}>NL</span>
+        </button>
+        <a href="#subscribe" class="nav-cta">{t.subscribe}</a>
+        <button
+          id="nav-menu-toggle"
+          class="nav-menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label={t.menu}
+          data-label-open={t.menu}
+          data-label-close={t.close}
+        >
+          {t.menu}
+        </button>
+      </div>
     </nav>
+    <div id="mobile-menu" class="mobile-menu glass" hidden>
+      <a href={`${homePath}#posts`}>{t.writing}</a>
+      <a href={lang === 'nl' ? '/nl/speaking' : '/speaking'}>{t.speaking}</a>
+      <a href={lang === 'nl' ? '/nl/about' : '/about'}>{t.about}</a>
+      <a href="#subscribe">{t.subscribe}</a>
+    </div>
 
     <!-- Page content -->
     <main>
@@ -339,6 +359,68 @@ const homePath = lang === 'nl' ? '/nl/' : '/';
           window.location.href = '/nl' + (path === '/' ? '/' : path);
         }
       });
+
+      // ── Mobile navigation toggle ─────────────────────────────────
+      const menuToggle = document.getElementById('nav-menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (menuToggle && mobileMenu) {
+        const openLabel = menuToggle.getAttribute('data-label-open') || 'Menu';
+        const closeLabel = menuToggle.getAttribute('data-label-close') || 'Close menu';
+
+        const closeMenu = () => {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.textContent = openLabel;
+          menuToggle.setAttribute('aria-label', openLabel);
+          mobileMenu.classList.remove('open');
+          mobileMenu.setAttribute('hidden', '');
+          document.body.classList.remove('menu-open');
+        };
+
+        const openMenu = () => {
+          menuToggle.setAttribute('aria-expanded', 'true');
+          menuToggle.textContent = closeLabel;
+          menuToggle.setAttribute('aria-label', closeLabel);
+          mobileMenu.removeAttribute('hidden');
+          mobileMenu.classList.add('open');
+          document.body.classList.add('menu-open');
+        };
+
+        menuToggle.addEventListener('click', () => {
+          if (menuToggle.getAttribute('aria-expanded') === 'true') {
+            closeMenu();
+            return;
+          }
+          openMenu();
+        });
+
+        mobileMenu.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => closeMenu());
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            closeMenu();
+          }
+        });
+
+        document.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Node)) {
+            return;
+          }
+          if (mobileMenu.contains(target) || menuToggle.contains(target)) {
+            return;
+          }
+          closeMenu();
+        });
+
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 980) {
+            closeMenu();
+          }
+        });
+      }
     </script>
   </body>
 </html>
