@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://kenneth.nicasens.be',
+  site: 'https://kn-automations.be',
   devToolbar: {
     enabled: false,
   },
