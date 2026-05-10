@@ -19,10 +19,49 @@ const past = [
     event: 'AI Apps & Agents Tour',
     location: 'Amsterdam · Nederland',
     date: '21 april 2026',
-    topic: 'Keynote: VTS Usecase — Intelligente Automatisering in de Overheid',
-    description:
-      'Een praktijkvoorbeeld van hoe applicaties hand in hand gaan met AI.',
+    topic: 'Keynote: VTS Usecase — Intelligent Automation in Government',
+    description: 'Een live praktijkvoorbeeld van hoe applicaties hand in hand gaan met AI.',
+    type: 'event',
+  },
+  {
+    event: 'KSA Summit',
+    location: 'Let\'s Meet Elewijt · België',
+    date: '17 maart 2026',
+    topic: 'VTS Usecase — Intelligent Automation in Government',
+    description: 'Een live praktijkvoorbeeld van hoe applicaties hand in hand gaan met AI.',
+    type: 'event',
+  },
+  {
+    event: 'Cegeka Business Solutions Summit',
+    location: 'UGC Turnout · België',
+    date: '10 januari 2026',
+    topic: 'Hyperautomation demystified: from vision to execution with Power Platform',
+    description: '',
+    type: 'summit',
+  },
+  {
+    event: 'Cegeka Business Solutions Summit',
+    location: 'UGC Turnout · België',
+    date: '10 januari 2026',
+    topic: 'The rise of Agentic AI: Practical applications and intelligent automations',
+    description: '',
+    type: 'summit',
+  },
+  {
+    event: 'European Power Platform Conference',
+    location: 'Wenen · Oostenrijk',
+    date: '19 juni 2025',
+    topic: 'Scaling Success: Building Global Power Platform Solutions Together',
+    description: '',
     type: 'conference',
+  },
+  {
+    event: 'Power Addicts Belgium',
+    location: 'Gent · België',
+    date: '2 april 2024',
+    topic: 'Activity Tables and what to do with it',
+    description: 'Mensen vergeten vaak de standaardfuncties zoals de tijdlijncomponent en wat je ermee kan doen. In deze sessie toon ik activiteitstabellen, de tijdlijncomponent en e-mailfunctionaliteit.',
+    type: 'event',
   },
 ];
 ---
@@ -59,7 +98,7 @@ const past = [
           <div class="speaking-card glass upcoming-card">
             <div class="speaking-card-header">
               <div class="speaking-event-info">
-                <span class={`talk-type-pill ${talk.type}`}>{talk.type === 'conference' ? 'conferentie' : 'meetup'}</span>
+                <span class={`talk-type-pill ${talk.type}`}>{talk.type === 'conference' ? 'Conferentie' : talk.type === 'summit' ? 'Summit' : 'Event'}</span>
                 <span class="talking-date">{talk.date}</span>
               </div>
               <span class="talking-location">{talk.location}</span>
@@ -89,7 +128,7 @@ const past = [
           <div class="speaking-card glass">
             <div class="speaking-card-header">
               <div class="speaking-event-info">
-                <span class={`talk-type-pill ${talk.type}`}>{talk.type === 'conference' ? 'conferentie' : 'meetup'}</span>
+                <span class={`talk-type-pill ${talk.type}`}>{talk.type === 'conference' ? 'Conferentie' : talk.type === 'summit' ? 'Summit' : 'Event'}</span>
                 <span class="talking-date">{talk.date}</span>
               </div>
               <span class="talking-location">{talk.location}</span>

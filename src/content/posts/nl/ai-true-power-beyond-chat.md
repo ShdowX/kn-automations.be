@@ -1,6 +1,6 @@
 ---
-title: "De Werkelijke Kracht van AI Ligt Beyond Chat"
-excerpt: "Stop met AI verwarren met conversatie. De echte waarde van AI is autonoom, werkend op de achtergrond, je processen slimmer makend."
+title: "De Werkelijke Kracht van AI Ligt Verder dan Chat"
+excerpt: "Stop met AI te verwarren met conversatie. De echte waarde van AI is autonoom, werkend op de achtergrond."
 date: 2026-05-08
 category: "AI · Procesontwerp"
 readTime: "5 min"
@@ -27,7 +27,7 @@ Bedrijven gebruiken al jaren OCR (Optische Tekenherkenning) om documenten te lez
 
 ## Waarom We AI Met Chat Verwarren
 
-Chat haalde AI uit de achtergrond en maakte het zichtbaar. Voor het eerst voelde AI als iets waarmee je direct kon interacteren, niet alleen iets dat achter de schermen gebeurde.
+Chat haalde AI uit de achtergrond en maakte het zichtbaar. Voor het eerst voelde AI als iets waarmee je direct kon communiceren, niet alleen iets dat achter de schermen gebeurde.
 
 Die zichtbaarheid had een prijs: het vernauwde hoe we over AI denken.
 

@@ -1222,10 +1222,16 @@ body.menu-open {
   border: 1px solid rgba(196, 181, 253, 0.25);
 }
 
-.talk-type-pill.meetup {
+.talk-type-pill.event {
   background: rgba(125, 211, 252, 0.12);
   color: var(--accent-3);
   border: 1px solid rgba(125, 211, 252, 0.2);
+}
+
+.talk-type-pill.summit {
+  background: rgba(255, 184, 107, 0.14);
+  color: var(--accent);
+  border: 1px solid rgba(255, 184, 107, 0.28);
 }
 
 .talking-date {

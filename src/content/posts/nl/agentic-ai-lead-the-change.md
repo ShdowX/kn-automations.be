@@ -1,6 +1,6 @@
 ---
-title: "Agentic AI: Leid de Verandering, Achtervol Deze Niet"
-excerpt: "Stop met het toevoegen van AI aan gebroken processen. Ontwerp je processen helemaal opnieuw rond AI — en begin klein met een groot plan."
+title: "Agentic AI: Leid met visie"
+excerpt: "Stop met het toevoegen van AI aan gebroken processen. Ontwerp je processen helemaal opnieuw rond AI - begin klein met een groot plan."
 date: 2026-05-08
 category: "AI · Procesontwerp"
 readTime: "6 min"
@@ -35,9 +35,9 @@ Traditionele automatisering werkt goed voor repetitieve, voorspelbare taken. AI 
 
 Laat me je laten zien hoe dit er in de praktijk uitziet.
 
-## Een Concreet Voorbeeld: Aankoopopdrachtenverwerking
+## Een Concreet Voorbeeld: Aankoop verwerking
 
-In de meeste bedrijven is aankoopopdrachtenverwerking saai handwerk:
+In de meeste bedrijven is aankoopo verwerking saai handwerk:
 
 1. Medewerker ontvangt PDF per e-mail
 2. Opent het, leest het, controleert op problemen
@@ -52,7 +52,7 @@ Stel je nu hetzelfde proces voor **herontworpen rond een AI-agent**:
 - Verifieert prijzen tegen verwachte bereiken
 - Verwerkt geldige orders automatisch in boekhoudsoftware
 
-**Als de agent een afwijking detecteert**—een onbekende leverancier, een ongebruikelijke hoeveelheid, een prijsstijging—markeert het de order ter menselijke beoordeling in plaats van de gehele workflow stil te zetten.
+**Als de agent een afwijking detecteert** -een onbekende leverancier, een ongebruikelijke hoeveelheid, een prijsstijging—markeert het de order ter menselijke beoordeling in plaats van de gehele workflow stil te zetten.
 
 **Het resultaat**: 85-90% van orders stroomt automatisch door. Je team handelt alleen echte uitzonderingsgevallen af die oordeel vereisen.
 
@@ -86,7 +86,7 @@ Volg in plaats daarvan het "begin klein, denk groot"-principe:
 
 Elke kleine automatiseringswinnaar vormt de basis voor een breder AI-geïntegreerd landschap. Je probeert niet de oceaan te koken—je bewijst dat het model werkt, je leert ervan en je schaalt doelgericht.
 
-En hier is het sleutelstuk: **gebruik traditionele automatisering waar het beter werkt**. Forceer AI niet in elke gat. Ons doel is AI-geïntegreerde oplossingen geleid door mensen, niet AI om het even.
+En hier is het sleutelstuk: **gebruik traditionele automatisering waar het beter werkt**. Forceer AI niet in elke stap. Ons doel is AI-geïntegreerde oplossingen geleid door mensen, niet AI om het even waar.
 
 ## Waarom Dit Telt
 
@@ -96,7 +96,7 @@ Vervolgens bouwden ze die versie.
 
 De angst dat AI banen zal elimineren is begrijpelijk. Maar wat werkelijk gebeurt wanneer je processen rond AI herontwerpt, is anders: mensen gaan van repetitief, voorspelbaar werk doen naar het hanteren van oordelen, uitzonderingen en problemen die werkelijk creativiteit en context vereisen.
 
-Dat is geen verlies. Dat is het hele doel.
+Dat is geen verlies.
 
 ---
 

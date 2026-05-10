@@ -22,9 +22,53 @@ const past = [
     topic: 'Keynote: VTS Usecase — Intelligent Automation in Government',
     description:
       'A real live example on how applications go hand in hand with AI.',
-    type: 'Event',
+    type: 'event',
   },
-  
+  {
+    event: 'KSA Summit',
+    location: 'Let’s Meet Elewijt · Belgium',
+    date: 'March 17, 2026',
+    topic: 'VTS Usecase — Intelligent Automation in Government',
+    description:
+      'A real live example on how applications go hand in hand with AI.',
+    type: 'event',
+  },
+  {
+    event: 'Cegeka Business Solutions Summit',
+    location: 'UGC Turnout · Belgium',
+    date: 'January 10, 2026',
+    topic: 'Hyperautomation demystified: from vision to execution with Power Platform',
+    description:
+      '',
+    type: 'summit',
+  },
+  {
+    event: 'Cegeka Business Solutions Summit',
+    location: 'UGC Turnout · Belgium',
+    date: 'January 10, 2026',
+    topic: 'The rise of Agentic AI: Practical applications and intelligent automations',
+    description:
+      '',
+    type: 'summit',
+  },
+  {
+    event: 'European Power Platform Conference',
+    location: 'Vienna · Austria',
+    date: 'June 19, 2025',
+    topic: 'Scaling Success: Building Global Power Platform Solutions Together',
+    description:
+      '',
+    type: 'conference',
+  },
+  {
+    event: 'Power Addicts Belgium',
+    location: 'Gent · Belgium',
+    date: 'April 2, 2024',
+    topic: 'Activity Tables and what to do with it',
+    description:
+      'People tend to forget the out of the box features like the timeline component and what you can do with it. In this session I will show to activity tables, timeline component and the email functionality.',
+    type: 'event',
+  },
 ];
 ---
 
@@ -60,7 +104,7 @@ const past = [
           <div class="speaking-card glass upcoming-card">
             <div class="speaking-card-header">
               <div class="speaking-event-info">
-                <span class={`talk-type-pill ${talk.type}`}>{talk.type}</span>
+                <span class={`talk-type-pill ${talk.type}`}>{talk.type.charAt(0).toUpperCase() + talk.type.slice(1)}</span>
                 <span class="talking-date">{talk.date}</span>
               </div>
               <span class="talking-location">{talk.location}</span>
@@ -90,7 +134,7 @@ const past = [
           <div class="speaking-card glass">
             <div class="speaking-card-header">
               <div class="speaking-event-info">
-                <span class={`talk-type-pill ${talk.type}`}>{talk.type}</span>
+                <span class={`talk-type-pill ${talk.type}`}>{talk.type.charAt(0).toUpperCase() + talk.type.slice(1)}</span>
                 <span class="talking-date">{talk.date}</span>
               </div>
               <span class="talking-location">{talk.location}</span>
