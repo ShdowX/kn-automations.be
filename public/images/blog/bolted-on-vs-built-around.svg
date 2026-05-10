@@ -1,0 +1,280 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" font-family="'Inter Tight', system-ui, sans-serif">
+  <defs>
+    <!-- Aurora blobs (ambient) -->
+    <radialGradient id="blobAmber" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb86b" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ffb86b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blobViolet" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#c4b5fd" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blobRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fb7185" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#fb7185" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Process step gradients -->
+    <linearGradient id="oldStep" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+
+    <linearGradient id="newStep" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+
+    <!-- AI core (the centerpiece) -->
+    <radialGradient id="aiCore" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb86b"/>
+      <stop offset="60%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </radialGradient>
+
+    <!-- AI bolt-on (small, awkwardly stuck) -->
+    <linearGradient id="aiBolt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb86b"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+
+    <!-- Glow filters -->
+    <filter id="centerGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="20" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Dotted grid -->
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#ffffff" opacity="0.06"/>
+    </pattern>
+
+    <!-- Arrow marker for the broken pipeline -->
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(148,163,184,0.7)"/>
+    </marker>
+
+    <!-- Arrow marker for the new design -->
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffb86b"/>
+    </marker>
+  </defs>
+
+  <!-- Ambient backdrop -->
+  <rect width="1200" height="760" fill="url(#dots)" opacity="0.5"/>
+  <ellipse cx="300" cy="450" rx="380" ry="260" fill="url(#blobRed)" opacity="0.5"/>
+  <ellipse cx="900" cy="450" rx="420" ry="280" fill="url(#blobAmber)" opacity="0.6"/>
+  <ellipse cx="600" cy="600" rx="320" ry="220" fill="url(#blobViolet)" opacity="0.4"/>
+
+  <!-- Eyebrow + title -->
+  <text x="60" y="70" fill="#8b7fb8" font-family="'JetBrains Mono', monospace" font-size="13" letter-spacing="3" font-weight="500">
+    KEY INSIGHT · 06
+  </text>
+  <text x="60" y="125" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-weight="400" font-size="46" letter-spacing="-1.5">
+    Bolted on, <tspan font-style="italic" fill="#d97706">or built around.</tspan>
+  </text>
+  <text x="60" y="158" fill="#4a4a5e" font-size="16" font-weight="400">
+    AI doesn't fail because it can't work. It fails because of where you put it.
+  </text>
+
+  <!-- Center divider line -->
+  <line x1="600" y1="210" x2="600" y2="700" stroke="rgba(196,181,253,0.25)" stroke-width="1" stroke-dasharray="4 6"/>
+
+  <!-- ==================================================== -->
+  <!-- LEFT: THE TRAP — AI bolted onto a broken pipeline -->
+  <!-- ==================================================== -->
+
+  <!-- Section label -->
+  <g transform="translate(80, 220)">
+    <rect x="-2" y="-18" width="6" height="6" fill="#fb7185"/>
+    <text x="14" y="-12" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="2.5" font-weight="600">THE TRAP</text>
+    <text x="0" y="14" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-size="26" font-weight="400" font-style="italic">AI as an add-on.</text>
+    <text x="0" y="40" fill="#4a4a5e" font-size="13">A broken process with robots glued onto it.</text>
+  </g>
+
+  <!-- Existing pipeline: 5 grey steps in a row, with AI awkwardly stuck above -->
+  <g transform="translate(80, 320)">
+    <!-- Pipeline label -->
+    <text x="0" y="-8" fill="rgba(74,74,94,0.7)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">EXISTING PROCESS</text>
+
+    <!-- 5 grey process steps -->
+    <g>
+      <!-- Step 1 -->
+      <rect x="0" y="60" width="92" height="56" rx="10" fill="url(#oldStep)" stroke="rgba(148,163,184,0.3)" stroke-width="1"/>
+      <text x="46" y="84" fill="rgba(250,250,247,0.85)" font-size="11" font-weight="500" text-anchor="middle">Intake</text>
+      <text x="46" y="100" fill="rgba(148,163,184,0.7)" font-size="9" text-anchor="middle">manual</text>
+
+      <!-- Step 2 -->
+      <rect x="100" y="60" width="92" height="56" rx="10" fill="url(#oldStep)" stroke="rgba(148,163,184,0.3)" stroke-width="1"/>
+      <text x="146" y="84" fill="rgba(250,250,247,0.85)" font-size="11" font-weight="500" text-anchor="middle">Triage</text>
+      <text x="146" y="100" fill="rgba(148,163,184,0.7)" font-size="9" text-anchor="middle">manual</text>
+
+      <!-- Step 3 -->
+      <rect x="200" y="60" width="92" height="56" rx="10" fill="url(#oldStep)" stroke="rgba(148,163,184,0.3)" stroke-width="1"/>
+      <text x="246" y="84" fill="rgba(250,250,247,0.85)" font-size="11" font-weight="500" text-anchor="middle">Review</text>
+      <text x="246" y="100" fill="rgba(148,163,184,0.7)" font-size="9" text-anchor="middle">manual</text>
+
+      <!-- Step 4 -->
+      <rect x="300" y="60" width="92" height="56" rx="10" fill="url(#oldStep)" stroke="rgba(148,163,184,0.3)" stroke-width="1"/>
+      <text x="346" y="84" fill="rgba(250,250,247,0.85)" font-size="11" font-weight="500" text-anchor="middle">Approve</text>
+      <text x="346" y="100" fill="rgba(148,163,184,0.7)" font-size="9" text-anchor="middle">manual</text>
+
+      <!-- Step 5 -->
+      <rect x="400" y="60" width="92" height="56" rx="10" fill="url(#oldStep)" stroke="rgba(148,163,184,0.3)" stroke-width="1"/>
+      <text x="446" y="84" fill="rgba(250,250,247,0.85)" font-size="11" font-weight="500" text-anchor="middle">Output</text>
+      <text x="446" y="100" fill="rgba(148,163,184,0.7)" font-size="9" text-anchor="middle">manual</text>
+    </g>
+
+    <!-- Connecting arrows between steps -->
+    <g stroke="rgba(148,163,184,0.7)" stroke-width="1.5" fill="none">
+      <line x1="92" y1="88" x2="100" y2="88" marker-end="url(#arrowGray)"/>
+      <line x1="192" y1="88" x2="200" y2="88" marker-end="url(#arrowGray)"/>
+      <line x1="292" y1="88" x2="300" y2="88" marker-end="url(#arrowGray)"/>
+      <line x1="392" y1="88" x2="400" y2="88" marker-end="url(#arrowGray)"/>
+    </g>
+
+    <!-- AI bolt-ons stuck on top of steps 2 and 4 (awkwardly) -->
+    <g>
+      <!-- Wonky connector to step 2 -->
+      <line x1="146" y1="60" x2="146" y2="20" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <g transform="translate(120, -10)" filter="url(#softGlow)">
+        <rect width="52" height="30" rx="8" fill="url(#aiBolt)" transform="rotate(-6 26 15)"/>
+      </g>
+      <text x="146" y="9" fill="#fafaf7" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1" font-weight="700" text-anchor="middle" transform="rotate(-6 146 9)">AI</text>
+
+      <!-- Wonky connector to step 4 -->
+      <line x1="346" y1="60" x2="346" y2="20" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <g transform="translate(320, -10)" filter="url(#softGlow)">
+        <rect width="52" height="30" rx="8" fill="url(#aiBolt)" transform="rotate(5 26 15)"/>
+      </g>
+      <text x="346" y="9" fill="#fafaf7" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1" font-weight="700" text-anchor="middle" transform="rotate(5 346 9)">AI</text>
+    </g>
+
+    <!-- Pain indicators below the pipeline -->
+    <g transform="translate(0, 145)">
+      <!-- Friction marks -->
+      <text x="46" y="0" fill="#fb7185" font-size="14" text-anchor="middle">⚡</text>
+      <text x="246" y="0" fill="#fb7185" font-size="14" text-anchor="middle">⚡</text>
+      <text x="446" y="0" fill="#fb7185" font-size="14" text-anchor="middle">⚡</text>
+
+      <!-- Result label -->
+      <line x1="0" y1="20" x2="492" y2="20" stroke="rgba(251,113,133,0.25)" stroke-width="1"/>
+      <text x="0" y="42" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">RESULT</text>
+      <text x="0" y="64" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-size="18" font-weight="400" font-style="italic">Same broken line —</text>
+      <text x="0" y="84" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-size="18" font-weight="400" font-style="italic">now faster.</text>
+    </g>
+  </g>
+
+  <!-- ==================================================== -->
+  <!-- RIGHT: THE REDESIGN — AI at the center, processes radiate from it -->
+  <!-- ==================================================== -->
+
+  <!-- Section label -->
+  <g transform="translate(640, 220)">
+    <rect x="-2" y="-18" width="6" height="6" fill="#ffb86b"/>
+    <text x="14" y="-12" fill="#d97706" font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="2.5" font-weight="600">THE REDESIGN</text>
+    <text x="0" y="14" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-size="26" font-weight="400" font-style="italic">AI at the center.</text>
+    <text x="0" y="40" fill="#4a4a5e" font-size="13">Process built around it — not bolted to it.</text>
+  </g>
+
+  <!-- The hub-and-spoke composition -->
+  <!-- Center the AI hub at approximately (900, 480) -->
+  <g transform="translate(900, 480)">
+
+    <!-- Outer pulse rings (concentric, fading) -->
+    <circle r="190" fill="none" stroke="rgba(255,184,107,0.1)" stroke-width="1"/>
+    <circle r="155" fill="none" stroke="rgba(255,184,107,0.18)" stroke-width="1"/>
+    <circle r="125" fill="none" stroke="rgba(255,184,107,0.28)" stroke-width="1" stroke-dasharray="2 4"/>
+
+    <!-- Spokes connecting AI core to each step -->
+    <g stroke="rgba(255,184,107,0.55)" stroke-width="1.5" fill="none">
+      <!-- 6 spokes radiating outward -->
+      <line x1="0" y1="0" x2="0" y2="-155" marker-end="url(#arrowAmber)"/>
+      <line x1="0" y1="0" x2="134" y2="-78" marker-end="url(#arrowAmber)"/>
+      <line x1="0" y1="0" x2="134" y2="78" marker-end="url(#arrowAmber)"/>
+      <line x1="0" y1="0" x2="0" y2="155" marker-end="url(#arrowAmber)"/>
+      <line x1="0" y1="0" x2="-134" y2="78" marker-end="url(#arrowAmber)"/>
+      <line x1="0" y1="0" x2="-134" y2="-78" marker-end="url(#arrowAmber)"/>
+    </g>
+
+    <!-- 6 process nodes around the hub -->
+    <g font-family="'Inter Tight', sans-serif">
+      <!-- Top -->
+      <g transform="translate(-50, -195)">
+        <rect width="100" height="40" rx="10" fill="url(#newStep)" opacity="0.95" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <text x="50" y="18" fill="#fafaf7" font-size="11" font-weight="500" text-anchor="middle">Sense</text>
+        <text x="50" y="32" fill="rgba(255,255,255,0.7)" font-family="'JetBrains Mono', monospace" font-size="8" letter-spacing="1" text-anchor="middle">CONTINUOUS</text>
+      </g>
+
+      <!-- Top-right -->
+      <g transform="translate(105, -110)">
+        <rect width="100" height="40" rx="10" fill="url(#newStep)" opacity="0.95" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <text x="50" y="18" fill="#fafaf7" font-size="11" font-weight="500" text-anchor="middle">Decide</text>
+        <text x="50" y="32" fill="rgba(255,255,255,0.7)" font-family="'JetBrains Mono', monospace" font-size="8" letter-spacing="1" text-anchor="middle">AUTONOMOUS</text>
+      </g>
+
+      <!-- Bottom-right -->
+      <g transform="translate(105, 70)">
+        <rect width="100" height="40" rx="10" fill="url(#newStep)" opacity="0.95" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <text x="50" y="18" fill="#fafaf7" font-size="11" font-weight="500" text-anchor="middle">Act</text>
+        <text x="50" y="32" fill="rgba(255,255,255,0.7)" font-family="'JetBrains Mono', monospace" font-size="8" letter-spacing="1" text-anchor="middle">AUTOMATED</text>
+      </g>
+
+      <!-- Bottom -->
+      <g transform="translate(-50, 155)">
+        <rect width="100" height="40" rx="10" fill="url(#newStep)" opacity="0.95" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <text x="50" y="18" fill="#fafaf7" font-size="11" font-weight="500" text-anchor="middle">Learn</text>
+        <text x="50" y="32" fill="rgba(255,255,255,0.7)" font-family="'JetBrains Mono', monospace" font-size="8" letter-spacing="1" text-anchor="middle">FEEDBACK</text>
+      </g>
+
+      <!-- Bottom-left -->
+      <g transform="translate(-205, 70)">
+        <rect width="100" height="40" rx="10" fill="url(#newStep)" opacity="0.95" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <text x="50" y="18" fill="#fafaf7" font-size="11" font-weight="500" text-anchor="middle">Adapt</text>
+        <text x="50" y="32" fill="rgba(255,255,255,0.7)" font-family="'JetBrains Mono', monospace" font-size="8" letter-spacing="1" text-anchor="middle">CONTINUOUS</text>
+      </g>
+
+      <!-- Top-left -->
+      <g transform="translate(-205, -110)">
+        <rect width="100" height="40" rx="10" fill="url(#newStep)" opacity="0.95" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <text x="50" y="18" fill="#fafaf7" font-size="11" font-weight="500" text-anchor="middle">Orient</text>
+        <text x="50" y="32" fill="rgba(255,255,255,0.7)" font-family="'JetBrains Mono', monospace" font-size="8" letter-spacing="1" text-anchor="middle">CONTEXTUAL</text>
+      </g>
+    </g>
+
+    <!-- AI core in the middle -->
+    <g filter="url(#centerGlow)">
+      <circle r="60" fill="url(#aiCore)"/>
+    </g>
+    <circle r="60" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+
+    <text y="-2" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-size="22" font-weight="500" text-anchor="middle">AI</text>
+    <text y="18" fill="rgba(26,22,64,0.75)" font-family="'JetBrains Mono', monospace" font-size="8" letter-spacing="2" font-weight="600" text-anchor="middle">CORE</text>
+  </g>
+
+  <!-- Result label below the redesign -->
+  <g transform="translate(640, 695)">
+    <line x1="0" y1="-20" x2="492" y2="-20" stroke="rgba(255,184,107,0.3)" stroke-width="1"/>
+    <text x="0" y="0" fill="#d97706" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">RESULT</text>
+    <text x="0" y="22" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-size="18" font-weight="400" font-style="italic">A new line —</text>
+    <text x="0" y="42" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-size="18" font-weight="400" font-style="italic">designed to be intelligent.</text>
+  </g>
+
+  <!-- Bottom italic caption (full width) -->
+  <line x1="60" y1="730" x2="120" y2="730" stroke="#d97706" stroke-width="1"/>
+  <text x="135" y="734" fill="#4a4a5e" font-size="13" font-style="italic" font-family="'Fraunces', Georgia, serif">
+    The question isn't "where can AI help?" It's "what does this process look like if AI was here from the start?"
+  </text>
+
+</svg>

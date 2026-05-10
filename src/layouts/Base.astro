@@ -1,0 +1,344 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: 'en' | 'nl';
+}
+
+const {
+  title = 'Kenneth Nicasens — Power Platform & AI',
+  description =
+    'Field notes on AI process design, Microsoft Power Platform, and the future of intelligent work. By Kenneth Nicasens, consultant based in Belgium.',
+  lang = 'en',
+} = Astro.props;
+
+const year = new Date().getFullYear();
+
+const nav = {
+  en: { writing: 'Articles', about: 'About', notes: 'Notes', subscribe: 'Subscribe' },
+  nl: { writing: 'Artikels', about: 'Over mij', notes: 'Notities', subscribe: 'Abonneren' },
+};
+const t = nav[lang];
+const footerCols = {
+  en: { writing: 'Articles', allPosts: 'All Posts', elsewhere: 'Elsewhere', contact: 'Contact', speaking: 'Speaking', consulting: 'Consulting', copy: 'All rights reserved.', built: 'Built with Astro · Belgium 🇧🇪' },
+  nl: { writing: 'Artikels', allPosts: 'Alle posts', elsewhere: 'Elders', contact: 'Contact', speaking: 'Spreken', consulting: 'Consultancy', copy: 'Alle rechten voorbehouden.', built: 'Gebouwd met Astro · België 🇧🇪' },
+};
+const ft = footerCols[lang];
+const homePath = lang === 'nl' ? '/nl/' : '/';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="author" content="Kenneth Nicasens" />
+    <meta name="keywords" content="Power Platform, AI, Copilot Studio, Power Automate, AI Builder, process automation, intelligent automation, solution architecture" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="theme-color" content="#050510" />
+    
+    <!-- Language Alternates -->
+    <link rel="alternate" hrefLang="en" href={`${Astro.site}${Astro.url.pathname.replace(/^\/nl/, '')}`} />
+    <link rel="alternate" hrefLang="nl" href={`${Astro.site}${Astro.url.pathname.startsWith('/nl') ? Astro.url.pathname : '/nl' + Astro.url.pathname}`} />
+    <link rel="alternate" hrefLang="x-default" href={`${Astro.site}${Astro.url.pathname.replace(/^\/nl/, '')}`} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={`${Astro.site}${Astro.url.pathname}`} />
+    
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:site_name" content="Kenneth Nicasens" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`${Astro.site}${Astro.url.pathname}`} />
+    <meta property="og:image" content={`${Astro.site}og-image.jpg`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={lang === 'nl' ? 'nl_BE' : 'en_GB'} />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${Astro.site}og-image.jpg`} />
+    <meta name="twitter:creator" content="@kennethnicasens" />
+    <meta name="twitter:site" content="@kennethnicasens" />
+    
+    <!-- Search Engine Optimization -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <title>{title}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Kenneth Nicasens",
+      "url": Astro.site?.toString(),
+      "sameAs": [
+        "https://www.linkedin.com/in/kenneth-nicasens-72b55aba/",
+        "https://github.com/ShdowX",
+      ],
+      "jobTitle": "Power Platform & AI Solution Architect",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Cegeka"
+      },
+      "description": "Power Platform & AI Solution Architect helping organisations with intelligent automation, Copilot Studio design, and enterprise AI implementation.",
+      "image": `${Astro.site}images/about-portrait.svg`,
+      "location": {
+        "@type": "Place",
+        "name": "Belgium"
+      }
+    })}
+    </script>
+    
+    <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Kenneth Nicasens",
+      "url": Astro.site?.toString(),
+      "description": "Field notes on AI process design, Microsoft Power Platform, and intelligent automation.",
+      "author": {
+        "@type": "Person",
+        "name": "Kenneth Nicasens",
+        "url": Astro.site?.toString()
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${Astro.site}?q={search_term_string}`
+        }
+      }
+    })}
+    </script>
+  </head>
+  <body>
+    <!-- Scroll progress bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Animated background blobs -->
+    <div class="bg-blobs">
+      <div class="blob blob-1" id="blob-1"></div>
+      <div class="blob blob-2" id="blob-2"></div>
+      <div class="blob blob-3" id="blob-3"></div>
+      <div class="blob blob-4" id="blob-4"></div>
+    </div>
+
+    <!-- Dotted grid -->
+    <div class="bg-grid"></div>
+
+    <!-- SVG noise grain -->
+    <svg
+      class="bg-grain"
+      xmlns="http://www.w3.org/2000/svg"
+      width="100%"
+      height="100%"
+      aria-hidden="true"
+    >
+      <filter id="grain-noise">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.65"
+          numOctaves="3"
+          stitchTiles="stitch"
+        />
+        <feColorMatrix type="saturate" values="0" />
+      </filter>
+      <rect width="100%" height="100%" filter="url(#grain-noise)" />
+    </svg>
+
+    <!-- Top navigation -->
+    <nav class="nav-pill glass" aria-label="Main navigation">
+      <a href={homePath} class="nav-brand">
+        <span class="nav-dot" aria-hidden="true"></span>
+        Kenneth Nicasens
+      </a>
+      <ul class="nav-links">
+        <li><a href={`${homePath}#posts`}>{t.writing}</a></li>
+        <li><a href={lang === 'nl' ? '/nl/speaking' : '/speaking'}>{lang === 'nl' ? 'Spreken' : 'Speaking'}</a></li>
+        <li><a href={lang === 'nl' ? '/nl/about' : '/about'}>{t.about}</a></li>
+      </ul>
+      <button id="lang-toggle" class="lang-toggle" aria-label="Switch language">
+        <span class={`lang-option ${lang === 'en' ? 'active' : ''}`}>EN</span>
+        <span class="lang-separator">/</span>
+        <span class={`lang-option ${lang === 'nl' ? 'active' : ''}`}>NL</span>
+      </button>
+      <a href="#subscribe" class="nav-cta">{t.subscribe}</a>
+    </nav>
+
+    <!-- Page content -->
+    <main>
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">
+              <span class="nav-dot" aria-hidden="true"></span>
+              Kenneth Nicasens
+            </div>
+            <p class="footer-blurb">
+              {lang === 'nl'
+                ? 'Power Platform & AI-consultant gevestigd in België. Schrijft over intelligent procesontwerp, automatisering en de toekomst van enterprise AI.'
+                : 'Power Platform & AI consultant based in Belgium. Writing about intelligent process design, automation, and the future of enterprise AI.'}
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h4>{ft.writing}</h4>
+            <ul>
+              <li><a href={`${homePath}#posts`}>{ft.allPosts}</a></li>
+              <li><a href={`${homePath}#posts`}>{lang === 'nl' ? 'AI · Procesontwerp' : 'AI · Process Design'}</a></li>
+              <li><a href={`${homePath}#posts`}>Power Automate</a></li>
+              <li><a href={`${homePath}#posts`}>AI Builder</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4 data-i18n="footer.col.elsewhere">{ft.elsewhere}</h4>
+            <ul>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/kenneth-nicasens-72b55aba/"
+                  target="_blank"
+                  rel="noopener noreferrer">LinkedIn</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/ShdowX"
+                  target="_blank"
+                  rel="noopener noreferrer">GitHub</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>{ft.contact}</h4>
+            <ul>
+              <li>
+                <a href="mailto:hello@kennethnicasens.be"
+                  >hello@kennethnicasens.be</a
+                >
+              </li>
+              <li><a href={lang === 'nl' ? '/nl/speaking' : '/speaking'}>{ft.speaking}</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-copy">
+          <span>© {year} Kenneth Nicasens. {ft.copy}</span>
+          <span>{ft.built}</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // ── Scroll progress bar ──────────────────────────────────────
+      const progressBar = document.getElementById('scroll-progress');
+
+      // ── Blobs for parallax ───────────────────────────────────────
+      const blob1 = document.getElementById('blob-1') as HTMLElement | null;
+      const blob2 = document.getElementById('blob-2') as HTMLElement | null;
+      const blob3 = document.getElementById('blob-3') as HTMLElement | null;
+      const blob4 = document.getElementById('blob-4') as HTMLElement | null;
+
+      // ── IntersectionObserver for reveal animations ───────────────
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      document
+        .querySelectorAll('.reveal')
+        .forEach((el) => revealObserver.observe(el));
+
+      document
+        .querySelectorAll('.reveal-stagger > *')
+        .forEach((el) => revealObserver.observe(el));
+
+      // ── Scroll-driven mood & parallax ───────────────────────────
+      let ticking = false;
+
+      function updateOnScroll() {
+        const scrollY = window.scrollY;
+        const docH =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docH > 0 ? scrollY / docH : 0;
+
+        // Progress bar
+        if (progressBar) {
+          progressBar.style.width = `${progress * 100}%`;
+        }
+
+        // Mood shift
+        let mood = 'night';
+        if (progress > 0.66) mood = 'dusk';
+        else if (progress > 0.33) mood = 'aurora';
+        document.body.dataset.mood = mood;
+
+        // Blob parallax
+        const p = progress;
+        if (blob1) blob1.style.transform = `translate3d(${p * -35}px, ${p * -70}px, 0)`;
+        if (blob2) blob2.style.transform = `translate3d(${p * 45}px, ${p * -45}px, 0)`;
+        if (blob3) blob3.style.transform = `translate3d(${p * -25}px, ${p * 55}px, 0)`;
+        if (blob4) blob4.style.transform = `translate3d(${p * 35}px, ${p * 65}px, 0)`;
+
+        ticking = false;
+      }
+
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            requestAnimationFrame(updateOnScroll);
+            ticking = true;
+          }
+        },
+        { passive: true }
+      );
+
+      // Initial call
+      updateOnScroll();
+    </script>
+
+    <script>
+      // ── Language toggle — navigate to equivalent route ───────────
+      document.getElementById('lang-toggle')?.addEventListener('click', () => {
+        const path = window.location.pathname;
+        if (path.startsWith('/nl/') || path === '/nl') {
+          const enPath = path.replace(/^\/nl/, '') || '/';
+          window.location.href = enPath;
+        } else {
+          window.location.href = '/nl' + (path === '/' ? '/' : path);
+        }
+      });
+    </script>
+  </body>
+</html>

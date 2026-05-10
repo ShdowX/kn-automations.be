@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', (p) => p.data.lang === 'en');
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/^en\//, '') },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<'posts'>;
+const post = Astro.props;
+const { title, excerpt, date, category, readTime } = post.data;
+
+const visualMap = {
+  v2: {
+    src: '/images/blog/app-and-os.svg',
+    alt: 'Diagram showing how most AI value comes from autonomous background work',
+    caption: 'The visible chat layer is only a small part of AI impact. The operational value happens behind the scenes.',
+  },
+  v3: {
+    src: '/images/blog/bolted-on-vs-built-around.svg',
+    alt: 'Diagram comparing traditional processes with AI-centred process design',
+    caption: 'AI works best when the process is redesigned around it, not bolted onto the side.',
+  },
+  v5: {
+    src: '/images/blog/start-small-think-big.svg',
+    alt: 'Diagram describing a start small, think big execution model for AI automation',
+    caption: 'Start with one painful process, prove value, then scale deliberately.',
+  },
+} as const;
+
+const articleVisual = visualMap[post.data.visual as keyof typeof visualMap] ?? visualMap.v3;
+
+const { Content } = await render(post);
+
+const formattedDate = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(date);
+---
+
+<BlogPost {post} lang="en">
+  <div class="article-wrap">
+    <!-- Back link -->
+    <a href="/#posts" class="article-back">
+      <span aria-hidden="true">←</span> All writing
+    </a>
+
+    <!-- Article header -->
+    <header class="article-header">
+      <div class="article-meta-row">
+        <span class="category-pill">{category}</span>
+        <span class="article-date">{formattedDate}</span>
+        <span class="article-readtime">{readTime}</span>
+      </div>
+      <h1 class="article-title">{title}</h1>
+      <p class="article-lead">{excerpt}</p>
+    </header>
+
+    <figure class="article-visual glass reveal">
+      <img src={articleVisual.src} alt={articleVisual.alt} />
+      <figcaption>{articleVisual.caption}</figcaption>
+    </figure>
+
+    <!-- Article body (rendered Markdown) -->
+    <div class="article-body">
+      <Content />
+    </div>
+
+    <!-- Post footer navigation -->
+    <div
+      style="margin-top:4rem;padding-top:2rem;border-top:1px solid var(--glass-border);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;"
+    >
+      <a
+        href="/#posts"
+        style="font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.45;display:inline-flex;align-items:center;gap:0.4rem;transition:opacity 0.2s;"
+        onmouseover="this.style.opacity='0.8'"
+        onmouseout="this.style.opacity='0.45'"
+      >
+        ← Back to all posts
+      </a>
+      <span
+        style="font-family:var(--font-mono);font-size:0.65rem;opacity:0.3;text-transform:uppercase;letter-spacing:0.1em;"
+      >
+        Kenneth Nicasens · {new Date().getFullYear()}
+      </span>
+    </div>
+  </div>
+</BlogPost>

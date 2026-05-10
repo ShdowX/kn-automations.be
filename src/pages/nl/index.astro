@@ -1,0 +1,161 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import Subscribe from '../../components/Subscribe.astro';
+
+const allPosts = (await getCollection('posts', (p) => p.data.lang === 'nl')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const featuredPost = allPosts.find((p) => p.data.featured) ?? allPosts[0];
+const recentPosts = allPosts.filter((p) => p.id !== featuredPost?.id).slice(0, 6);
+
+const featuredDate = featuredPost
+  ? new Intl.DateTimeFormat('nl-BE', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    }).format(featuredPost.data.date)
+  : '';
+
+const visualStories = [
+  {
+    title: 'Procesherontwerp rond AI',
+    excerpt: 'Traditionele overdrachten versus AI-gestuurde workflows die uitzonderingen oppikken in plaats van extra ruis te creëren.',
+    image: '/images/blog/bolted-on-vs-built-around.svg',
+    href: '/nl/posts/agentic-ai-lead-the-change',
+  },
+  {
+    title: 'Waar AI-impact echt vandaan komt',
+    excerpt: 'De zichtbare chatlaag is klein. De operationele waarde zit in wat er op de achtergrond gebeurt.',
+    image: '/images/blog/ai-impact-split.svg',
+    href: '/nl/posts/ai-true-power-beyond-chat',
+  },
+  {
+    title: 'Begin klein, denk groot',
+    excerpt: 'Een praktisch uitvoeringsmodel om één waardevolle automatisering tegelijk op te leveren en daarna uit te breiden.',
+    image: '/images/blog/start-small-think-big.svg',
+    href: '/nl/posts/agentic-ai-lead-the-change',
+  },
+];
+---
+
+<Base
+  title="Kenneth Nicasens — Power Platform & AI"
+  description="Praktische inzichten over AI-procesontwerp en het Microsoft Power Platform. Door Kenneth Nicasens, consultant in België."
+  lang="nl"
+>
+  <!-- ── Hero ─────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal">Veldnotities · Vol. 04 · 2026</p>
+      <h1 class="hero-headline reveal">
+        Notities van <em class="gradient-text">de rand van</em><br />
+        proces &amp; <em class="gradient-text">intelligentie.</em>
+      </h1>
+      <p class="hero-desc reveal">
+        Praktische inzichten op het snijvlak van AI en procesontwerp voor grote
+        organisaties. Kenneth Nicasens schrijft over Copilot Studio, Power
+        Automate, AI Builder en de organisatorische patronen die intelligente
+        automatisering daadwerkelijk laten werken — vanuit België.
+      </p>
+      <div class="hero-ctas reveal">
+        <a href="#posts" class="btn-primary">Lees de laatste →</a>
+        <a href="/nl/about" class="btn-ghost">Over mij</a>
+      </div>
+    </div>
+
+    <!-- Floating stats card (hidden on mobile) -->
+    <div class="hero-float-card glass" aria-hidden="true">
+      <p class="hero-card-label">Gepubliceerde posts</p>
+      <p class="hero-card-count">{allPosts.length.toString().padStart(2, '0')}</p>
+      <p class="hero-card-sub">en groeiend</p>
+      <div style="margin-top:1.5rem; border-top:1px solid var(--glass-border); padding-top:1rem;">
+        <p class="hero-card-label" style="margin-bottom:0.4rem;">Onderwerpen</p>
+        {
+          [...new Set(allPosts.map((p) => p.data.category))].map((cat) => (
+            <span
+              style="display:inline-block;font-family:var(--font-mono);font-size:0.6rem;opacity:0.5;margin-right:0.35rem;margin-bottom:0.35rem;"
+            >
+              {cat}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Visual showcase ──────────────────────────────────────── -->
+  <section class="visual-showcase">
+    <div class="section-header reveal">
+      <h2 class="section-title">Visuele notities</h2>
+      <span
+        style="font-family:var(--font-mono);font-size:0.7rem;opacity:0.35;text-transform:uppercase;letter-spacing:0.1em;"
+      >
+        diagrammen &amp; kaders
+      </span>
+    </div>
+    <div class="visual-showcase-grid reveal-stagger">
+      {visualStories.map((story) => (
+        <a href={story.href} class="visual-story">
+          <img src={story.image} alt={story.title} class="visual-story-image" />
+          <div class="visual-story-body">
+            <span class="category-pill">Visueel</span>
+            <h3 class="visual-story-title">{story.title}</h3>
+            <p class="visual-story-text">{story.excerpt}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ── Featured post ─────────────────────────────────────────── -->
+  {
+    featuredPost && (
+      <section class="featured-section">
+        <p class="section-label reveal">Uitgelicht</p>
+        <div class="featured-grid reveal">
+          <div class={`featured-panel ${featuredPost.data.visual}`}>
+            <span class="category-pill">{featuredPost.data.category}</span>
+          </div>
+          <div class="featured-content">
+            <p class="featured-meta">{featuredDate} · {featuredPost.data.readTime}</p>
+            <h2 class="featured-title">{featuredPost.data.title}</h2>
+            <p class="featured-excerpt">{featuredPost.data.excerpt}</p>
+            <a
+              href={`/nl/posts/${featuredPost.id.replace(/^nl\//, '')}`}
+              class="featured-link"
+            >
+              <span>Verder lezen</span> <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ── Recent posts grid ──────────────────────────────────────── -->
+  <section class="posts-section" id="posts">
+    <div class="section-header reveal">
+      <h2 class="section-title">Recente artikels</h2>
+      <span
+        style="font-family:var(--font-mono);font-size:0.7rem;opacity:0.35;text-transform:uppercase;letter-spacing:0.1em;"
+      >
+        {recentPosts.length} posts
+      </span>
+    </div>
+    <div class="posts-grid reveal-stagger">
+      {recentPosts.map((post) => <PostCard post={post} lang="nl" />)}
+    </div>
+  </section>
+
+  <!-- ── Subscribe ─────────────────────────────────────────────── -->
+  <section id="subscribe" style="padding:4rem 2rem; text-align:center;" class="reveal">
+    <div style="max-width:500px;margin:0 auto;">
+      <h2 class="section-title" style="margin-bottom:0.5rem;">Blijf op de hoogte</h2>
+      <p style="opacity:0.7;margin-bottom:2rem;">Krijg een melding wanneer er nieuwe artikels online gaan.</p>
+      <Subscribe lang="nl" />
+    </div>
+  </section>
+</Base>

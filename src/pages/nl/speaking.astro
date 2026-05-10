@@ -1,0 +1,120 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const upcoming = [
+  {
+    event: 'Europese Power Platform Conferentie',
+    location: 'Kopenhagen, Denemarken',
+    date: '29 juni – 2 juli 2026',
+    topic: 'From Boring to Brilliant: How Agentic AI Is Redefining The Government',
+    description:
+      'Wat als controleurs paperwerk kunnen overslaan en zich kunnen concentreren op fraudebestrijding? De Vlaamse Regering doet precies dat. Sluit je aan terwijl we laten zien hoe Agentic AI auditing transformeert door 80% van routinetaken te automatiseren, afwijkingen aan het licht te brengen en experts in staat te stellen sneller en slimmer op te treden. Deze praktijkcase laat zien hoe Agentic AI een tastbaar verschil voor de maatschappij kan maken, door subsidiefraudeverticale uit te dekken en middelen om te leiden naar waar ze de grootste positieve impact hebben.',
+    url: 'https://espc.tech/conference/eppc-2026/',
+    type: 'conference',
+  },
+];
+
+const past = [
+  {
+    event: 'AI Apps & Agents Tour',
+    location: 'Amsterdam · Nederland',
+    date: '21 april 2026',
+    topic: 'Keynote: VTS Usecase — Intelligente Automatisering in de Overheid',
+    description:
+      'Een praktijkvoorbeeld van hoe applicaties hand in hand gaan met AI.',
+    type: 'conference',
+  },
+];
+---
+
+<Base title="Spreken — Kenneth Nicasens" description="Kenneth Nicasens spreekt op events over Power Platform, Copilot Studio, AI Builder en intelligent procesontwerp." lang="nl">
+  <article class="article-wrap">
+    <div class="article-header">
+      <div class="article-meta">
+        <span class="category-pill">Spreken</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-item">{upcoming.length} aankomend</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-item">{past.length} afgelopen talks</span>
+      </div>
+      <h1 class="article-title">Op het podium</h1>
+      <p class="article-lead">
+        Ik spreek op conferenties, summits en community-events over Power Platform, Copilot Studio, AI Builder
+        en de organisatorische patronen achter intelligente automatisering. Alle sessies zijn gericht op
+        practitioners — echte implementaties, echte fouten, echte oplossingen.
+      </p>
+      <p style="margin-top:1rem;opacity:0.6;font-size:0.9rem;">
+        Interesse om mij uit te nodigen voor jouw event?
+        <a href="mailto:hello@kennethnicasens.be" style="color:var(--accent);">Neem contact op →</a>
+      </p>
+    </div>
+
+    <!-- ── Upcoming ───────────────────────────────────────────── -->
+    <section class="speaking-section">
+      <h2 class="speaking-section-title">
+        <span class="speaking-badge upcoming-badge">Aankomend</span>
+      </h2>
+      <div class="speaking-list">
+        {upcoming.map((talk) => (
+          <div class="speaking-card glass upcoming-card">
+            <div class="speaking-card-header">
+              <div class="speaking-event-info">
+                <span class={`talk-type-pill ${talk.type}`}>{talk.type === 'conference' ? 'conferentie' : 'meetup'}</span>
+                <span class="talking-date">{talk.date}</span>
+              </div>
+              <span class="talking-location">{talk.location}</span>
+            </div>
+            <div class="speaking-card-body">
+              <h3 class="talking-event">{talk.event}</h3>
+              <p class="talking-topic">"{talk.topic}"</p>
+              <p class="talking-desc">{talk.description}</p>
+            </div>
+            {talk.url !== '#' && (
+              <a href={talk.url} class="talking-link" target="_blank" rel="noopener noreferrer">
+                Event-website →
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── Past talks ─────────────────────────────────────────── -->
+    <section class="speaking-section">
+      <h2 class="speaking-section-title">
+        <span class="speaking-badge past-badge">Afgelopen talks</span>
+      </h2>
+      <div class="speaking-list">
+        {past.map((talk) => (
+          <div class="speaking-card glass">
+            <div class="speaking-card-header">
+              <div class="speaking-event-info">
+                <span class={`talk-type-pill ${talk.type}`}>{talk.type === 'conference' ? 'conferentie' : 'meetup'}</span>
+                <span class="talking-date">{talk.date}</span>
+              </div>
+              <span class="talking-location">{talk.location}</span>
+            </div>
+            <div class="speaking-card-body">
+              <h3 class="talking-event">{talk.event}</h3>
+              <p class="talking-topic">"{talk.topic}"</p>
+              <p class="talking-desc">{talk.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── CTA ────────────────────────────────────────────────── -->
+    <section class="glass speaking-cta">
+      <h2>Wil je mij uitnodigen voor jouw event?</h2>
+      <p>
+        Ik ben beschikbaar voor conferenties, interne bedrijfsevenementen en community-sessies in België en
+        internationaal. Sessies kunnen worden afgestemd op jouw publiek — van executive-overzichten tot diepgaande
+        technische workshops over Copilot Studio, Power Automate en AI Builder.
+      </p>
+      <a href="mailto:hello@kennethnicasens.be" class="btn-primary" style="margin-top:1.5rem;">
+        Neem contact op →
+      </a>
+    </section>
+  </article>
+</Base>

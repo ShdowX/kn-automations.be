@@ -1,0 +1,259 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" font-family="'Inter Tight', system-ui, sans-serif">
+  <defs>
+    <!-- Aurora blobs -->
+    <radialGradient id="blobAmber" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb86b" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ffb86b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blobViolet" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#c4b5fd" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blobIndigo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4338ca" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#4338ca" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Phone screen wallpaper -->
+    <linearGradient id="screenWall" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#0c0a26"/>
+    </linearGradient>
+
+    <!-- Chat icon gradient (the bright visible thing) -->
+    <linearGradient id="chatIcon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb86b"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+
+    <!-- OS panel gradient (the hidden machinery) -->
+    <linearGradient id="osPanel" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1640" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#050510" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Glow for icon -->
+    <filter id="iconGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Dotted grid -->
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#ffffff" opacity="0.06"/>
+    </pattern>
+
+    <!-- Activity bar gradient (for the process bars) -->
+    <linearGradient id="activityBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#c4b5fd" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient backdrop -->
+  <rect width="1200" height="700" fill="url(#dots)" opacity="0.5"/>
+  <ellipse cx="200" cy="200" rx="380" ry="260" fill="url(#blobAmber)" opacity="0.6"/>
+  <ellipse cx="1000" cy="500" rx="420" ry="280" fill="url(#blobIndigo)" opacity="0.6"/>
+  <ellipse cx="600" cy="400" rx="320" ry="220" fill="url(#blobViolet)" opacity="0.4"/>
+
+  <!-- Eyebrow + title -->
+  <text x="60" y="70" fill="#8b7fb8" font-family="'JetBrains Mono', monospace" font-size="13" letter-spacing="3" font-weight="500">
+    KEY INSIGHT · 05
+  </text>
+  <text x="60" y="125" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-weight="400" font-size="48" letter-spacing="-1.5">
+    The app, <tspan font-style="italic" fill="#d97706">and the OS.</tspan>
+  </text>
+  <text x="60" y="160" fill="#4a4a5e" font-size="16" font-weight="400">
+    You tap the icon. Everything else runs underneath.
+  </text>
+
+  <!-- ==================================================== -->
+  <!-- LEFT: THE PHONE (what users see) -->
+  <!-- ==================================================== -->
+
+  <!-- Phone body -->
+  <g transform="translate(140, 230)">
+    <!-- Phone outer shell -->
+    <rect width="280" height="420" rx="38" fill="#0a0a14" stroke="rgba(196,181,253,0.3)" stroke-width="1.5"/>
+    <!-- Inner screen -->
+    <rect x="10" y="10" width="260" height="400" rx="30" fill="url(#screenWall)"/>
+
+    <!-- Status bar -->
+    <text x="30" y="35" fill="rgba(250,250,247,0.75)" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="500">9:41</text>
+    <g transform="translate(220, 26)">
+      <rect width="22" height="10" rx="2" fill="none" stroke="rgba(250,250,247,0.6)" stroke-width="1"/>
+      <rect x="2" y="2" width="14" height="6" rx="1" fill="rgba(250,250,247,0.6)"/>
+    </g>
+
+    <!-- Notch -->
+    <rect x="105" y="14" width="70" height="22" rx="11" fill="#0a0a14"/>
+
+    <!-- The chat icon (centered, glowing) -->
+    <g transform="translate(105, 130)" filter="url(#iconGlow)">
+      <rect width="70" height="70" rx="18" fill="url(#chatIcon)"/>
+      <!-- Speech bubble inside -->
+      <path d="M 22 28 Q 22 22 28 22 L 48 22 Q 54 22 54 28 L 54 40 Q 54 46 48 46 L 38 46 L 32 52 L 32 46 L 28 46 Q 22 46 22 40 Z"
+            fill="rgba(255,255,255,0.95)"/>
+    </g>
+    <text x="140" y="222" fill="#fafaf7" font-family="'Inter Tight', sans-serif" font-size="13" font-weight="500" text-anchor="middle">Chat</text>
+
+    <!-- Other dimmed app icons (placeholder grid) -->
+    <g opacity="0.35">
+      <rect x="35" y="130" width="50" height="50" rx="13" fill="rgba(196,181,253,0.3)"/>
+      <rect x="195" y="130" width="50" height="50" rx="13" fill="rgba(196,181,253,0.3)"/>
+      <rect x="35" y="200" width="50" height="50" rx="13" fill="rgba(196,181,253,0.3)"/>
+      <rect x="195" y="200" width="50" height="50" rx="13" fill="rgba(196,181,253,0.3)"/>
+      <rect x="115" y="245" width="50" height="50" rx="13" fill="rgba(196,181,253,0.3)"/>
+    </g>
+
+    <!-- Home indicator -->
+    <rect x="100" y="395" width="80" height="4" rx="2" fill="rgba(250,250,247,0.4)"/>
+
+    <!-- "10% VISIBLE" badge floating above the chat icon -->
+    <g transform="translate(95, 100)">
+      <rect width="90" height="22" rx="11" fill="rgba(255,184,107,0.95)"/>
+      <text x="45" y="15" fill="#1a1640" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="700" text-anchor="middle">10% VISIBLE</text>
+    </g>
+  </g>
+
+  <!-- "What you tap" caption above phone -->
+  <g transform="translate(140, 195)">
+    <text x="0" y="0" fill="#d97706" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" font-weight="600">WHAT YOU TAP</text>
+    <text x="0" y="22" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-size="22" font-weight="400">An app. A conversation.</text>
+  </g>
+
+  <!-- ==================================================== -->
+  <!-- RIGHT: THE OS PANEL (what's actually running) -->
+  <!-- Visualised as an Activity Monitor / system processes view -->
+  <!-- ==================================================== -->
+
+  <g transform="translate(490, 230)">
+    <!-- Panel background -->
+    <rect width="610" height="420" rx="22" fill="url(#osPanel)" stroke="rgba(196,181,253,0.3)" stroke-width="1"/>
+
+    <!-- Panel header -->
+    <rect width="610" height="44" rx="22" fill="rgba(196,181,253,0.06)"/>
+    <rect y="22" width="610" height="22" fill="rgba(196,181,253,0.06)"/>
+    <line x1="0" y1="44" x2="610" y2="44" stroke="rgba(196,181,253,0.2)" stroke-width="1"/>
+
+    <!-- Window dots -->
+    <circle cx="20" cy="22" r="5" fill="#ff6b6b" opacity="0.7"/>
+    <circle cx="38" cy="22" r="5" fill="#ffb86b" opacity="0.7"/>
+    <circle cx="56" cy="22" r="5" fill="#6ee7b7" opacity="0.7"/>
+
+    <!-- Header title -->
+    <text x="85" y="27" fill="rgba(250,250,247,0.9)" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="500">activity_monitor</text>
+    <text x="500" y="27" fill="rgba(196,181,253,0.7)" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1.5">90% · BACKGROUND</text>
+
+    <!-- Column headers -->
+    <g transform="translate(0, 65)">
+      <text x="22" y="0" fill="rgba(196,181,253,0.55)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">PROCESS</text>
+      <text x="280" y="0" fill="rgba(196,181,253,0.55)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">ACTIVITY</text>
+      <text x="500" y="0" fill="rgba(196,181,253,0.55)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">STATUS</text>
+    </g>
+
+    <!-- Process rows -->
+    <g font-family="'Inter Tight', sans-serif">
+      <!-- Row 1 -->
+      <g transform="translate(0, 90)">
+        <line x1="20" y1="20" x2="590" y2="20" stroke="rgba(196,181,253,0.08)" stroke-width="1"/>
+        <circle cx="32" cy="0" r="3" fill="#6ee7b7"/>
+        <text x="44" y="4" fill="rgba(250,250,247,0.9)" font-size="12" font-weight="500">data_enrichment</text>
+        <rect x="280" y="-6" width="160" height="10" rx="5" fill="rgba(255,255,255,0.04)"/>
+        <rect x="280" y="-6" width="138" height="10" rx="5" fill="url(#activityBar)"/>
+        <text x="500" y="4" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1">RUNNING</text>
+      </g>
+
+      <!-- Row 2 -->
+      <g transform="translate(0, 122)">
+        <line x1="20" y1="20" x2="590" y2="20" stroke="rgba(196,181,253,0.08)" stroke-width="1"/>
+        <circle cx="32" cy="0" r="3" fill="#6ee7b7"/>
+        <text x="44" y="4" fill="rgba(250,250,247,0.9)" font-size="12" font-weight="500">lead_qualifying</text>
+        <rect x="280" y="-6" width="160" height="10" rx="5" fill="rgba(255,255,255,0.04)"/>
+        <rect x="280" y="-6" width="112" height="10" rx="5" fill="url(#activityBar)"/>
+        <text x="500" y="4" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1">RUNNING</text>
+      </g>
+
+      <!-- Row 3 -->
+      <g transform="translate(0, 154)">
+        <line x1="20" y1="20" x2="590" y2="20" stroke="rgba(196,181,253,0.08)" stroke-width="1"/>
+        <circle cx="32" cy="0" r="3" fill="#6ee7b7"/>
+        <text x="44" y="4" fill="rgba(250,250,247,0.9)" font-size="12" font-weight="500">routing_triage</text>
+        <rect x="280" y="-6" width="160" height="10" rx="5" fill="rgba(255,255,255,0.04)"/>
+        <rect x="280" y="-6" width="148" height="10" rx="5" fill="url(#activityBar)"/>
+        <text x="500" y="4" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1">RUNNING</text>
+      </g>
+
+      <!-- Row 4 -->
+      <g transform="translate(0, 186)">
+        <line x1="20" y1="20" x2="590" y2="20" stroke="rgba(196,181,253,0.08)" stroke-width="1"/>
+        <circle cx="32" cy="0" r="3" fill="#6ee7b7"/>
+        <text x="44" y="4" fill="rgba(250,250,247,0.9)" font-size="12" font-weight="500">document_parsing</text>
+        <rect x="280" y="-6" width="160" height="10" rx="5" fill="rgba(255,255,255,0.04)"/>
+        <rect x="280" y="-6" width="96" height="10" rx="5" fill="url(#activityBar)"/>
+        <text x="500" y="4" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1">RUNNING</text>
+      </g>
+
+      <!-- Row 5 -->
+      <g transform="translate(0, 218)">
+        <line x1="20" y1="20" x2="590" y2="20" stroke="rgba(196,181,253,0.08)" stroke-width="1"/>
+        <circle cx="32" cy="0" r="3" fill="#6ee7b7"/>
+        <text x="44" y="4" fill="rgba(250,250,247,0.9)" font-size="12" font-weight="500">summarisation</text>
+        <rect x="280" y="-6" width="160" height="10" rx="5" fill="rgba(255,255,255,0.04)"/>
+        <rect x="280" y="-6" width="124" height="10" rx="5" fill="url(#activityBar)"/>
+        <text x="500" y="4" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1">RUNNING</text>
+      </g>
+
+      <!-- Row 6 -->
+      <g transform="translate(0, 250)">
+        <line x1="20" y1="20" x2="590" y2="20" stroke="rgba(196,181,253,0.08)" stroke-width="1"/>
+        <circle cx="32" cy="0" r="3" fill="#6ee7b7"/>
+        <text x="44" y="4" fill="rgba(250,250,247,0.9)" font-size="12" font-weight="500">anomaly_detection</text>
+        <rect x="280" y="-6" width="160" height="10" rx="5" fill="rgba(255,255,255,0.04)"/>
+        <rect x="280" y="-6" width="80" height="10" rx="5" fill="url(#activityBar)"/>
+        <text x="500" y="4" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1">RUNNING</text>
+      </g>
+
+      <!-- Row 7 -->
+      <g transform="translate(0, 282)">
+        <line x1="20" y1="20" x2="590" y2="20" stroke="rgba(196,181,253,0.08)" stroke-width="1"/>
+        <circle cx="32" cy="0" r="3" fill="#6ee7b7"/>
+        <text x="44" y="4" fill="rgba(250,250,247,0.9)" font-size="12" font-weight="500">forecasting</text>
+        <rect x="280" y="-6" width="160" height="10" rx="5" fill="rgba(255,255,255,0.04)"/>
+        <rect x="280" y="-6" width="132" height="10" rx="5" fill="url(#activityBar)"/>
+        <text x="500" y="4" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1">RUNNING</text>
+      </g>
+
+      <!-- Row 8 -->
+      <g transform="translate(0, 314)">
+        <line x1="20" y1="20" x2="590" y2="20" stroke="rgba(196,181,253,0.08)" stroke-width="1"/>
+        <circle cx="32" cy="0" r="3" fill="#6ee7b7"/>
+        <text x="44" y="4" fill="rgba(250,250,247,0.9)" font-size="12" font-weight="500">decision_support</text>
+        <rect x="280" y="-6" width="160" height="10" rx="5" fill="rgba(255,255,255,0.04)"/>
+        <rect x="280" y="-6" width="120" height="10" rx="5" fill="url(#activityBar)"/>
+        <text x="500" y="4" fill="#6ee7b7" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1">RUNNING</text>
+      </g>
+    </g>
+
+    <!-- Footer summary -->
+    <text x="22" y="395" fill="rgba(196,181,253,0.7)" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1">
+      <tspan fill="#6ee7b7">●</tspan> 8 processes active · running 24/7 · zero user input
+    </text>
+  </g>
+
+  <!-- "What's actually running" caption above OS panel -->
+  <g transform="translate(490, 195)">
+    <text x="0" y="0" fill="#7c3aed" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" font-weight="600">WHAT'S ACTUALLY RUNNING</text>
+    <text x="0" y="22" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-size="22" font-weight="400">An operating system of agents.</text>
+  </g>
+
+  <!-- Bottom italic caption -->
+  <line x1="60" y1="660" x2="120" y2="660" stroke="#d97706" stroke-width="1"/>
+  <text x="135" y="664" fill="#4a4a5e" font-size="13" font-style="italic" font-family="'Fraunces', Georgia, serif">
+    The icon is the part you can point to. The transformation is everything you can't.
+  </text>
+
+</svg>

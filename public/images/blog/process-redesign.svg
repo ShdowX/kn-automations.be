@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Traditional vs AI-Centred Design</title>
+  <desc id="desc">A side-by-side comparison of a linear traditional process and an AI-centred process with exception handling.</desc>
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#050510"/>
+      <stop offset="100%" stop-color="#09091d"/>
+    </linearGradient>
+    <linearGradient id="warmGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffb86b" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#c4b5fd" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="coolGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.12"/>
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#ffb86b"/>
+    </marker>
+    <style>
+      text { font-family: system-ui, -apple-system, Segoe UI, sans-serif; }
+      .title { font-size: 30px; font-weight: 700; fill: #fafaf7; letter-spacing: -0.02em; }
+      .subtitle { font-size: 15px; fill: rgba(250,250,247,0.7); }
+      .section { font-size: 16px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; fill: rgba(250,250,247,0.6); }
+      .box { fill: rgba(255,255,255,0.06); stroke: rgba(255,255,255,0.16); stroke-width: 2; }
+      .box-ai { fill: rgba(255,184,107,0.1); stroke: rgba(255,184,107,0.32); stroke-width: 2; }
+      .label { font-size: 19px; font-weight: 600; fill: #fafaf7; }
+      .small { font-size: 15px; fill: rgba(250,250,247,0.75); }
+      .accent { fill: #ffb86b; }
+      .muted { fill: rgba(250,250,247,0.55); }
+      .arrow { stroke: #ffb86b; stroke-width: 4; fill: none; marker-end: url(#arrowhead); }
+      .divider { stroke: rgba(255,255,255,0.08); stroke-width: 2; stroke-dasharray: 8 10; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="700" fill="url(#bgGrad)"/>
+  <circle cx="160" cy="130" r="180" fill="url(#warmGrad)"/>
+  <circle cx="1040" cy="560" r="220" fill="url(#coolGrad)"/>
+
+  <text x="60" y="72" class="title">Traditional vs AI-Centred Design</text>
+  <text x="60" y="106" class="subtitle">A clearer process beats a louder tool. AI adds value when it is built into the workflow itself.</text>
+
+  <line x1="600" y1="160" x2="600" y2="590" class="divider"/>
+
+  <text x="80" y="160" class="section">Traditional process</text>
+  <rect x="80" y="205" width="420" height="120" rx="18" class="box"/>
+  <rect x="110" y="230" width="96" height="70" rx="14" class="box"/>
+  <text x="158" y="260" text-anchor="middle" class="label">Manual</text>
+  <text x="158" y="285" text-anchor="middle" class="small">Process</text>
+
+  <path d="M 216 265 L 255 265" class="arrow"/>
+  <rect x="270" y="230" width="96" height="70" rx="14" class="box"/>
+  <text x="318" y="260" text-anchor="middle" class="label">Human</text>
+  <text x="318" y="285" text-anchor="middle" class="small">Review</text>
+
+  <path d="M 376 265 L 415 265" class="arrow"/>
+  <rect x="430" y="230" width="48" height="70" rx="14" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+  <text x="454" y="260" text-anchor="middle" class="label">1</text>
+  <text x="454" y="285" text-anchor="middle" class="small">Result</text>
+
+  <text x="110" y="355" class="small">Slower, brittle, and dependent on available people</text>
+
+  <text x="680" y="160" class="section">AI-centred process</text>
+  <rect x="680" y="205" width="420" height="120" rx="18" class="box"/>
+  <rect x="710" y="230" width="96" height="70" rx="14" class="box-ai"/>
+  <text x="758" y="260" text-anchor="middle" class="label">AI Agent</text>
+  <text x="758" y="285" text-anchor="middle" class="small">Processes</text>
+
+  <path d="M 816 265 L 855 265" class="arrow"/>
+  <rect x="870" y="230" width="96" height="70" rx="14" class="box-ai"/>
+  <text x="918" y="260" text-anchor="middle" class="label">Flags</text>
+  <text x="918" y="285" text-anchor="middle" class="small">Exceptions</text>
+
+  <path d="M 976 265 L 1015 265" class="arrow"/>
+  <rect x="1030" y="230" width="48" height="70" rx="14" fill="rgba(255,184,107,0.16)" stroke="rgba(255,184,107,0.35)" stroke-width="2"/>
+  <text x="1054" y="260" text-anchor="middle" class="label">∞</text>
+  <text x="1054" y="285" text-anchor="middle" class="small">Scale</text>
+
+  <text x="710" y="355" class="small">Faster, more consistent, and humans focus on the judgment calls</text>
+
+  <g>
+    <circle cx="120" cy="485" r="7" fill="#ffb86b"/>
+    <text x="145" y="490" class="small">The process decides the outcome.</text>
+  </g>
+  <g>
+    <circle cx="120" cy="525" r="7" fill="#c4b5fd"/>
+    <text x="145" y="530" class="small">AI should handle the repetitive steps and escalate only exceptions.</text>
+  </g>
+  <g>
+    <circle cx="120" cy="565" r="7" fill="#7dd3fc"/>
+    <text x="145" y="570" class="small">Better workflow design beats bolting AI onto a broken one.</text>
+  </g>
+</svg>

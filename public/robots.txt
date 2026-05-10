@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+Allow: /rss.xml
+Allow: /nl/rss.xml
+Allow: /sitemap.xml
+
+Disallow: /admin
+Disallow: /.env
+Disallow: /private
+
+Sitemap: https://kenneth.nicasens.be/sitemap.xml
+Sitemap: https://kenneth.nicasens.be/nl/sitemap.xml
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# OpenAI
+User-agent: GPTBot
+Allow: /
+
+# Anthropic
+User-agent: Claude-Web
+Allow: /

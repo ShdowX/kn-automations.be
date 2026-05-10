@@ -1,0 +1,121 @@
+---
+import Base from '../layouts/Base.astro';
+
+const upcoming = [
+  {
+    event: 'European Power Platform Conference',
+    location: 'Copenhagen, Denmark',
+    date: 'June 29 – July 2, 2026',
+    topic: 'From Boring to Brilliant: How Agentic AI Is Redefining The Government',
+    description:
+      'What if auditors could skip the paperwork and focus on stopping fraud? The Flemish Government is doing exactly that. Join us as we showcase how Agentic AI is transforming auditing by automating 80% of routine tasks, surfacing anomalies, and empowering experts to act faster and smarter. This real-world use case demonstrates how Agentic AI can make a tangible difference in society, helping to detect subsidy fraud and redirect funds to where they have the greatest positive impact.',
+    url: 'https://espc.tech/conference/eppc-2026/',
+    type: 'conference',
+  },
+];
+
+const past = [
+  {
+    event: 'AI Apps & Agents Tour',
+    location: 'Amsterdam · Netherlands',
+    date: 'April 21, 2026',
+    topic: 'Keynote: VTS Usecase — Intelligent Automation in Government',
+    description:
+      'A real live example on how applications go hand in hand with AI.',
+    type: 'Event',
+  },
+  
+];
+---
+
+<Base title="Speaking — Kenneth Nicasens" description="Kenneth Nicasens speaking at events on Power Platform, Copilot Studio, AI Builder, and intelligent process design." lang="en">
+  <article class="article-wrap">
+    <div class="article-header">
+      <div class="article-meta">
+        <span class="category-pill">Speaking</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-item">{upcoming.length} upcoming</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-item">{past.length} past talks</span>
+      </div>
+      <h1 class="article-title">On Stage</h1>
+      <p class="article-lead">
+        I speak at conferences, summits, and community events on Power Platform, Copilot Studio, AI Builder,
+        and the organisational patterns behind intelligent automation. All sessions are practitioner-level —
+        real implementations, real failures, real fixes.
+      </p>
+      <p style="margin-top:1rem;opacity:0.6;font-size:0.9rem;">
+        Interested in having me speak at your event?
+        <a href="mailto:hello@kennethnicasens.be" style="color:var(--accent);">Get in touch →</a>
+      </p>
+    </div>
+
+    <!-- ── Upcoming ───────────────────────────────────────────── -->
+    <section class="speaking-section">
+      <h2 class="speaking-section-title">
+        <span class="speaking-badge upcoming-badge">Upcoming</span>
+      </h2>
+      <div class="speaking-list">
+        {upcoming.map((talk) => (
+          <div class="speaking-card glass upcoming-card">
+            <div class="speaking-card-header">
+              <div class="speaking-event-info">
+                <span class={`talk-type-pill ${talk.type}`}>{talk.type}</span>
+                <span class="talking-date">{talk.date}</span>
+              </div>
+              <span class="talking-location">{talk.location}</span>
+            </div>
+            <div class="speaking-card-body">
+              <h3 class="talking-event">{talk.event}</h3>
+              <p class="talking-topic">"{talk.topic}"</p>
+              <p class="talking-desc">{talk.description}</p>
+            </div>
+            {talk.url !== '#' && (
+              <a href={talk.url} class="talking-link" target="_blank" rel="noopener noreferrer">
+                Event website →
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── Past talks ─────────────────────────────────────────── -->
+    <section class="speaking-section">
+      <h2 class="speaking-section-title">
+        <span class="speaking-badge past-badge">Past talks</span>
+      </h2>
+      <div class="speaking-list">
+        {past.map((talk) => (
+          <div class="speaking-card glass">
+            <div class="speaking-card-header">
+              <div class="speaking-event-info">
+                <span class={`talk-type-pill ${talk.type}`}>{talk.type}</span>
+                <span class="talking-date">{talk.date}</span>
+              </div>
+              <span class="talking-location">{talk.location}</span>
+            </div>
+            <div class="speaking-card-body">
+              <h3 class="talking-event">{talk.event}</h3>
+              <p class="talking-topic">"{talk.topic}"</p>
+              <p class="talking-desc">{talk.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── CTA ────────────────────────────────────────────────── -->
+    <section class="glass speaking-cta">
+      <h2>Want me to speak at your event?</h2>
+      <p>
+        I'm available for conferences, internal company events, and community sessions across Belgium and
+        internationally. Sessions can be tailored to your audience — from executive overviews to deep technical
+        workshops on Copilot Studio, Power Automate, and AI Builder.
+      </p>
+      <a href="mailto:hello@kennethnicasens.be" class="btn-primary" style="margin-top:1.5rem;">
+        Reach out →
+      </a>
+    </section>
+  </article>
+</Base>

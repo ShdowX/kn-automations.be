@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  lang?: 'en' | 'nl';
+}
+
+const { post, lang = 'en' } = Astro.props;
+const { title, excerpt, date, category, readTime, visual } = post.data;
+
+// Strip lang prefix from ID to get the base slug
+const baseSlug = post.id.replace(/^nl\//, '').replace(/^en\//, '');
+const href = lang === 'nl' ? `/nl/posts/${baseSlug}` : `/posts/${baseSlug}`;
+
+const formattedDate = new Intl.DateTimeFormat(lang === 'nl' ? 'nl-BE' : 'en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+}).format(date);
+---
+
+<a href={href} class="post-card reveal">
+  <!-- Coloured gradient header -->
+  <div class={`post-card-header ${visual}`}>
+    <span class="category-pill">{category}</span>
+  </div>
+
+  <!-- Card body -->
+  <div class="post-card-body">
+    <span class="post-card-date">{formattedDate}</span>
+    <h3 class="post-card-title">{title}</h3>
+    <p class="post-card-excerpt">{excerpt}</p>
+  </div>
+
+  <!-- Card footer -->
+  <div class="post-card-footer">
+    <span>{readTime}</span>
+    <span aria-hidden="true">→</span>
+  </div>
+</a>

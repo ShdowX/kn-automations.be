@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Where AI's Impact Comes From</title>
+  <desc id="desc">A split visualization showing the small visible chat layer and the much larger autonomous background layer of AI impact.</desc>
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#050510"/>
+      <stop offset="100%" stop-color="#09111f"/>
+    </linearGradient>
+    <linearGradient id="chatGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffb86b" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="agentGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#c4b5fd" stop-opacity="0.16"/>
+    </linearGradient>
+    <style>
+      text { font-family: system-ui, -apple-system, Segoe UI, sans-serif; }
+      .title { font-size: 30px; font-weight: 700; fill: #fafaf7; letter-spacing: -0.02em; }
+      .subtitle { font-size: 15px; fill: rgba(250,250,247,0.7); }
+      .panel-title { font-size: 17px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; fill: rgba(250,250,247,0.65); }
+      .percent { font-size: 68px; font-weight: 800; fill: #fafaf7; }
+      .label { font-size: 17px; fill: rgba(250,250,247,0.82); }
+      .small { font-size: 15px; fill: rgba(250,250,247,0.62); }
+      .panel { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.12); stroke-width: 2; }
+      .divider { stroke: rgba(255,184,107,0.35); stroke-width: 2.5; stroke-dasharray: 8 8; }
+      .chip { fill: rgba(255,255,255,0.08); stroke: rgba(255,255,255,0.12); stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="700" fill="url(#bgGrad)"/>
+  <circle cx="180" cy="150" r="190" fill="url(#chatGrad)"/>
+  <circle cx="1010" cy="540" r="240" fill="url(#agentGrad)"/>
+
+  <text x="60" y="72" class="title">Where AI's Impact Comes From</text>
+  <text x="60" y="106" class="subtitle">The visible interface matters, but the real value scales in the background.</text>
+
+  <line x1="600" y1="160" x2="600" y2="610" class="divider"/>
+
+  <text x="80" y="170" class="panel-title">Visible impact</text>
+  <rect x="70" y="205" width="460" height="350" rx="22" class="panel"/>
+  <rect x="110" y="250" width="180" height="82" rx="18" fill="rgba(255,184,107,0.18)" stroke="rgba(255,184,107,0.35)" stroke-width="2"/>
+  <text x="200" y="283" text-anchor="middle" class="percent">10%</text>
+  <text x="200" y="313" text-anchor="middle" class="small">Chat / Q&amp;A / visible interactions</text>
+
+  <g>
+    <rect x="330" y="245" width="170" height="42" rx="21" class="chip"/>
+    <text x="415" y="272" text-anchor="middle" class="label">Chatbot responses</text>
+    <rect x="330" y="296" width="170" height="42" rx="21" class="chip"/>
+    <text x="415" y="323" text-anchor="middle" class="label">Q&amp;A interactions</text>
+    <rect x="330" y="347" width="170" height="42" rx="21" class="chip"/>
+    <text x="415" y="374" text-anchor="middle" class="label">Easy to demo</text>
+    <rect x="330" y="398" width="170" height="42" rx="21" class="chip"/>
+    <text x="415" y="425" text-anchor="middle" class="label">Single user at a time</text>
+    <rect x="330" y="449" width="170" height="42" rx="21" class="chip"/>
+    <text x="415" y="476" text-anchor="middle" class="label">Limited scale</text>
+    <rect x="330" y="500" width="170" height="42" rx="21" class="chip"/>
+    <text x="415" y="527" text-anchor="middle" class="label">Often underwhelming</text>
+  </g>
+
+  <text x="110" y="594" class="small">What people think AI is</text>
+
+  <text x="690" y="170" class="panel-title">Invisible impact</text>
+  <rect x="680" y="205" width="450" height="350" rx="22" class="panel"/>
+  <rect x="720" y="245" width="190" height="92" rx="18" fill="rgba(125,211,252,0.18)" stroke="rgba(125,211,252,0.32)" stroke-width="2"/>
+  <text x="815" y="278" text-anchor="middle" class="percent">90%</text>
+  <text x="815" y="308" text-anchor="middle" class="small">Autonomous background work</text>
+
+  <g>
+    <rect x="950" y="240" width="145" height="38" rx="19" class="chip"/>
+    <text x="1022" y="265" text-anchor="middle" class="label">Background processing</text>
+    <rect x="950" y="286" width="145" height="38" rx="19" class="chip"/>
+    <text x="1022" y="311" text-anchor="middle" class="label">Autonomous agents</text>
+    <rect x="950" y="332" width="145" height="38" rx="19" class="chip"/>
+    <text x="1022" y="357" text-anchor="middle" class="label">Process automation</text>
+    <rect x="950" y="378" width="145" height="38" rx="19" class="chip"/>
+    <text x="1022" y="403" text-anchor="middle" class="label">Document work</text>
+    <rect x="950" y="424" width="145" height="38" rx="19" class="chip"/>
+    <text x="1022" y="449" text-anchor="middle" class="label">Pattern detection</text>
+    <rect x="950" y="470" width="145" height="38" rx="19" class="chip"/>
+    <text x="1022" y="495" text-anchor="middle" class="label">Multi-process orchestration</text>
+  </g>
+
+  <text x="710" y="594" class="small">Where the real transformation happens</text>
+</svg>

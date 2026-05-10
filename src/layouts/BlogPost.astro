@@ -1,0 +1,48 @@
+---
+import Base from './Base.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  lang?: 'en' | 'nl';
+}
+
+const { post, lang = 'en' } = Astro.props;
+
+const pubDateFormatted = post.data.date.toISOString().split('T')[0];
+const authorUrl = Astro.site?.toString();
+
+// Generate schema markup for this blog post
+const blogPostSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  'headline': post.data.title,
+  'description': post.data.excerpt,
+  'image': `${Astro.site}images/blog-post.jpg`,
+  'datePublished': pubDateFormatted,
+  'dateModified': pubDateFormatted,
+  'author': {
+    '@type': 'Person',
+    'name': 'Kenneth Nicasens',
+    'url': authorUrl,
+  },
+  'publisher': {
+    '@type': 'Organization',
+    'name': 'Kenneth Nicasens',
+    'url': authorUrl,
+  },
+  'keywords': [post.data.category],
+  'articleSection': post.data.category,
+  'wordCount': post.data.readTime,
+  'inLanguage': lang === 'nl' ? 'nl-BE' : 'en-GB',
+};
+---
+
+<Base
+  title={post.data.title}
+  description={post.data.excerpt}
+  lang={lang}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(blogPostSchema)} />
+  <slot />
+</Base>

@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BlogPost from '../../../layouts/BlogPost.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', (p) => p.data.lang === 'nl');
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/^nl\//, '') },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<'posts'>;
+const post = Astro.props;
+const { title, excerpt, date, category, readTime } = post.data;
+
+const visualMap = {
+  v2: {
+    src: '/images/blog/app-and-os.svg',
+    alt: 'Diagram dat laat zien dat het grootste deel van AI-waarde uit autonome achtergrondprocessen komt',
+    caption: 'De zichtbare chatlaag is maar een klein deel van AI-impact. De operationele waarde zit achter de schermen.',
+  },
+  v3: {
+    src: '/images/blog/bolted-on-vs-built-around.svg',
+    alt: 'Diagram dat traditioneel procesontwerp vergelijkt met AI-gericht procesontwerp',
+    caption: 'AI werkt het best wanneer het proces rond AI wordt herontworpen, niet wanneer het ernaast wordt geplakt.',
+  },
+  v5: {
+    src: '/images/blog/start-small-think-big.svg',
+    alt: 'Diagram dat een begin klein, denk groot-uitvoeringsmodel voor AI-automatisering beschrijft',
+    caption: 'Begin met één pijnlijk proces, bewijs de waarde en schaal daarna doelgericht op.',
+  },
+} as const;
+
+const articleVisual = visualMap[post.data.visual as keyof typeof visualMap] ?? visualMap.v3;
+
+const { Content } = await render(post);
+
+const formattedDate = new Intl.DateTimeFormat('nl-BE', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(date);
+---
+
+<BlogPost {post} lang="nl">
+  <div class="article-wrap">
+    <!-- Back link -->
+    <a href="/nl/#posts" class="article-back">
+      <span aria-hidden="true">←</span> Alle artikels
+    </a>
+
+    <!-- Article header -->
+    <header class="article-header">
+      <div class="article-meta-row">
+        <span class="category-pill">{category}</span>
+        <span class="article-date">{formattedDate}</span>
+        <span class="article-readtime">{readTime}</span>
+      </div>
+      <h1 class="article-title">{title}</h1>
+      <p class="article-lead">{excerpt}</p>
+    </header>
+
+    <figure class="article-visual glass reveal">
+      <img src={articleVisual.src} alt={articleVisual.alt} />
+      <figcaption>{articleVisual.caption}</figcaption>
+    </figure>
+
+    <!-- Article body (rendered Markdown) -->
+    <div class="article-body">
+      <Content />
+    </div>
+
+    <!-- Post footer navigation -->
+    <div
+      style="margin-top:4rem;padding-top:2rem;border-top:1px solid var(--glass-border);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;"
+    >
+      <a
+        href="/nl/#posts"
+        style="font-family:var(--font-mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.45;display:inline-flex;align-items:center;gap:0.4rem;transition:opacity 0.2s;"
+        onmouseover="this.style.opacity='0.8'"
+        onmouseout="this.style.opacity='0.45'"
+      >
+        ← Terug naar alle posts
+      </a>
+      <span
+        style="font-family:var(--font-mono);font-size:0.65rem;opacity:0.3;text-transform:uppercase;letter-spacing:0.1em;"
+      >
+        Kenneth Nicasens · {new Date().getFullYear()}
+      </span>
+    </div>
+  </div>
+</BlogPost>

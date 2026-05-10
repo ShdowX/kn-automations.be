@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import Subscribe from '../components/Subscribe.astro';
+
+const allPosts = (await getCollection('posts', (p) => p.data.lang === 'en')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const featuredPost = allPosts.find((p) => p.data.featured) ?? allPosts[0];
+const recentPosts = allPosts.filter((p) => p.id !== featuredPost?.id).slice(0, 6);
+
+const featuredDate = featuredPost
+  ? new Intl.DateTimeFormat('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    }).format(featuredPost.data.date)
+  : '';
+
+const visualStories = [
+  {
+    title: 'Process redesign around AI',
+    excerpt: 'Traditional handoffs versus AI-centred workflows that flag exceptions instead of creating more noise.',
+    image: '/images/blog/bolted-on-vs-built-around.svg',
+    href: '/posts/agentic-ai-lead-the-change',
+  },
+  {
+    title: 'Where AI impact really comes from',
+    excerpt: 'The visible chat layer is small. The operational value comes from what happens in the background.',
+    image: '/images/blog/app-and-os.svg',
+    href: '/posts/ai-true-power-beyond-chat',
+  },
+  {
+    title: 'Start small, think big',
+    excerpt: 'A practical execution model for shipping one valuable automation at a time before scaling out.',
+    image: '/images/blog/start-small-think-big.svg',
+    href: '/posts/agentic-ai-lead-the-change',
+  },
+];
+---
+
+<Base title="Kenneth Nicasens — Power Platform & AI">
+  <!-- ── Hero ─────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal">Field Notes · Vol. 04 · 2026</p>
+      <h1 class="hero-headline reveal">
+        Notes from <em class="gradient-text">the edge of</em><br />
+        process &amp; <em class="gradient-text">intelligence.</em>
+      </h1>
+      <p class="hero-desc reveal">
+        Practical dispatches from the intersection of AI and enterprise process
+        design. Kenneth Nicasens writes about Copilot Studio, Power Automate,
+        AI Builder, and the organisational patterns that make intelligent
+        automation actually work — from Belgium.
+      </p>
+      <div class="hero-ctas reveal">
+        <a href="#posts" class="btn-primary">Read the latest →</a>
+        <a href="/about" class="btn-ghost">About me</a>
+      </div>
+    </div>
+
+    <!-- Floating stats card (hidden on mobile) -->
+    <div class="hero-float-card glass" aria-hidden="true">
+      <p class="hero-card-label">Posts published</p>
+      <p class="hero-card-count">{allPosts.length.toString().padStart(2, '0')}</p>
+      <p class="hero-card-sub">and counting</p>
+      <div style="margin-top:1.5rem; border-top:1px solid var(--glass-border); padding-top:1rem;">
+        <p class="hero-card-label" style="margin-bottom:0.4rem;">Topics</p>
+        {
+          [...new Set(allPosts.map((p) => p.data.category))].map((cat) => (
+            <span
+              style="display:inline-block;font-family:var(--font-mono);font-size:0.6rem;opacity:0.5;margin-right:0.35rem;margin-bottom:0.35rem;"
+            >
+              {cat}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Visual showcase ──────────────────────────────────────── -->
+  <section class="visual-showcase">
+    <div class="section-header reveal">
+      <h2 class="section-title">Visual notes</h2>
+      <span
+        style="font-family:var(--font-mono);font-size:0.7rem;opacity:0.35;text-transform:uppercase;letter-spacing:0.1em;"
+      >
+        diagrams &amp; frameworks
+      </span>
+    </div>
+    <div class="visual-showcase-grid reveal-stagger">
+      {visualStories.map((story) => (
+        <a href={story.href} class="visual-story">
+          <img src={story.image} alt={story.title} class="visual-story-image" />
+          <div class="visual-story-body">
+            <span class="category-pill">Visual</span>
+            <h3 class="visual-story-title">{story.title}</h3>
+            <p class="visual-story-text">{story.excerpt}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ── Featured post ─────────────────────────────────────────── -->
+  {
+    featuredPost && (
+      <section class="featured-section">
+        <p class="section-label reveal">Featured</p>
+        <div class="featured-grid reveal">
+          <div class={`featured-panel ${featuredPost.data.visual}`}>
+            <span class="category-pill">{featuredPost.data.category}</span>
+          </div>
+          <div class="featured-content">
+            <p class="featured-meta">{featuredDate} · {featuredPost.data.readTime}</p>
+            <h2 class="featured-title">{featuredPost.data.title}</h2>
+            <p class="featured-excerpt">{featuredPost.data.excerpt}</p>
+            <a href={`/posts/${featuredPost.id.replace(/^en\//, '')}`} class="featured-link">
+              Continue reading <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ── Recent posts grid ──────────────────────────────────────── -->
+  <section class="posts-section" id="posts">
+    <div class="section-header reveal">
+      <h2 class="section-title">Recent writing</h2>
+      <span
+        style="font-family:var(--font-mono);font-size:0.7rem;opacity:0.35;text-transform:uppercase;letter-spacing:0.1em;"
+      >
+        {recentPosts.length} posts
+      </span>
+    </div>
+    <div class="posts-grid reveal-stagger">
+      {recentPosts.map((post) => <PostCard post={post} lang="en" />)}
+    </div>
+  </section>
+
+  <!-- ── Subscribe ─────────────────────────────────────────────── -->
+  <section id="subscribe" style="padding:4rem 2rem; text-align:center;" class="reveal">
+    <div style="max-width:500px;margin:0 auto;">
+      <h2 class="section-title" style="margin-bottom:0.5rem;">Stay updated</h2>
+      <p style="opacity:0.7;margin-bottom:2rem;">Get notified when new posts go live.</p>
+      <Subscribe lang="en" />
+    </div>
+  </section>
+</Base>

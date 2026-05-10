@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" width="760" height="340" style="font-family: 'JetBrains Mono', monospace;">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f1f6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7dd3fc;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="l1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3730a3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="l2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0e7490;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22d3ee;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="l3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c4b5fd;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="760" height="340" rx="16" fill="#050510"/>
+  <rect width="760" height="340" rx="16" fill="url(#bg)" opacity="0.08"/>
+
+  <!-- Grid dots -->
+  <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="0.8" fill="rgba(255,255,255,0.07)"/>
+  </pattern>
+  <rect width="760" height="340" fill="url(#dots)" rx="16"/>
+
+  <!-- Title -->
+  <text x="380" y="42" text-anchor="middle" font-size="11" fill="rgba(255,184,107,0.7)" letter-spacing="3" font-family="'JetBrains Mono', monospace">THREE-LAYER CONTEXT ARCHITECTURE</text>
+
+  <!-- Layer 1 — Org Chart -->
+  <rect x="40" y="66" width="200" height="192" rx="12" fill="url(#l1)" opacity="0.15"/>
+  <rect x="40" y="66" width="200" height="192" rx="12" fill="none" stroke="rgba(99,102,241,0.5)" stroke-width="1"/>
+  <text x="140" y="92" text-anchor="middle" font-size="9" fill="#a5b4fc" letter-spacing="2" font-family="'JetBrains Mono', monospace">LAYER 1</text>
+  <text x="140" y="112" text-anchor="middle" font-size="14" font-weight="600" fill="#e0e7ff" font-family="'Inter Tight', sans-serif">Org Chart</text>
+
+  <!-- Org chart mini diagram -->
+  <circle cx="140" cy="145" r="10" fill="rgba(99,102,241,0.4)" stroke="#818cf8" stroke-width="1.5"/>
+  <text x="140" y="149" text-anchor="middle" font-size="8" fill="#c7d2fe" font-family="'JetBrains Mono', monospace">CEO</text>
+
+  <line x1="110" y1="155" x2="110" y2="168" stroke="rgba(99,102,241,0.4)" stroke-width="1.5"/>
+  <line x1="140" y1="155" x2="140" y2="168" stroke="rgba(99,102,241,0.4)" stroke-width="1.5"/>
+  <line x1="170" y1="155" x2="170" y2="168" stroke="rgba(99,102,241,0.4)" stroke-width="1.5"/>
+  <line x1="110" y1="155" x2="170" y2="155" stroke="rgba(99,102,241,0.4)" stroke-width="1.5"/>
+
+  <circle cx="110" cy="175" r="8" fill="rgba(99,102,241,0.3)" stroke="#818cf8" stroke-width="1"/>
+  <circle cx="140" cy="175" r="8" fill="rgba(99,102,241,0.3)" stroke="#818cf8" stroke-width="1"/>
+  <circle cx="170" cy="175" r="8" fill="rgba(99,102,241,0.3)" stroke="#818cf8" stroke-width="1"/>
+
+  <line x1="110" y1="183" x2="97" y2="194" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+  <line x1="110" y1="183" x2="123" y2="194" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+  <circle cx="97" cy="200" r="6" fill="rgba(99,102,241,0.2)" stroke="#818cf8" stroke-width="1"/>
+  <circle cx="123" cy="200" r="6" fill="rgba(99,102,241,0.2)" stroke="#818cf8" stroke-width="1"/>
+
+  <text x="140" y="228" text-anchor="middle" font-size="9" fill="rgba(165,180,252,0.65)" font-family="'Inter Tight', sans-serif">Who decides what</text>
+  <text x="140" y="244" text-anchor="middle" font-size="9" fill="rgba(165,180,252,0.65)" font-family="'Inter Tight', sans-serif">Decision topology</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="246" y1="162" x2="276" y2="162" stroke="rgba(255,184,107,0.4)" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="276,158 284,162 276,166" fill="rgba(255,184,107,0.5)"/>
+
+  <!-- Layer 2 — Process Map -->
+  <rect x="280" y="66" width="200" height="192" rx="12" fill="url(#l2)" opacity="0.15"/>
+  <rect x="280" y="66" width="200" height="192" rx="12" fill="none" stroke="rgba(34,211,238,0.45)" stroke-width="1"/>
+  <text x="380" y="92" text-anchor="middle" font-size="9" fill="#67e8f9" letter-spacing="2" font-family="'JetBrains Mono', monospace">LAYER 2</text>
+  <text x="380" y="112" text-anchor="middle" font-size="14" font-weight="600" fill="#cffafe" font-family="'Inter Tight', sans-serif">Process Map</text>
+
+  <!-- Flow diagram -->
+  <rect x="310" y="128" width="44" height="22" rx="4" fill="rgba(34,211,238,0.2)" stroke="rgba(34,211,238,0.5)" stroke-width="1"/>
+  <text x="332" y="143" text-anchor="middle" font-size="8" fill="#a5f3fc" font-family="'JetBrains Mono', monospace">START</text>
+
+  <line x1="354" y1="139" x2="366" y2="139" stroke="rgba(34,211,238,0.4)" stroke-width="1.5"/>
+  <polygon points="366,136 372,139 366,142" fill="rgba(34,211,238,0.5)"/>
+
+  <rect x="372" y="128" width="44" height="22" rx="4" fill="rgba(34,211,238,0.2)" stroke="rgba(34,211,238,0.5)" stroke-width="1"/>
+  <text x="394" y="143" text-anchor="middle" font-size="8" fill="#a5f3fc" font-family="'JetBrains Mono', monospace">CHECK</text>
+
+  <line x1="394" y1="150" x2="394" y2="162" stroke="rgba(34,211,238,0.4)" stroke-width="1.5"/>
+
+  <!-- Diamond -->
+  <polygon points="394,162 410,174 394,186 378,174" fill="rgba(34,211,238,0.15)" stroke="rgba(34,211,238,0.5)" stroke-width="1"/>
+  <text x="394" y="178" text-anchor="middle" font-size="7" fill="#a5f3fc" font-family="'JetBrains Mono', monospace">OK?</text>
+
+  <line x1="378" y1="174" x2="344" y2="174" stroke="rgba(34,211,238,0.35)" stroke-width="1.5"/>
+  <text x="360" y="170" text-anchor="middle" font-size="7" fill="rgba(167,243,252,0.5)" font-family="'JetBrains Mono', monospace">no</text>
+
+  <line x1="344" y1="174" x2="344" y2="139" stroke="rgba(34,211,238,0.35)" stroke-width="1.5"/>
+  <line x1="344" y1="139" x2="354" y2="139" stroke="rgba(34,211,238,0.35)" stroke-width="1.5"/>
+
+  <line x1="410" y1="174" x2="430" y2="174" stroke="rgba(34,211,238,0.4)" stroke-width="1.5"/>
+  <text x="420" y="170" text-anchor="middle" font-size="7" fill="rgba(167,243,252,0.5)" font-family="'JetBrains Mono', monospace">yes</text>
+  <polygon points="430,171 436,174 430,177" fill="rgba(34,211,238,0.5)"/>
+
+  <rect x="314" y="196" width="132" height="18" rx="3" fill="rgba(34,211,238,0.08)" stroke="rgba(34,211,238,0.2)" stroke-width="1"/>
+  <text x="380" y="209" text-anchor="middle" font-size="8" fill="rgba(103,232,249,0.5)" font-family="'Inter Tight', sans-serif">incl. workarounds</text>
+
+  <text x="380" y="232" text-anchor="middle" font-size="9" fill="rgba(103,232,249,0.65)" font-family="'Inter Tight', sans-serif">How work actually flows</text>
+  <text x="380" y="248" text-anchor="middle" font-size="9" fill="rgba(103,232,249,0.65)" font-family="'Inter Tight', sans-serif">Living documentation</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="486" y1="162" x2="516" y2="162" stroke="rgba(255,184,107,0.4)" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="516,158 524,162 516,166" fill="rgba(255,184,107,0.5)"/>
+
+  <!-- Layer 3 — Failure Modes -->
+  <rect x="520" y="66" width="200" height="192" rx="12" fill="url(#l3)" opacity="0.15"/>
+  <rect x="520" y="66" width="200" height="192" rx="12" fill="none" stroke="rgba(196,181,253,0.45)" stroke-width="1"/>
+  <text x="620" y="92" text-anchor="middle" font-size="9" fill="#c4b5fd" letter-spacing="2" font-family="'JetBrains Mono', monospace">LAYER 3</text>
+  <text x="620" y="112" text-anchor="middle" font-size="14" font-weight="600" fill="#ede9fe" font-family="'Inter Tight', sans-serif">Failure Modes</text>
+
+  <!-- Table mini -->
+  <rect x="538" y="124" width="164" height="86" rx="5" fill="rgba(124,58,237,0.12)" stroke="rgba(196,181,253,0.25)" stroke-width="1"/>
+  <line x1="538" y1="138" x2="702" y2="138" stroke="rgba(196,181,253,0.2)" stroke-width="1"/>
+  <text x="548" y="134" font-size="7.5" fill="rgba(196,181,253,0.6)" font-family="'JetBrains Mono', monospace">MODE</text>
+  <text x="638" y="134" font-size="7.5" fill="rgba(196,181,253,0.6)" font-family="'JetBrains Mono', monospace">SEVERITY</text>
+
+  <text x="548" y="152" font-size="7.5" fill="rgba(221,214,254,0.75)" font-family="'Inter Tight', sans-serif">Approval skip</text>
+  <rect x="634" y="143" width="40" height="12" rx="3" fill="rgba(239,68,68,0.25)" stroke="rgba(239,68,68,0.4)" stroke-width="1"/>
+  <text x="654" y="153" text-anchor="middle" font-size="7" fill="#fca5a5" font-family="'JetBrains Mono', monospace">HIGH</text>
+
+  <text x="548" y="169" font-size="7.5" fill="rgba(221,214,254,0.75)" font-family="'Inter Tight', sans-serif">Routing error</text>
+  <rect x="634" y="160" width="44" height="12" rx="3" fill="rgba(234,179,8,0.2)" stroke="rgba(234,179,8,0.4)" stroke-width="1"/>
+  <text x="656" y="170" text-anchor="middle" font-size="7" fill="#fde68a" font-family="'JetBrains Mono', monospace">MED</text>
+
+  <text x="548" y="186" font-size="7.5" fill="rgba(221,214,254,0.75)" font-family="'Inter Tight', sans-serif">Timeout logic</text>
+  <rect x="634" y="177" width="40" height="12" rx="3" fill="rgba(239,68,68,0.25)" stroke="rgba(239,68,68,0.4)" stroke-width="1"/>
+  <text x="654" y="187" text-anchor="middle" font-size="7" fill="#fca5a5" font-family="'JetBrains Mono', monospace">HIGH</text>
+
+  <text x="620" y="232" text-anchor="middle" font-size="9" fill="rgba(196,181,253,0.65)" font-family="'Inter Tight', sans-serif">Known failure patterns</text>
+  <text x="620" y="248" text-anchor="middle" font-size="9" fill="rgba(196,181,253,0.65)" font-family="'Inter Tight', sans-serif">Recovery paths</text>
+
+  <!-- Bottom label -->
+  <text x="380" y="308" text-anchor="middle" font-size="10" fill="rgba(255,184,107,0.55)" font-family="'Inter Tight', sans-serif" font-style="italic">Feed all three layers to your agent as grounding context</text>
+
+  <!-- Arrow down from layers -->
+  <line x1="380" y1="266" x2="380" y2="292" stroke="rgba(255,184,107,0.3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="376,292 380,300 384,292" fill="rgba(255,184,107,0.4)"/>
+
+  <!-- Outer border glow -->
+  <rect width="760" height="340" rx="16" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+</svg>
