@@ -11,7 +11,7 @@ lang: "nl"
 
 De meeste gesprekken over AI-mislukkingen missen het eigenlijke probleem. We horen waarschuwingen dat de AI-bubbel barst, dat teveel projecten teleurstellen, dat de beloofde productiviteitswinsten nooit materialiseert.
 
-Maar ik denk dat we de verkeerde vraag stellen. Het probleem is niet of AI werkt—dat doet het. Het probleem is *hoe* we het implementeren.
+Maar ik denk dat we de verkeerde vraag stellen. Het probleem is niet of AI werkt, dat doet het. Het probleem is *hoe* we het implementeren.
 
 ## De Valkuil: AI als Toevoeging
 
@@ -31,7 +31,7 @@ De echte kans is anders. Wat als we **onze processen volledig herontwerpen, met 
 
 Dit is kritiek: herontwerpen rond AI betekent niet dat je mensen elimineert. Het betekent mensen inzetten waar zij de meeste waarde toevoegen.
 
-Traditionele automatisering werkt goed voor repetitieve, voorspelbare taken. AI is uitstekend in het hanteren van uitzonderingsgevallen, patroonherkenning en adaptieve besluitvorming. De sweet spot is beide combineren—en menselijk toezicht behouden voor alles wat afwijkend is.
+Traditionele automatisering werkt goed voor repetitieve, voorspelbare taken. AI is uitstekend in het hanteren van uitzonderingsgevallen, patroonherkenning en adaptieve besluitvorming. De sweet spot is beide combineren en menselijk toezicht behouden voor alles wat afwijkend is.
 
 Laat me je laten zien hoe dit er in de praktijk uitziet.
 
@@ -52,7 +52,7 @@ Stel je nu hetzelfde proces voor **herontworpen rond een AI-agent**:
 - Verifieert prijzen tegen verwachte bereiken
 - Verwerkt geldige orders automatisch in boekhoudsoftware
 
-**Als de agent een afwijking detecteert** -een onbekende leverancier, een ongebruikelijke hoeveelheid, een prijsstijging—markeert het de order ter menselijke beoordeling in plaats van de gehele workflow stil te zetten.
+**Als de agent een afwijking detecteert** -een onbekende leverancier, een ongebruikelijke hoeveelheid, een prijsstijging, markeert het de order ter menselijke beoordeling in plaats van de gehele workflow stil te zetten.
 
 **Het resultaat**: 85-90% van orders stroomt automatisch door. Je team handelt alleen echte uitzonderingsgevallen af die oordeel vereisen.
 
@@ -79,12 +79,12 @@ Volg in plaats daarvan het "begin klein, denk groot"-principe:
 ![Begin Klein Denk Groot Raamwerk](/images/blog/start-small-think-big.svg)
 
 1. **Identificeer één pijnlijk, repetitief proces** (zoals aankoopopdrachten)
-2. **Ontwerp dat ene proces rond AI**—alleen dat ene
+2. **Ontwerp dat ene proces rond AI** alleen dat ene
 3. **Implementeer het modulair** zodat elke automatiseringsstap onmiddellijke waarde oplevert
 4. **Meet wat werkt**; gooi weg wat niet werkt
 5. **Voeg het volgende proces toe** zodra het eerste stabiel is
 
-Elke kleine automatiseringswinnaar vormt de basis voor een breder AI-geïntegreerd landschap. Je probeert niet de oceaan te koken—je bewijst dat het model werkt, je leert ervan en je schaalt doelgericht.
+Elke kleine automatiseringswinnaar vormt de basis voor een breder AI-geïntegreerd landschap. Je probeert niet de oceaan te koken, je bewijst dat het model werkt, je leert ervan en je schaalt doelgericht.
 
 En hier is het sleutelstuk: **gebruik traditionele automatisering waar het beter werkt**. Forceer AI niet in elke stap. Ons doel is AI-geïntegreerde oplossingen geleid door mensen, niet AI om het even waar.
 

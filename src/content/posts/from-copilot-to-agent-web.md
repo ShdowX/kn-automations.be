@@ -47,6 +47,10 @@ A typical IT role often includes responsibilities like:
 - Software configuration and monitoring
 - And much more
 
+![Three levels of AI: personal assistant, team assistant, and agent network](/images/blog/three-levels-of-ai.svg)
+
+*From individual copilots to collaborating agents: this is the shift that unlocks real, scalable impact.*
+
 The straightforward move is to add an AI assistant that helps with these tasks: suggest steps, rewrite emails, surface tips. Helpful, but the role itself stays largely the same.
 
 A stronger move is to redesign one process with AI, for example service desk intake. Users interact with AI to capture first-line issues and receive solutions from your existing ITSM knowledge.
@@ -61,6 +65,10 @@ Imagine an agent that monitors cloud errors.
 Imagine an agent that captures first-line incidents and proposes fixes.
 Imagine a specialist agent that resolves cloud infra issues using PowerShell expertise.
 Imagine an agent that detects onboarding milestones and automatically triggers orders for laptops, phones, backpacks, and workplace setup.
+
+![Agent network for IT operations: specialized agents collaborating across incidents, cloud, onboarding, and remediation](/images/blog/agent-network.svg)
+
+*Each request can be handled by a specialist agent, while shared context between agents enables faster and more consistent execution.*
 
 Now connect them.
 

@@ -9,7 +9,7 @@ visual: "v2"
 lang: "nl"
 ---
 
-Wat denk je bij AI? De meeste mensen zien een chatvenster voor zich—een interface waar je een vraag invoert en direct een antwoord krijgt.
+Wat denk je bij AI? De meeste mensen zien een chatvenster voor zich, een interface waar je een vraag invoert en direct een antwoord krijgt.
 
 Dat is begrijpelijk. We denken in gesprekken. We communiceren via taal. En voor veel van ons was ChatGPT onze eerste echte kennismaking met AI. De chatinterface voelde natuurlijk, toegankelijk, krachtig.
 
@@ -17,9 +17,9 @@ Maar door AI primair als chattool te zien, missen we het meeste van het potentie
 
 ## AI Is Overal (Zonder Chat)
 
-Dit merken de meeste mensen niet op: AI is diep ingebed in technologie die je dagelijks gebruikt—bijna altijd zonder chatinterface.
+Dit merken de meeste mensen niet op: AI is diep ingebed in technologie die je dagelijks gebruikt, bijna altijd zonder chatinterface.
 
-Je smartphone past foto's aan bij slecht licht met AI. Je ontgrendelt je telefoon met gezichtsherkenning of vingerafdrukanalyse—beide AI. Google Translate laat je een foto van tekst maken en direct een vertaling zien. Dit alles gebruikt machine learning, toch noemen we het zelden "AI."
+Je smartphone past foto's aan bij slecht licht met AI. Je ontgrendelt je telefoon met gezichtsherkenning of vingerafdrukanalyse, beide AI. Google Translate laat je een foto van tekst maken en direct een vertaling zien. Dit alles gebruikt machine learning, toch noemen we het zelden "AI."
 
 Bedrijven gebruiken al jaren OCR (Optische Tekenherkenning) om documenten te lezen en interpreteren. Het werkt betrouwbaar, op schaal, volledig onzichtbaar. Niemand hoeft het vragen te stellen.
 
@@ -31,7 +31,7 @@ Chat haalde AI uit de achtergrond en maakte het zichtbaar. Voor het eerst voelde
 
 Die zichtbaarheid had een prijs: het vernauwde hoe we over AI denken.
 
-Het moment dat iemand "AI" zegt, denken de meeste mensen direct aan ChatGPT of soortgelijke tools. Chat voelt vertrouwd—geen training nodig, gewoon een vraag stellen. Die toegankelijkheid is krachtig voor verkenning en leren.
+Het moment dat iemand "AI" zegt, denken de meeste mensen direct aan ChatGPT of soortgelijke tools. Chat voelt vertrouwd, geen training nodig, gewoon een vraag stellen. Die toegankelijkheid is krachtig voor verkenning en leren.
 
 Maar toegankelijkheid is niet hetzelfde als schaalbaarheid. En daar beginnen de echte problemen.
 
@@ -51,7 +51,7 @@ Dit is waar autonome agenten om de hoek komen.
 
 In plaats van AI die reageert op expliciete menselijke vragen, monitoren agenten je processen. Ze communiceren met andere systemen. Ze werken naar resultaten zonder constante menselijke tussenkomst (tenzij je dat zo defineert).
 
-Terwijl chat één-op-één interactie ondersteunt, stellen agenten je in staat tot schaalbare samenwerking. Je creëert niet één persoonlijke assistent—je bouwt een netwerk van digitale collega's, elk met een duidelijk gedefinieerde rol.
+Terwijl chat één-op-één interactie ondersteunt, stellen agenten je in staat tot schaalbare samenwerking. Je creëert niet één persoonlijke assistent, je bouwt een netwerk van digitale collega's, elk met een duidelijk gedefinieerde rol.
 
 Dit vereist geen revolutionaire nieuwe technologie. Het vereist een ander mentaal model.
 
@@ -72,7 +72,7 @@ Dit is nuttig, maar het zijn nog steeds één-op-één interacties. Iemand moest
 - Agenten markeren prioriteitsopportuniteiten op basis van context en klantwaarneming
 - Kwalificatie gebeurt autonoom, terwijl mensen zich richten op relatiebeheer en sluiting
 
-Op dat moment heb je het proces fundamenteel herontworpen. Je versnelt niet zomaar een bestaande workflow—je bouwt een slimmere.
+Op dat moment heb je het proces fundamenteel herontworpen. Je versnelt niet zomaar een bestaande workflow, je bouwt een slimmere.
 
 ## De Onzichtbare Impact
 
@@ -84,7 +84,7 @@ Ongeveer 90% van AI's waarde werkt stilletjes, autonoom, achter de schermen. **D
 
 ## De Les: Begin Met Processen, Niet Chat
 
-De meeste organisaties beginnen hun AI-reis met experimenten—chatinterfaces, snelle pilots, zichtbare winsten. Dat is prima voor verkenning.
+De meeste organisaties beginnen hun AI-reis met experimenten, chatinterfaces, snelle pilots, zichtbare winsten. Dat is prima voor verkenning.
 
 Maar als je daar stopt, heb je het punt gemist.
 

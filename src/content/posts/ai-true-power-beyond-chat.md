@@ -9,7 +9,7 @@ visual: "v2"
 lang: "en"
 ---
 
-What comes to mind when you think about AI? Most people picture a chat window—an interface where you type a question and get an instant response.
+What comes to mind when you think about AI? Most people picture a chat window, an interface where you type a question and get an instant response.
 
 That's understandable. We think in conversations. We communicate through language. And for many of us, ChatGPT was our first real encounter with AI. The chat interface felt natural, accessible, powerful.
 
@@ -17,9 +17,9 @@ But by viewing AI primarily as a chat tool, we're missing most of its potential.
 
 ## AI Is Everywhere (Without Chat)
 
-Here's what most people don't notice: AI is deeply embedded in technology you use every day—almost always without a chat interface.
+Here's what most people don't notice: AI is deeply embedded in technology you use every day, almost always without a chat interface.
 
-Your smartphone adjusts photos in poor lighting using AI. You unlock your phone with facial recognition or fingerprint analysis—both AI. Google Translate lets you photograph text and instantly see it translated. These all use machine learning, yet we rarely call them "AI."
+Your smartphone adjusts photos in poor lighting using AI. You unlock your phone with facial recognition or fingerprint analysis, both AI. Google Translate lets you photograph text and instantly see it translated. These all use machine learning, yet we rarely call them "AI."
 
 For years, companies have used OCR (Optical Character Recognition) to read and interpret documents. It works reliably, at scale, completely invisibly. No one needs to ask it questions.
 
@@ -31,7 +31,7 @@ Chat brought AI out of the background and made it visible. For the first time, A
 
 That visibility had a cost: it narrowed how we think about AI.
 
-The moment someone says "AI," most people's minds immediately go to ChatGPT or similar tools. Chat feels familiar—no training required, just ask a question. That accessibility is powerful for exploration and learning.
+The moment someone says "AI," most people's minds immediately go to ChatGPT or similar tools. Chat feels familiar, no training required, just ask a question. That accessibility is powerful for exploration and learning.
 
 But accessibility isn't the same as scalability. And that's where the real problems begin.
 
@@ -51,7 +51,7 @@ This is where autonomous agents come in.
 
 Rather than having AI respond to explicit human questions, agents monitor your processes. They communicate with other systems. They work toward outcomes without constant human intervention (unless you define it that way).
 
-Where chat supports one-to-one interaction, agents enable scalable collaboration. You're not creating a single personal assistant—you're building a network of digital colleagues, each with a clearly defined role.
+Where chat supports one-to-one interaction, agents enable scalable collaboration. You're not creating a single personal assistant, you're building a network of digital colleagues, each with a clearly defined role.
 
 This doesn't require revolutionary new technology. It requires a different mental model.
 
@@ -72,7 +72,7 @@ These are useful, but they're still one-to-one interactions. Someone had to ask 
 - Agents flag priority opportunities based on context and customer sentiment
 - Qualification happens autonomously, while humans focus on relationship-building and closing
 
-At that point, you've fundamentally redesigned the process. You're not just speeding up an existing workflow—you're building a smarter one.
+At that point, you've fundamentally redesigned the process. You're not just speeding up an existing workflow, you're building a smarter one.
 
 ## The Invisible Impact
 
@@ -86,7 +86,7 @@ Around 90% of AI's value operates quietly, autonomously, behind the scenes. **Th
 
 ## The Lesson: Start With Processes, Not Chat
 
-Most organisations begin their AI journey with experimentation—chat interfaces, quick pilots, visible wins. That's fine for exploration.
+Most organisations begin their AI journey with experimentation, chat interfaces, quick pilots, visible wins. That's fine for exploration.
 
 But if you stop there, you've missed the point.
 
