@@ -10,7 +10,11 @@ interface Props {
 const { post, lang = 'en' } = Astro.props;
 
 const pubDateFormatted = post.data.date.toISOString().split('T')[0];
-const authorUrl = Astro.site?.toString();
+const siteUrl = Astro.site ? new URL(Astro.site) : new URL('https://kn-automations.be');
+const authorUrl = siteUrl.toString();
+const articleUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageUrl = new URL('/og-image.jpg', siteUrl).toString();
+const wordCountEstimate = Number.parseInt(post.data.readTime, 10);
 
 // Generate schema markup for this blog post
 const blogPostSchema = {
@@ -18,7 +22,9 @@ const blogPostSchema = {
   '@type': 'BlogPosting',
   'headline': post.data.title,
   'description': post.data.excerpt,
-  'image': `${Astro.site}images/blog-post.jpg`,
+  'image': ogImageUrl,
+  'url': articleUrl,
+  'mainEntityOfPage': articleUrl,
   'datePublished': pubDateFormatted,
   'dateModified': pubDateFormatted,
   'author': {
@@ -30,10 +36,20 @@ const blogPostSchema = {
     '@type': 'Organization',
     'name': 'Kenneth Nicasens',
     'url': authorUrl,
+    'logo': {
+      '@type': 'ImageObject',
+      'url': new URL('/images/about-portrait.svg', siteUrl).toString(),
+    },
+  },
+  'isPartOf': {
+    '@type': 'Blog',
+    'name': 'Kenneth Nicasens',
+    'url': siteUrl.toString(),
   },
   'keywords': [post.data.category],
   'articleSection': post.data.category,
-  'wordCount': post.data.readTime,
+  'wordCount': Number.isNaN(wordCountEstimate) ? undefined : wordCountEstimate * 220,
+  'isAccessibleForFree': true,
   'inLanguage': lang === 'nl' ? 'nl-BE' : 'en-GB',
 };
 ---

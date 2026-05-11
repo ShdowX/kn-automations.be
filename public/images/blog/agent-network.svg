@@ -1,0 +1,273 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 920" width="1200" height="920" font-family="'Inter Tight', system-ui, sans-serif">
+  <defs>
+    <!-- Aurora blobs (ambient) -->
+    <radialGradient id="blobAmber" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb86b" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ffb86b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blobViolet" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#c4b5fd" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blobIndigo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4338ca" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#4338ca" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Human supervisor gradient -->
+    <linearGradient id="humanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#312e81"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+
+    <!-- Agent card gradient (each agent gets a slight tint variation) -->
+    <linearGradient id="agentA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#5b21b6"/>
+    </linearGradient>
+    <linearGradient id="agentB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="agentC" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="agentD" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="agentE" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="agentF" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb86b"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+
+    <!-- Center human halo -->
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb86b" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#ffb86b" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Glow filter -->
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="strongGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Dotted grid -->
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#ffffff" opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- Ambient backdrop -->
+  <rect width="1200" height="920" fill="url(#dots)" opacity="0.5"/>
+  <ellipse cx="200" cy="450" rx="380" ry="260" fill="url(#blobIndigo)" opacity="0.5"/>
+  <ellipse cx="1000" cy="450" rx="420" ry="280" fill="url(#blobAmber)" opacity="0.6"/>
+  <ellipse cx="600" cy="500" rx="380" ry="260" fill="url(#blobViolet)" opacity="0.4"/>
+
+  <!-- Eyebrow + title -->
+  <text x="60" y="70" fill="#8b7fb8" font-family="'JetBrains Mono', monospace" font-size="13" letter-spacing="3" font-weight="500">
+    KEY INSIGHT · 08
+  </text>
+  <text x="60" y="125" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-weight="400" font-size="46" letter-spacing="-1.5">
+    A web of agents, <tspan font-style="italic" fill="#d97706">one supervisor.</tspan>
+  </text>
+  <text x="60" y="158" fill="#4a4a5e" font-size="16" font-weight="400">
+    Each agent has a job. Together they reshape what an IT role actually does.
+  </text>
+
+  <!-- Legend (top right) -->
+  <g transform="translate(870, 95)">
+    <g transform="translate(0, 0)">
+      <line x1="0" y1="0" x2="22" y2="0" stroke="#d97706" stroke-width="1.5"/>
+      <text x="30" y="4" fill="#4a4a5e" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1.2">SUPERVISION</text>
+    </g>
+    <g transform="translate(0, 22)">
+      <line x1="0" y1="0" x2="22" y2="0" stroke="rgba(168,85,247,0.6)" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="30" y="4" fill="#4a4a5e" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1.2">AGENT-TO-AGENT</text>
+    </g>
+    <g transform="translate(0, 44)">
+      <circle cx="11" cy="0" r="3" fill="#6ee7b7"/>
+      <text x="30" y="4" fill="#4a4a5e" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1.2">RUNNING · 24/7</text>
+    </g>
+  </g>
+
+  <!-- ==================================================== -->
+  <!-- THE NETWORK — center of canvas around (600, 480) -->
+  <!-- ==================================================== -->
+
+  <g transform="translate(600, 480)">
+
+    <!-- Outer orbital rings -->
+    <circle r="280" fill="none" stroke="rgba(217,119,6,0.06)" stroke-width="1"/>
+    <circle r="240" fill="none" stroke="rgba(217,119,6,0.1)" stroke-width="1"/>
+    <circle r="200" fill="none" stroke="rgba(217,119,6,0.15)" stroke-width="1" stroke-dasharray="2 5"/>
+
+    <!-- Agent-to-agent connections (the autonomous communication layer)
+         Draw BEFORE the agent cards so they render behind. -->
+    <g stroke="rgba(168,85,247,0.45)" stroke-width="1" stroke-dasharray="3 4" fill="none">
+      <!-- Connect adjacent agents around the ring -->
+      <path d="M 0 -240 Q 130 -210 208 -120"/>
+      <path d="M 208 -120 Q 260 0 208 120"/>
+      <path d="M 208 120 Q 130 210 0 240"/>
+      <path d="M 0 240 Q -130 210 -208 120"/>
+      <path d="M -208 120 Q -260 0 -208 -120"/>
+      <path d="M -208 -120 Q -130 -210 0 -240"/>
+
+      <!-- A few cross-connections for "web" feel -->
+      <path d="M 0 -240 Q 0 0 208 120" opacity="0.5"/>
+      <path d="M 208 -120 Q 0 0 -208 120" opacity="0.5"/>
+      <path d="M -208 -120 Q 0 0 0 240" opacity="0.5"/>
+    </g>
+
+    <!-- Supervisor → agent spokes (solid amber) -->
+    <g stroke="rgba(217,119,6,0.5)" stroke-width="1.5" fill="none">
+      <line x1="0" y1="0" x2="0" y2="-220"/>
+      <line x1="0" y1="0" x2="190" y2="-110"/>
+      <line x1="0" y1="0" x2="190" y2="110"/>
+      <line x1="0" y1="0" x2="0" y2="220"/>
+      <line x1="0" y1="0" x2="-190" y2="110"/>
+      <line x1="0" y1="0" x2="-190" y2="-110"/>
+    </g>
+
+    <!-- ============ AGENT CARDS ============ -->
+
+    <!-- AGENT 1: TOP — Cloud Monitor -->
+    <g transform="translate(-95, -285)">
+      <rect width="190" height="76" rx="14" fill="url(#agentA)" opacity="0.95"/>
+      <rect width="190" height="76" rx="14" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <!-- Agent label -->
+      <text x="14" y="22" fill="rgba(255,255,255,0.6)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">AGENT · 01</text>
+      <circle cx="170" cy="18" r="3" fill="#6ee7b7"/>
+      <!-- Name -->
+      <text x="14" y="46" fill="#fafaf7" font-family="'Fraunces', Georgia, serif" font-size="18" font-weight="400">Cloud Monitor</text>
+      <!-- Description -->
+      <text x="14" y="64" fill="rgba(255,255,255,0.7)" font-size="11">Watches infra for errors.</text>
+    </g>
+
+    <!-- AGENT 2: TOP-RIGHT — First Line Responder -->
+    <g transform="translate(135, -150)">
+      <rect width="200" height="76" rx="14" fill="url(#agentB)" opacity="0.95"/>
+      <rect width="200" height="76" rx="14" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="14" y="22" fill="rgba(255,255,255,0.6)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">AGENT · 02</text>
+      <circle cx="180" cy="18" r="3" fill="#6ee7b7"/>
+      <text x="14" y="46" fill="#fafaf7" font-family="'Fraunces', Georgia, serif" font-size="18" font-weight="400">First Line Responder</text>
+      <text x="14" y="64" fill="rgba(255,255,255,0.7)" font-size="11">Triages tickets, suggests fixes.</text>
+    </g>
+
+    <!-- AGENT 3: BOTTOM-RIGHT — PowerShell Specialist -->
+    <g transform="translate(135, 75)">
+      <rect width="210" height="76" rx="14" fill="url(#agentC)" opacity="0.95"/>
+      <rect width="210" height="76" rx="14" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="14" y="22" fill="rgba(255,255,255,0.6)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">AGENT · 03</text>
+      <circle cx="190" cy="18" r="3" fill="#6ee7b7"/>
+      <text x="14" y="46" fill="#fafaf7" font-family="'Fraunces', Georgia, serif" font-size="18" font-weight="400">PowerShell Specialist</text>
+      <text x="14" y="64" fill="rgba(255,255,255,0.7)" font-size="11">Resolves cloud infra issues.</text>
+    </g>
+
+    <!-- AGENT 4: BOTTOM — Onboarding Orchestrator -->
+    <g transform="translate(-115, 210)">
+      <rect width="230" height="76" rx="14" fill="url(#agentD)" opacity="0.95"/>
+      <rect width="230" height="76" rx="14" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="14" y="22" fill="rgba(255,255,255,0.6)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">AGENT · 04</text>
+      <circle cx="210" cy="18" r="3" fill="#6ee7b7"/>
+      <text x="14" y="46" fill="#fafaf7" font-family="'Fraunces', Georgia, serif" font-size="18" font-weight="400">Onboarding Orchestrator</text>
+      <text x="14" y="64" fill="rgba(255,255,255,0.7)" font-size="11">Triggers laptop, GSM, desk setup.</text>
+    </g>
+
+    <!-- AGENT 5: BOTTOM-LEFT — Asset Manager -->
+    <g transform="translate(-340, 75)">
+      <rect width="190" height="76" rx="14" fill="url(#agentE)" opacity="0.95"/>
+      <rect width="190" height="76" rx="14" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="14" y="22" fill="rgba(255,255,255,0.6)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">AGENT · 05</text>
+      <circle cx="170" cy="18" r="3" fill="#6ee7b7"/>
+      <text x="14" y="46" fill="#fafaf7" font-family="'Fraunces', Georgia, serif" font-size="18" font-weight="400">Asset Manager</text>
+      <text x="14" y="64" fill="rgba(255,255,255,0.7)" font-size="11">Orders, tracks, retires hardware.</text>
+    </g>
+
+    <!-- AGENT 6: TOP-LEFT — Knowledge Curator -->
+    <g transform="translate(-335, -150)">
+      <rect width="195" height="76" rx="14" fill="url(#agentF)" opacity="0.95"/>
+      <rect width="195" height="76" rx="14" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="14" y="22" fill="rgba(0,0,0,0.5)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="1.5" font-weight="600">AGENT · 06</text>
+      <circle cx="175" cy="18" r="3" fill="#1a1640"/>
+      <text x="14" y="46" fill="#1a1640" font-family="'Fraunces', Georgia, serif" font-size="18" font-weight="400">Knowledge Curator</text>
+      <text x="14" y="64" fill="rgba(26,22,64,0.75)" font-size="11">Keeps the ITSM brain fresh.</text>
+    </g>
+
+    <!-- ============ THE SUPERVISOR (CENTER) ============ -->
+    <!-- Halo glow -->
+    <circle r="80" fill="url(#halo)"/>
+
+    <!-- Human disk -->
+    <g filter="url(#strongGlow)">
+      <circle r="46" fill="rgba(255,184,107,0.25)"/>
+    </g>
+    <circle r="44" fill="rgba(255,255,255,0.95)" stroke="rgba(217,119,6,0.6)" stroke-width="1.5"/>
+
+    <!-- Human icon -->
+    <circle cx="0" cy="-10" r="10" fill="url(#humanGrad)"/>
+    <path d="M -16 22 Q -16 4 0 4 Q 16 4 16 22 L 16 28 L -16 28 Z" fill="url(#humanGrad)"/>
+
+    <!-- Supervisor label -->
+    <g transform="translate(0, 75)">
+      <rect x="-58" y="-12" width="116" height="22" rx="11" fill="rgba(26,22,64,0.92)"/>
+      <text y="3" fill="#ffb86b" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" font-weight="600" text-anchor="middle">IT SUPERVISOR</text>
+    </g>
+  </g>
+
+  <!-- ==================================================== -->
+  <!-- SIDE PANEL: "What the supervisor does" -->
+  <!-- ==================================================== -->
+  <g transform="translate(60, 800)">
+    <rect width="1080" height="78" rx="16" fill="rgba(255,255,255,0.5)" stroke="rgba(196,181,253,0.3)" stroke-width="1"/>
+
+    <text x="22" y="26" fill="#7c3aed" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" font-weight="600">THE SUPERVISOR'S NEW WORK</text>
+
+    <g transform="translate(22, 50)" font-family="'Inter Tight', sans-serif" font-size="12">
+      <g>
+        <circle cx="4" cy="4" r="3" fill="#d97706"/>
+        <text x="14" y="8" fill="#1a1640" font-weight="500">Design agent workflows</text>
+      </g>
+      <g transform="translate(220, 0)">
+        <circle cx="4" cy="4" r="3" fill="#d97706"/>
+        <text x="14" y="8" fill="#1a1640" font-weight="500">Tune &amp; correct outputs</text>
+      </g>
+      <g transform="translate(420, 0)">
+        <circle cx="4" cy="4" r="3" fill="#d97706"/>
+        <text x="14" y="8" fill="#1a1640" font-weight="500">Security-by-design</text>
+      </g>
+      <g transform="translate(610, 0)">
+        <circle cx="4" cy="4" r="3" fill="#d97706"/>
+        <text x="14" y="8" fill="#1a1640" font-weight="500">Knowledge curation</text>
+      </g>
+      <g transform="translate(800, 0)">
+        <circle cx="4" cy="4" r="3" fill="#d97706"/>
+        <text x="14" y="8" fill="#1a1640" font-weight="500">Change management</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom italic caption -->
+  <line x1="60" y1="900" x2="120" y2="900" stroke="#d97706" stroke-width="1"/>
+  <text x="135" y="904" fill="#4a4a5e" font-size="13" font-style="italic" font-family="'Fraunces', Georgia, serif">
+    Less firefighting. More designing the system that doesn't catch fire.
+  </text>
+
+</svg>

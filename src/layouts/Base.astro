@@ -27,6 +27,13 @@ const footerCols = {
 };
 const ft = footerCols[lang];
 const homePath = lang === 'nl' ? '/nl/' : '/';
+const siteUrl = Astro.site ? new URL(Astro.site) : new URL('https://kn-automations.be');
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const enAltPath = Astro.url.pathname.replace(/^\/nl/, '') || '/';
+const nlAltPath = Astro.url.pathname.startsWith('/nl') ? Astro.url.pathname : `/nl${Astro.url.pathname === '/' ? '/' : Astro.url.pathname}`;
+const enAltUrl = new URL(enAltPath, siteUrl).toString();
+const nlAltUrl = new URL(nlAltPath, siteUrl).toString();
+const ogImageUrl = new URL('/og-image.jpg', siteUrl).toString();
 ---
 
 <!doctype html>
@@ -39,23 +46,27 @@ const homePath = lang === 'nl' ? '/nl/' : '/';
     <meta name="author" content="Kenneth Nicasens" />
     <meta name="keywords" content="Power Platform, AI, Copilot Studio, Power Automate, AI Builder, process automation, intelligent automation, solution architecture" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="theme-color" content="#050510" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     
     <!-- Language Alternates -->
-    <link rel="alternate" hreflang="en" href={`${Astro.site}${Astro.url.pathname.replace(/^\/nl/, '')}`} />
-    <link rel="alternate" hreflang="nl" href={`${Astro.site}${Astro.url.pathname.startsWith('/nl') ? Astro.url.pathname : '/nl' + Astro.url.pathname}`} />
-    <link rel="alternate" hreflang="x-default" href={`${Astro.site}${Astro.url.pathname.replace(/^\/nl/, '')}`} />
+    <link rel="alternate" hreflang="en" href={enAltUrl} />
+    <link rel="alternate" hreflang="nl" href={nlAltUrl} />
+    <link rel="alternate" hreflang="x-default" href={enAltUrl} />
     
     <!-- Canonical URL -->
-    <link rel="canonical" href={`${Astro.site}${Astro.url.pathname}`} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" type="application/xml" href={new URL('/sitemap.xml', siteUrl).toString()} />
     
     <!-- Open Graph for Social Sharing -->
     <meta property="og:site_name" content="Kenneth Nicasens" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={`${Astro.site}${Astro.url.pathname}`} />
-    <meta property="og:image" content={`${Astro.site}og-image.jpg`} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content={lang === 'nl' ? 'nl_BE' : 'en_GB'} />
@@ -64,7 +75,7 @@ const homePath = lang === 'nl' ? '/nl/' : '/';
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${Astro.site}og-image.jpg`} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:creator" content="@kennethnicasens" />
     <meta name="twitter:site" content="@kennethnicasens" />
     
@@ -86,7 +97,7 @@ const homePath = lang === 'nl' ? '/nl/' : '/';
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Kenneth Nicasens",
-      "url": Astro.site?.toString(),
+      "url": siteUrl.toString(),
       "sameAs": [
         "https://www.linkedin.com/in/kenneth-nicasens-72b55aba/",
         "https://github.com/ShdowX",
@@ -97,7 +108,7 @@ const homePath = lang === 'nl' ? '/nl/' : '/';
         "name": "Cegeka"
       },
       "description": "Power Platform & AI Solution Architect helping organisations with intelligent automation, Copilot Studio design, and enterprise AI implementation.",
-      "image": `${Astro.site}images/about-portrait.svg`,
+      "image": new URL('/images/about-portrait.svg', siteUrl).toString(),
       "location": {
         "@type": "Place",
         "name": "Belgium"
@@ -110,18 +121,18 @@ const homePath = lang === 'nl' ? '/nl/' : '/';
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Kenneth Nicasens",
-      "url": Astro.site?.toString(),
+      "url": siteUrl.toString(),
       "description": "Field notes on AI process design, Microsoft Power Platform, and intelligent automation.",
       "author": {
         "@type": "Person",
         "name": "Kenneth Nicasens",
-        "url": Astro.site?.toString()
+        "url": siteUrl.toString()
       },
       "potentialAction": {
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": `${Astro.site}?q={search_term_string}`
+          "urlTemplate": `${siteUrl.toString()}?q={search_term_string}`
         }
       }
     })}
@@ -272,6 +283,21 @@ const homePath = lang === 'nl' ? '/nl/' : '/';
       </div>
     </footer>
 
+    <div id="visual-lightbox" class="visual-lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true">
+      <button
+        id="visual-lightbox-close"
+        class="visual-lightbox-close"
+        type="button"
+        aria-label={lang === 'nl' ? 'Afbeelding sluiten' : 'Close image'}
+      >
+        ×
+      </button>
+      <figure class="visual-lightbox-figure">
+        <img id="visual-lightbox-image" src="" alt="" />
+        <figcaption id="visual-lightbox-caption"></figcaption>
+      </figure>
+    </div>
+
     <script>
       // ── Scroll progress bar ──────────────────────────────────────
       const progressBar = document.getElementById('scroll-progress');
@@ -421,6 +447,85 @@ const homePath = lang === 'nl' ? '/nl/' : '/';
           }
         });
       }
+
+      // ── Click-to-enlarge visuals ────────────────────────────────
+      const visualLightbox = document.getElementById('visual-lightbox');
+      const visualLightboxImage = document.getElementById('visual-lightbox-image') as HTMLImageElement | null;
+      const visualLightboxCaption = document.getElementById('visual-lightbox-caption');
+      const visualLightboxClose = document.getElementById('visual-lightbox-close');
+      const contentImages = document.querySelectorAll('main img');
+
+      const closeLightbox = () => {
+        if (!visualLightbox || !visualLightboxImage) {
+          return;
+        }
+        visualLightbox.setAttribute('hidden', '');
+        visualLightbox.setAttribute('aria-hidden', 'true');
+        visualLightboxImage.src = '';
+        visualLightboxImage.alt = '';
+        if (visualLightboxCaption) {
+          visualLightboxCaption.textContent = '';
+        }
+        document.body.classList.remove('visual-lightbox-open');
+      };
+
+      const openLightbox = (img: HTMLImageElement) => {
+        if (!visualLightbox || !visualLightboxImage) {
+          return;
+        }
+        const source = img.currentSrc || img.src;
+        visualLightboxImage.src = source;
+        visualLightboxImage.alt = img.alt || '';
+        if (visualLightboxCaption) {
+          visualLightboxCaption.textContent = img.alt || '';
+        }
+        visualLightbox.removeAttribute('hidden');
+        visualLightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('visual-lightbox-open');
+      };
+
+      contentImages.forEach((img) => {
+        if (!(img instanceof HTMLImageElement) || img.dataset.noZoom === 'true') {
+          return;
+        }
+        img.classList.add('zoomable-visual');
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', img.alt ? `Enlarge image: ${img.alt}` : 'Enlarge image');
+
+        img.addEventListener('click', (event) => {
+          const target = event.currentTarget;
+          if (!(target instanceof HTMLImageElement)) {
+            return;
+          }
+          openLightbox(target);
+        });
+
+        img.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') {
+            return;
+          }
+          event.preventDefault();
+          const target = event.currentTarget;
+          if (target instanceof HTMLImageElement) {
+            openLightbox(target);
+          }
+        });
+      });
+
+      visualLightboxClose?.addEventListener('click', closeLightbox);
+
+      visualLightbox?.addEventListener('click', (event) => {
+        if (event.target === visualLightbox) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeLightbox();
+        }
+      });
     </script>
   </body>
 </html>

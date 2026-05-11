@@ -1,6 +1,5 @@
 ---
 import { getCollection, render } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
@@ -11,7 +10,6 @@ export async function getStaticPaths() {
   }));
 }
 
-type Props = CollectionEntry<'posts'>;
 const post = Astro.props;
 const { title, excerpt, date, category, readTime } = post.data;
 
@@ -30,6 +28,11 @@ const visualMap = {
     src: '/images/blog/start-small-think-big.svg',
     alt: 'Diagram describing a start small, think big execution model for AI automation',
     caption: 'Start with one painful process, prove value, then scale deliberately.',
+  },
+  v6: {
+    src: '/images/blog/agent-network.svg',
+    alt: 'Diagram showing a network of specialized AI agents collaborating across IT operations tasks',
+    caption: 'Specialized agents can collaborate across incidents, cloud operations, and onboarding workflows.',
   },
 } as const;
 

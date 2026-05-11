@@ -3,13 +3,15 @@ Allow: /
 Allow: /rss.xml
 Allow: /nl/rss.xml
 Allow: /sitemap.xml
+Allow: /llms.txt
 
 Disallow: /admin
 Disallow: /.env
 Disallow: /private
 
-Sitemap: https://kenneth.nicasens.be/sitemap.xml
-Sitemap: https://kenneth.nicasens.be/nl/sitemap.xml
+Host: https://kn-automations.be
+Sitemap: https://kn-automations.be/sitemap.xml
+Sitemap: https://kn-automations.be/nl/sitemap.xml
 
 # Google
 User-agent: Googlebot
@@ -23,6 +25,21 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 
+# OpenAI Search
+User-agent: OAI-SearchBot
+Allow: /
+
+# ChatGPT retrieval browser
+User-agent: ChatGPT-User
+Allow: /
+
 # Anthropic
 User-agent: Claude-Web
+Allow: /
+
+# Common AI/indexing crawlers
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
 Allow: /

@@ -1,0 +1,23 @@
+# Kenneth Nicasens — AI & Power Platform Notes
+
+This site publishes practical articles on AI process design, Microsoft Power Platform, automation strategy, and agent-based operating models.
+
+Primary language versions:
+- English: https://kn-automations.be/
+- Dutch: https://kn-automations.be/nl/
+
+Important URLs:
+- Sitemap (EN): https://kn-automations.be/sitemap.xml
+- Sitemap (NL): https://kn-automations.be/nl/sitemap.xml
+- Speaking: https://kn-automations.be/speaking
+- About: https://kn-automations.be/about
+
+Recent key articles:
+- https://kn-automations.be/posts/from-copilot-to-agent-web
+- https://kn-automations.be/posts/agentic-ai-lead-the-change
+- https://kn-automations.be/posts/ai-true-power-beyond-chat
+
+Usage guidance:
+- Content may be summarized with attribution and source links.
+- Keep quotes accurate and preserve technical context.
+- Prefer canonical URLs from the live domain.
