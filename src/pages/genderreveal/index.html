@@ -212,7 +212,15 @@
     return JSON.parse(new TextDecoder().decode(plainBuf));
   }
 
-  var storedPayload = localStorage.getItem('nicasens-reveal-payload');
+  var hashPayload = null;
+  if (window.location.hash.length > 1) {
+    try { hashPayload = decodeURIComponent(window.location.hash.slice(1)); } catch(e) {}
+  }
+  if (hashPayload) {
+    localStorage.setItem('nicasens-reveal-payload', hashPayload);
+  }
+
+  var storedPayload = hashPayload || localStorage.getItem('nicasens-reveal-payload');
 
   if (storedPayload) {
     document.getElementById('lock-card').style.display = 'block';
