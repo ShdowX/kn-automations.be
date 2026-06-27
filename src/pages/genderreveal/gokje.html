@@ -181,7 +181,7 @@
   <h1 class="main">doe jouw gokje</h1>
   <p class="subtitle">wat denk jij dat het wordt?</p>
 
-  <form name="babygokje" data-netlify="true" action="/" netlify-honeypot="bot-field" id="guess-form" novalidate>
+  <form name="babygokje" data-netlify="true" action="/genderreveal/gokje/" netlify-honeypot="bot-field" id="guess-form" method="POST" novalidate>
     <input type="hidden" name="form-name" value="babygokje" />
     <p style="display:none"><label>Niet invullen: <input name="bot-field" /></label></p>
 
@@ -250,7 +250,6 @@
           <option value="groen">Groen</option>
           <option value="bruin">Bruin</option>
           <option value="grijs">Grijs</option>
-          <option value="hazel">Hazel</option>
         </select>
       </fieldset>
     </div>
@@ -282,9 +281,22 @@
 
 <script>
 (function() {
+  // If returned from Netlify redirect after submission, show thank-you
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('sent') === '1') {
+    document.getElementById('form-card').style.display = 'none';
+    var tc = document.getElementById('thanks-card');
+    tc.style.display = 'block';
+    var naam = params.get('naam');
+    document.getElementById('thanks-name').textContent = naam
+      ? 'Bedankt ' + decodeURIComponent(naam) + ', we laten je weten hoe het afloopt!'
+      : 'Bedankt! We laten je weten hoe het afloopt.';
+    return;
+  }
+
+  // Radio button styling
   var boyOpt  = document.getElementById('opt-boy');
   var girlOpt = document.getElementById('opt-girl');
-
   boyOpt.addEventListener('click', function() {
     boyOpt.classList.add('selected-boy');
     girlOpt.classList.remove('selected-girl');
@@ -294,41 +306,27 @@
     boyOpt.classList.remove('selected-boy');
   });
 
-  document.getElementById('guess-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
+  // Client-side validation — if OK, let browser submit natively to Netlify
+  document.getElementById('guess-form').addEventListener('submit', function(e) {
     var form = this;
     var errorEl = document.getElementById('error-msg');
-    var btn = document.getElementById('submit-btn');
     errorEl.textContent = '';
 
     var naam = form.querySelector('[name="naam"]').value.trim();
     var geslacht = form.querySelector('[name="geslacht"]:checked');
     var datum = form.querySelector('[name="geboortedatum"]').value;
 
-    if (!naam) { errorEl.textContent = 'Vul jouw naam in.'; return; }
-    if (!geslacht) { errorEl.textContent = 'Kies jongen of meisje.'; return; }
-    if (!datum) { errorEl.textContent = 'Kies een geboortedatum.'; return; }
+    if (!naam)     { e.preventDefault(); errorEl.textContent = 'Vul jouw naam in.'; return; }
+    if (!geslacht) { e.preventDefault(); errorEl.textContent = 'Kies jongen of meisje.'; return; }
+    if (!datum)    { e.preventDefault(); errorEl.textContent = 'Kies een geboortedatum.'; return; }
 
+    // Append naam to action so thank-you page can personalise
+    form.action = '/genderreveal/gokje/?sent=1&naam=' + encodeURIComponent(naam);
+
+    var btn = document.getElementById('submit-btn');
     btn.disabled = true;
     btn.textContent = 'versturen…';
-
-    try {
-      var body = new URLSearchParams(new FormData(form)).toString();
-      await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body
-      });
-      // Netlify may return a redirect — treat any completed fetch as success
-      document.getElementById('form-card').style.display = 'none';
-      var thanksCard = document.getElementById('thanks-card');
-      thanksCard.style.display = 'block';
-      document.getElementById('thanks-name').textContent = 'Bedankt ' + naam + ', we laten je weten hoe het afloopt!';
-    } catch(err) {
-      errorEl.textContent = 'Er ging iets mis. Probeer het opnieuw.';
-      btn.disabled = false;
-      btn.textContent = 'versturen';
-    }
+    // Allow native form submission to Netlify
   });
 })();
 </script>

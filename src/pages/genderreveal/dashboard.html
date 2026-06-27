@@ -255,23 +255,27 @@
       document.getElementById('dash-wrap').style.display = 'block';
       loadSubmissions(t);
     } catch(err) {
-      document.getElementById('lock-error').textContent = 'Token niet geldig of site niet gevonden.';
+      document.getElementById('lock-error').textContent = err.message || 'Token niet geldig of site niet gevonden.';
     }
   }
 
   async function findSite(t) {
     var cachedId = sessionStorage.getItem('netlify_site_id');
     if (cachedId) return { id: cachedId };
-    var resp = await fetch('https://api.netlify.com/api/v1/sites?filter=all&per_page=100', {
+    var resp = await fetch('https://api.netlify.com/api/v1/sites?per_page=100', {
       headers: { Authorization: 'Bearer ' + t }
     });
     if (!resp.ok) throw new Error('auth failed');
     var sites = await resp.json();
     var site = sites.find(function(s) {
-      return (s.url && s.url.includes('kn-automations')) ||
-             (s.name && s.name.includes('kn-automations')) ||
-             (s.custom_domain && s.custom_domain.includes('kn-automations'));
+      var haystack = [s.url, s.name, s.custom_domain, s.ssl_url, s.default_domain]
+        .filter(Boolean).join(' ').toLowerCase();
+      return haystack.includes('kn-automations') || haystack.includes('kn_automations');
     });
+    if (!site && sites.length > 0) {
+      // Show site names to help the user pick the right match
+      throw new Error('site niet gevonden. beschikbare sites: ' + sites.map(function(s) { return s.name; }).join(', '));
+    }
     return site || null;
   }
 
