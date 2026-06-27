@@ -18,11 +18,54 @@
   }
   .voice { font-family: 'Cormorant Garamond', serif; }
 
+  .lock-card {
+    width: 100%;
+    max-width: 380px;
+    background: #F6F1E7;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(60, 48, 20, 0.12);
+    display: none;
+  }
+  .lock-card p.eyebrow {
+    font-size: 12px;
+    color: #8B6F35;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .lock-card h1 { font-size: 22px; font-weight: 500; color: #2B2620; margin-bottom: 18px; }
+  .lock-card input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #D9C9A0;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    color: #2B2620;
+    background: white;
+  }
+  .lock-card button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #8B6F35;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .lock-error { color: #A32D2D; font-size: 12px; margin-top: 10px; min-height: 16px; }
+
   .card {
     width: 100%;
     max-width: 560px;
     min-height: 600px;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -73,6 +116,14 @@
 </style>
 </head>
 <body>
+
+<div class="lock-card" id="lock-card">
+  <p class="eyebrow voice">familie Nicasens</p>
+  <h1 class="voice">deze pagina is beveiligd</h1>
+  <input type="password" id="password-input" placeholder="wachtwoord" autocomplete="off" />
+  <button id="unlock-btn">openen</button>
+  <p class="lock-error" id="lock-error"></p>
+</div>
 
 <div class="card" id="main-card">
   <div id="confetti-layer"></div>
@@ -133,7 +184,8 @@
 
 <script>
 (function() {
-  var ENCRYPTED_PAYLOAD = "89cM2I1wXY6j7yCZ:t7gQYl32MIiKsS0ftu9nVuseuAIrQSXKcqFkafmZm48gijZxWijNxPpKkmcxxPmZtiAtmD8=";
+  var FALLBACK_PAYLOAD = "89cM2I1wXY6j7yCZ:t7gQYl32MIiKsS0ftu9nVuseuAIrQSXKcqFkafmZm48gijZxWijNxPpKkmcxxPmZtiAtmD8=";
+  var FALLBACK_PW     = "Nicasens$01";
 
   async function deriveKey(password) {
     var enc = new TextEncoder();
@@ -156,24 +208,45 @@
     return arr;
   }
 
-  async function decryptPayload(password) {
-    var parts = ENCRYPTED_PAYLOAD.split(':');
+  async function decryptPayload(password, encryptedPayload) {
+    var parts = encryptedPayload.split(':');
     var iv = b64ToBytes(parts[0]);
     var ciphertext = b64ToBytes(parts[1]);
     var key = await deriveKey(password);
     var plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, ciphertext);
-    var dec = new TextDecoder();
-    return JSON.parse(dec.decode(plainBuf));
+    return JSON.parse(new TextDecoder().decode(plainBuf));
   }
 
-  (async function autoUnlock() {
-    try {
-      var payload = await decryptPayload("Nicasens$01");
-      startCountdown(payload.g, payload.t);
-    } catch (err) {
-      console.error('Kon de reveal-data niet laden:', err);
+  var storedPayload = localStorage.getItem('nicasens-reveal-payload');
+
+  if (storedPayload) {
+    document.getElementById('lock-card').style.display = 'block';
+
+    function tryUnlock() {
+      var pw = document.getElementById('password-input').value;
+      var errEl = document.getElementById('lock-error');
+      errEl.textContent = '';
+      decryptPayload(pw, storedPayload).then(function(payload) {
+        document.getElementById('lock-card').style.display = 'none';
+        document.getElementById('main-card').style.display = 'flex';
+        startCountdown(payload.g, payload.t);
+      }).catch(function() {
+        errEl.textContent = 'verkeerd wachtwoord, probeer opnieuw';
+      });
     }
-  })();
+
+    document.getElementById('unlock-btn').addEventListener('click', tryUnlock);
+    document.getElementById('password-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') tryUnlock();
+    });
+  } else {
+    document.getElementById('main-card').style.display = 'flex';
+    decryptPayload(FALLBACK_PW, FALLBACK_PAYLOAD).then(function(payload) {
+      startCountdown(payload.g, payload.t);
+    }).catch(function(err) {
+      console.error('Kon de reveal-data niet laden:', err);
+    });
+  }
 
   function startCountdown(gender, isoTime) {
     var target = new Date(isoTime);
@@ -194,10 +267,10 @@
         startParty(isBoy);
         return;
       }
-      document.getElementById('d-days').textContent = pad(Math.floor(diff / 86400000));
+      document.getElementById('d-days').textContent  = pad(Math.floor(diff / 86400000));
       document.getElementById('d-hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
-      document.getElementById('d-mins').textContent = pad(Math.floor((diff % 3600000) / 60000));
-      document.getElementById('d-secs').textContent = pad(Math.floor((diff % 60000) / 1000));
+      document.getElementById('d-mins').textContent  = pad(Math.floor((diff % 3600000) / 60000));
+      document.getElementById('d-secs').textContent  = pad(Math.floor((diff % 60000) / 1000));
     }
     tick();
     var interval = setInterval(tick, 1000);
