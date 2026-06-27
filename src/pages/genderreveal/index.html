@@ -90,6 +90,22 @@
   .countdown .num { font-size: 28px; font-weight: 500; color: #2B2620; font-family: 'Cormorant Garamond', serif; }
   .countdown .label { font-size: 10px; color: #8B6F35; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 6px; }
   .date-line { font-size: 12px; color: #A89B7A; letter-spacing: 1px; margin-top: 8px; }
+  .gokje-link {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 10px 26px;
+    border: 0.5px solid #B8923F;
+    border-radius: 6px;
+    color: #8B6F35;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-style: italic;
+    text-decoration: none;
+    transition: background 0.15s;
+    position: relative;
+    z-index: 1;
+  }
+  .gokje-link:hover { background: rgba(184, 146, 63, 0.08); }
 
   .balloon-zone { position: relative; height: 240px; width: 100%; margin-top: 12px; display: none; }
   .balloon-zone svg { position: absolute; bottom: 0; }
@@ -150,6 +166,7 @@
   </div>
   <p class="date-line" id="date-line"></p>
   <p class="subtitle voice">Wat leuk dat jullie meevolgen en even benieuwd zijn als ons!</p>
+  <a href="/genderreveal/gokje" class="gokje-link" id="gokje-link">waag een gokje &rsaquo;</a>
 
   <div class="balloon-zone" id="balloon-zone">
     <svg id="b1" width="90" height="130" viewBox="0 0 90 130">
@@ -182,8 +199,7 @@
 
 <script>
 (function() {
-  var FALLBACK_PAYLOAD = "89cM2I1wXY6j7yCZ:t7gQYl32MIiKsS0ftu9nVuseuAIrQSXKcqFkafmZm48gijZxWijNxPpKkmcxxPmZtiAtmD8=";
-  var FALLBACK_PW     = "Nicasens$01";
+  var FALLBACK_DATE = '2026-07-19T19:00:00';
 
   async function deriveKey(password) {
     var enc = new TextEncoder();
@@ -247,11 +263,7 @@
     });
   } else {
     document.getElementById('main-card').style.display = 'flex';
-    decryptPayload(FALLBACK_PW, FALLBACK_PAYLOAD).then(function(payload) {
-      startCountdown(payload.g, payload.t);
-    }).catch(function(err) {
-      console.error('Kon de reveal-data niet laden:', err);
-    });
+    startCountdown(null, FALLBACK_DATE);
   }
 
   function startCountdown(gender, isoTime) {
@@ -317,6 +329,7 @@
     document.getElementById('pre-reveal').style.display = 'none';
     document.getElementById('countdown-block').style.display = 'none';
     document.getElementById('date-line').style.display = 'none';
+    document.getElementById('gokje-link').style.display = 'none';
     document.getElementById('balloon-zone').style.display = 'block';
 
     setTimeout(function() {
