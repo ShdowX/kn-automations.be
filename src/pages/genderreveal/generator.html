@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reveal-generator </title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -202,7 +201,7 @@
 
   <div class="card">
     <h2><span class="step-num">4</span>bestanden genereren</h2>
-    <p style="font-size: 13px; color: #786A50; margin-bottom: 14px;">je krijgt twee downloads: de countdown-pagina (voor Kenneth en gasten) en een schone versie van het document met het geslacht verwijderd (medische info blijft leesbaar).</p>
+    <p style="font-size: 13px; color: #786A50; margin-bottom: 14px;">het geslacht wordt verwijderd uit het document en ingeladen op de countdown-pagina. deel de link hieronder met iedereen die de countdown mag volgen.</p>
     <button id="generate-btn" disabled>vul eerst stap 1 t/m 3 in</button>
     <div class="status" id="generate-status"></div>
     <div class="share-box hidden" id="share-box">
@@ -214,7 +213,6 @@
     </div>
     <div class="download-row hidden" id="download-row">
       <button id="preview-countdown">bekijk countdown-pagina</button>
-      <button id="download-pdf" class="secondary">schone pdf</button>
       <button id="download-countdown" class="secondary">download als html</button>
     </div>
   </div>
@@ -255,12 +253,14 @@
         for (var i = 1; i <= pdf.numPages; i++) {
           pagePromises.push(pdf.getPage(i).then(function(page) {
             return page.getTextContent().then(function(content) {
-              return content.items.map(function(it) { return it.str; }).join(' ');
+              return content.items.map(function(it) {
+                return it.str + (it.hasEOL ? '\n' : ' ');
+              }).join('');
             });
           }));
         }
         Promise.all(pagePromises).then(function(pageTexts) {
-          var fullText = pageTexts.join(' ');
+          var fullText = pageTexts.join('\n\n');
           state.rawPdfText = fullText;
           detectGender(fullText);
         });
@@ -346,114 +346,35 @@
     return ivB64 + ':' + ctB64;
   }
 
-  // ---- Redact the gender line in the PDF content stream ----
-  // The content stream is FlateDecode-compressed, so we must decompress,
-  // do the text replacement, then recompress before writing back.
-  async function streamToBytes(stream) {
-    var chunks = [];
-    var reader = stream.getReader();
-    while (true) {
-      var result = await reader.read();
-      if (result.done) break;
-      chunks.push(result.value);
-    }
-    var total = chunks.reduce(function(sum, c) { return sum + c.length; }, 0);
-    var out = new Uint8Array(total);
-    var offset = 0;
-    chunks.forEach(function(c) { out.set(c, offset); offset += c.length; });
-    return out;
-  }
-
-  async function inflate(bytes) {
-    var ds = new DecompressionStream('deflate');
-    var stream = new Blob([bytes]).stream().pipeThrough(ds);
-    return streamToBytes(stream);
-  }
-
-  async function deflate(bytes) {
-    var cs = new CompressionStream('deflate');
-    var stream = new Blob([bytes]).stream().pipeThrough(cs);
-    return streamToBytes(stream);
-  }
-
-  function bytesToLatin1(bytes) {
-    var s = '';
-    for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
-    return s;
-  }
-  function latin1ToBytes(s) {
-    var out = new Uint8Array(s.length);
-    for (var i = 0; i < s.length; i++) out[i] = s.charCodeAt(i);
-    return out;
-  }
-
-  async function buildRedactedPdfBytes() {
-    var PDFLib = window.PDFLib;
-    var pdfDoc = await PDFLib.PDFDocument.load(state.rawPdfBytes);
-    var pages = pdfDoc.getPages();
-
-    var targets = ['Mannelijk', 'Vrouwelijk'];
-    var replacement = 'Verborgen';
-
-    for (var p = 0; p < pages.length; p++) {
-      var page = pages[p];
-      var contentsRef = page.node.Contents();
-      if (!contentsRef || !contentsRef.contents) continue;
-
-      var compressed = contentsRef.contents;
-      var decompressed;
-      try {
-        decompressed = await inflate(compressed);
-      } catch (e) {
-        // Stream wasn't compressed (no /Filter) - use as-is
-        decompressed = compressed;
-      }
-
-      var text = bytesToLatin1(decompressed);
-      var changed = false;
-      targets.forEach(function(word) {
-        if (text.indexOf(word) !== -1) {
-          var pad = replacement;
-          if (pad.length < word.length) pad = pad + ' '.repeat(word.length - pad.length);
-          if (pad.length > word.length) pad = pad.substring(0, word.length);
-          while (text.indexOf(word) !== -1) {
-            text = text.replace(word, pad);
-            changed = true;
-          }
-        }
-      });
-
-      if (changed) {
-        var newDecompressedBytes = latin1ToBytes(text);
-        var recompressed = await deflate(newDecompressedBytes);
-        contentsRef.contents = recompressed;
-      }
-    }
-
-    return pdfDoc.save();
+  function cleanDocumentText(text) {
+    return text
+      .replace(/\b(mannelijk|vrouwelijk)\b/gi, '[verborgen]')
+      .replace(/geslacht\s*:\s*(jongen|meisje|man|vrouw)\b/gi, 'geslacht: [verborgen]')
+      .replace(/geslacht\s*:\s*(m|v)\b/g, 'geslacht: [verborgen]')
+      .replace(/\b(male|female)\s+fetus\b/gi, '[verborgen] fetus')
+      .replace(/\bsex\s*:\s*(male|female|m|f)\b/gi, 'sex: [verborgen]')
+      .replace(/\bgender\s*:\s*(male|female|m|f)\b/gi, 'gender: [verborgen]')
+      .replace(/\b(jongetje)\b/gi, '[verborgen]');
   }
 
   document.getElementById('generate-btn').addEventListener('click', async function() {
     var genStatus = document.getElementById('generate-status');
     genStatus.className = 'status';
-    genStatus.textContent = 'bestanden worden gegenereerd...';
+    genStatus.textContent = 'link wordt aangemaakt...';
 
     try {
       var date = document.getElementById('reveal-date').value;
       var time = document.getElementById('reveal-time').value;
       var pw = document.getElementById('page-password').value;
 
-      var encrypted = await encryptPayload(pw, { g: state.gender, t: date + 'T' + time + ':00' });
+      var cleanedDoc = state.rawPdfText ? cleanDocumentText(state.rawPdfText) : null;
+      var encrypted = await encryptPayload(pw, { g: state.gender, t: date + 'T' + time + ':00', doc: cleanedDoc });
 
       var shareUrl = window.location.origin + '/genderreveal/#' + encodeURIComponent(encrypted);
 
       var countdownHtml = buildCountdownHtml(encrypted);
       var countdownBlob = new Blob([countdownHtml], { type: 'text/html' });
       var countdownUrl = URL.createObjectURL(countdownBlob);
-
-      var redactedBytes = await buildRedactedPdfBytes();
-      var pdfBlob = new Blob([redactedBytes], { type: 'application/pdf' });
-      var pdfUrl = URL.createObjectURL(pdfBlob);
 
       document.getElementById('share-url').value = shareUrl;
       document.getElementById('copy-url-btn').onclick = function() {
@@ -471,14 +392,6 @@
         var a = document.createElement('a');
         a.href = countdownUrl;
         a.download = 'gender-reveal-countdown.html';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      };
-      document.getElementById('download-pdf').onclick = function() {
-        var a = document.createElement('a');
-        a.href = pdfUrl;
-        a.download = 'document-zonder-geslacht.pdf';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
