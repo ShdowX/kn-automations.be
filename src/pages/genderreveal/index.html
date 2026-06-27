@@ -20,48 +20,39 @@
   }
   .voice { font-family: 'Cormorant Garamond', serif; }
 
-  .lock-card {
-    width: 100%;
-    max-width: 380px;
-    background: #F6F1E7;
-    border-radius: 16px;
-    padding: 2.5rem 2rem;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(60, 48, 20, 0.12);
+  .reveal-prompt {
     display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
   }
-  .lock-card p.eyebrow {
-    font-size: 12px;
-    color: #8B6F35;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .lock-card h1 { font-size: 22px; font-weight: 500; color: #2B2620; margin-bottom: 18px; }
-  .lock-card input {
-    width: 100%;
-    padding: 12px 14px;
+  .reveal-prompt input {
+    padding: 11px 14px;
     border: 1px solid #D9C9A0;
     border-radius: 8px;
     font-size: 14px;
-    margin-bottom: 12px;
-    text-align: center;
     font-family: 'Inter', sans-serif;
     color: #2B2620;
     background: white;
+    width: 200px;
+    text-align: center;
   }
-  .lock-card button {
-    width: 100%;
-    padding: 12px;
+  .reveal-prompt input:focus { outline: none; border-color: #B8923F; }
+  .reveal-prompt button {
+    padding: 11px 28px;
     border-radius: 8px;
     border: none;
     background: #8B6F35;
     color: white;
     font-size: 14px;
-    font-weight: 500;
+    font-family: 'Inter', sans-serif;
     cursor: pointer;
   }
-  .lock-error { color: #A32D2D; font-size: 12px; margin-top: 10px; min-height: 16px; }
+  .reveal-prompt button:hover { background: #7A612E; }
+  .reveal-error { color: #A32D2D; font-size: 12px; min-height: 16px; }
 
   .card {
     width: 100%;
@@ -136,14 +127,6 @@
 </head>
 <body>
 
-<div class="lock-card" id="lock-card">
-  <p class="eyebrow voice">familie Nicasens</p>
-  <h1 class="voice">deze pagina is beveiligd</h1>
-  <input type="password" id="password-input" placeholder="wachtwoord" autocomplete="off" />
-  <button id="unlock-btn">openen</button>
-  <p class="lock-error" id="lock-error"></p>
-</div>
-
 <div class="card" id="main-card">
   <div id="confetti-layer"></div>
   <div class="frame"></div>
@@ -165,8 +148,16 @@
     <div><div class="num voice" id="d-secs">00</div><div class="label">seconden</div></div>
   </div>
   <p class="date-line" id="date-line"></p>
-  <p class="subtitle voice">Wat leuk dat jullie meevolgen en even benieuwd zijn als ons!</p>
-  <a href="/genderreveal/gokje" class="gokje-link" id="gokje-link">waag een gokje &rsaquo;</a>
+  <p class="subtitle voice" id="warm-msg">Wat leuk dat jullie meevolgen en even benieuwd zijn als ons!</p>
+  <a href="/genderreveal/gokje" class="gokje-link" id="gokje-link" style="display:none">waag een gokje &rsaquo;</a>
+
+  <div class="reveal-prompt" id="reveal-prompt">
+    <p class="eyebrow voice">het is zover!</p>
+    <h2 class="main voice" style="font-size: 26px; margin-bottom: 4px;">onthul het geslacht</h2>
+    <input type="password" id="reveal-pw-input" placeholder="wachtwoord" autocomplete="off" />
+    <button id="reveal-unlock-btn">onthullen</button>
+    <p class="reveal-error" id="reveal-error"></p>
+  </div>
 
   <div class="balloon-zone" id="balloon-zone">
     <svg id="b1" width="90" height="130" viewBox="0 0 90 130">
@@ -231,58 +222,40 @@
     return JSON.parse(new TextDecoder().decode(plainBuf));
   }
 
+  // Store hash payload silently — used only at reveal time
   var hashPayload = null;
   if (window.location.hash.length > 1) {
     try { hashPayload = decodeURIComponent(window.location.hash.slice(1)); } catch(e) {}
   }
-  if (hashPayload) {
-    localStorage.setItem('nicasens-reveal-payload', hashPayload);
-  }
-
+  if (hashPayload) localStorage.setItem('nicasens-reveal-payload', hashPayload);
   var storedPayload = hashPayload || localStorage.getItem('nicasens-reveal-payload');
 
-  if (storedPayload) {
-    document.getElementById('lock-card').style.display = 'block';
+  // Countdown is always publicly visible — no lock screen on load
+  document.getElementById('main-card').style.display = 'flex';
+  startCountdown(FALLBACK_DATE);
 
-    function tryUnlock() {
-      var pw = document.getElementById('password-input').value;
-      var errEl = document.getElementById('lock-error');
-      errEl.textContent = '';
-      decryptPayload(pw, storedPayload).then(function(payload) {
-        document.getElementById('lock-card').style.display = 'none';
-        document.getElementById('main-card').style.display = 'flex';
-        startCountdown(payload.g, payload.t);
-      }).catch(function() {
-        errEl.textContent = 'verkeerd wachtwoord, probeer opnieuw';
-      });
-    }
-
-    document.getElementById('unlock-btn').addEventListener('click', tryUnlock);
-    document.getElementById('password-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') tryUnlock();
-    });
-  } else {
-    document.getElementById('main-card').style.display = 'flex';
-    startCountdown(null, FALLBACK_DATE);
-  }
-
-  function startCountdown(gender, isoTime) {
+  function startCountdown(isoTime) {
     var target = new Date(isoTime);
-    var isBoy = gender === 'boy';
     var done = false;
 
-    document.getElementById('date-line').textContent = target.toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' }) + ' · ' + target.toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' }) + ' uur';
+    document.getElementById('date-line').textContent =
+      target.toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' }) +
+      ' · ' +
+      target.toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' }) + ' uur';
 
     function pad(n) { return String(n).padStart(2, '0'); }
 
     function tick() {
       if (done) return;
-      var now = new Date();
-      var diff = target - now;
+      var diff = target - new Date();
       if (diff <= 0) {
         done = true;
         clearInterval(interval);
-        startParty(isBoy);
+        if (storedPayload) {
+          showRevealPrompt();
+        } else {
+          startParty(null);
+        }
         return;
       }
       document.getElementById('d-days').textContent  = pad(Math.floor(diff / 86400000));
@@ -294,29 +267,52 @@
     var interval = setInterval(tick, 1000);
   }
 
+  function showRevealPrompt() {
+    document.getElementById('pre-reveal').style.display = 'none';
+    document.getElementById('countdown-block').style.display = 'none';
+    document.getElementById('date-line').style.display = 'none';
+    document.getElementById('warm-msg').style.display = 'none';
+    document.getElementById('reveal-prompt').style.display = 'flex';
+
+    function tryReveal() {
+      var pw = document.getElementById('reveal-pw-input').value;
+      var errEl = document.getElementById('reveal-error');
+      errEl.textContent = '';
+      decryptPayload(pw, storedPayload).then(function(payload) {
+        document.getElementById('reveal-prompt').style.display = 'none';
+        startParty(payload.g === 'boy');
+      }).catch(function() {
+        errEl.textContent = 'verkeerd wachtwoord, probeer opnieuw';
+      });
+    }
+
+    document.getElementById('reveal-unlock-btn').addEventListener('click', tryReveal);
+    document.getElementById('reveal-pw-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') tryReveal();
+    });
+  }
+
   function spawnConfetti(colors, count) {
     var layer = document.getElementById('confetti-layer');
     for (var i = 0; i < count; i++) {
       var piece = document.createElement('div');
       var c = colors[Math.floor(Math.random() * colors.length)];
       var size = 6 + Math.random() * 8;
-      piece.style.position = 'absolute';
+      piece.style.cssText = 'position:absolute;border-radius:2px;opacity:0.95;';
       piece.style.width = size + 'px';
       piece.style.height = (size * 0.4) + 'px';
       piece.style.background = c;
       piece.style.left = (Math.random() * 100) + '%';
       piece.style.top = '-20px';
-      piece.style.opacity = '0.95';
-      piece.style.borderRadius = '2px';
       var rot = Math.random() * 360;
       piece.style.transform = 'rotate(' + rot + 'deg)';
       piece.style.transition = 'top ' + (1.6 + Math.random() * 1.2) + 's cubic-bezier(0.4,0,0.6,1), opacity 2.6s ease-in';
       layer.appendChild(piece);
-      (function(p, rot) {
+      (function(p, r) {
         requestAnimationFrame(function() {
           setTimeout(function() {
             p.style.top = (70 + Math.random() * 30) + '%';
-            p.style.transform = 'rotate(' + (rot + 180 + Math.random() * 180) + 'deg)';
+            p.style.transform = 'rotate(' + (r + 180 + Math.random() * 180) + 'deg)';
             p.style.opacity = '0';
           }, 20 + Math.random() * 300);
         });
@@ -329,16 +325,16 @@
     document.getElementById('pre-reveal').style.display = 'none';
     document.getElementById('countdown-block').style.display = 'none';
     document.getElementById('date-line').style.display = 'none';
-    document.getElementById('gokje-link').style.display = 'none';
+    document.getElementById('warm-msg').style.display = 'none';
     document.getElementById('balloon-zone').style.display = 'block';
 
+    var color = (isBoy === true) ? '#7FA9C9' : '#D98FA8';
+
     setTimeout(function() {
-      var color = isBoy ? '#7FA9C9' : '#D98FA8';
       ['b1', 'b2', 'b3'].forEach(function(id) {
         var svg = document.getElementById(id);
         svg.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-        var current = svg.style.transform || '';
-        svg.style.transform = current + ' scale(1.4)';
+        svg.style.transform = (svg.style.transform || '') + ' scale(1.4)';
       });
 
       setTimeout(function() {
@@ -348,14 +344,24 @@
           document.getElementById(id + '-knot').setAttribute('fill', color);
         });
 
-        var palette = isBoy ? ['#7FA9C9', '#A9C7D8', '#B8923F', '#F6F1E7'] : ['#D98FA8', '#D8A9BD', '#B8923F', '#F6F1E7'];
+        var palette = (isBoy === true)
+          ? ['#7FA9C9', '#A9C7D8', '#B8923F', '#F6F1E7']
+          : ['#D98FA8', '#D8A9BD', '#B8923F', '#F6F1E7'];
         spawnConfetti(palette, 90);
 
         var block = document.getElementById('reveal-block');
         block.style.display = 'block';
         var word = document.getElementById('reveal-word');
-        word.textContent = isBoy ? 'Het is een broertje!' : 'Het is een zusje!';
-        word.style.color = isBoy ? '#3E6280' : '#8A3F5C';
+        if (isBoy === null) {
+          word.textContent = 'Het is zover!';
+          word.style.color = '#8B6F35';
+        } else {
+          word.textContent = isBoy ? 'Het is een broertje!' : 'Het is een zusje!';
+          word.style.color = isBoy ? '#3E6280' : '#8A3F5C';
+        }
+
+        // Show "waag een gokje" after the reveal
+        document.getElementById('gokje-link').style.display = 'inline-block';
 
         setTimeout(function() { spawnConfetti(isBoy ? ['#7FA9C9', '#B8923F'] : ['#D98FA8', '#B8923F'], 50); }, 500);
         setTimeout(function() { spawnConfetti(isBoy ? ['#A9C7D8', '#B8923F'] : ['#D8A9BD', '#B8923F'], 50); }, 1000);
