@@ -61,6 +61,32 @@
   input:focus, textarea:focus { outline: none; border-color: #B8923F; }
   textarea { resize: vertical; min-height: 80px; }
 
+  select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #D9C9A0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B8923F' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center;
+    color: #2B2620;
+    appearance: none;
+    cursor: pointer;
+  }
+  select:focus { outline: none; border-color: #B8923F; }
+
+  .back-link {
+    display: inline-block;
+    font-size: 12px;
+    color: #8B6F35;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .back-link:hover { color: #2B2620; }
+
   .row { display: flex; gap: 12px; }
   .row > fieldset { flex: 1; }
 
@@ -149,6 +175,8 @@
 <div class="card" id="form-card">
   <div class="frame"></div>
 
+  <a href="/genderreveal/" class="back-link">&larr; terug naar de countdown</a>
+
   <p class="eyebrow voice">Kenneth, Zora en Juul</p>
   <h1 class="main">doe jouw gokje</h1>
   <p class="subtitle">wat denk jij dat het wordt?</p>
@@ -199,6 +227,31 @@
       <fieldset>
         <legend>lengte (cm)</legend>
         <input type="number" name="lengte" placeholder="50" min="30" max="70" step="1" />
+      </fieldset>
+    </div>
+
+    <div class="row">
+      <fieldset>
+        <legend>haarkleur</legend>
+        <select name="haarkleur">
+          <option value="">kies een kleur</option>
+          <option value="blond">Blond</option>
+          <option value="bruin">Bruin</option>
+          <option value="zwart">Zwart</option>
+          <option value="rood">Rood</option>
+          <option value="geen haar">Geen haar</option>
+        </select>
+      </fieldset>
+      <fieldset>
+        <legend>oogkleur</legend>
+        <select name="oogkleur">
+          <option value="">kies een kleur</option>
+          <option value="blauw">Blauw</option>
+          <option value="groen">Groen</option>
+          <option value="bruin">Bruin</option>
+          <option value="grijs">Grijs</option>
+          <option value="hazel">Hazel</option>
+        </select>
       </fieldset>
     </div>
 
@@ -261,7 +314,7 @@
 
     try {
       var body = new URLSearchParams(new FormData(form)).toString();
-      var resp = await fetch(window.location.pathname, {
+      var resp = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: body

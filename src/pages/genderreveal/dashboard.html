@@ -208,6 +208,8 @@
             <th>tijd</th>
             <th>gewicht</th>
             <th>lengte</th>
+            <th>haar</th>
+            <th>ogen</th>
             <th>naam suggestie</th>
             <th>bericht</th>
             <th>ingediend</th>
@@ -349,6 +351,8 @@
           '<td>' + (d.geboortetijd ? esc(d.geboortetijd) : '<span class="muted">—</span>') + '</td>' +
           '<td>' + (d.gewicht ? esc(d.gewicht) + 'g' : '<span class="muted">—</span>') + '</td>' +
           '<td>' + (d.lengte ? esc(d.lengte) + 'cm' : '<span class="muted">—</span>') + '</td>' +
+          '<td>' + (d.haarkleur ? esc(d.haarkleur) : '<span class="muted">—</span>') + '</td>' +
+          '<td>' + (d.oogkleur ? esc(d.oogkleur) : '<span class="muted">—</span>') + '</td>' +
           '<td>' + (d.naam_suggestie ? esc(d.naam_suggestie) : '<span class="muted">—</span>') + '</td>' +
           '<td class="bericht-cell">' + (d.bericht ? esc(d.bericht) : '<span class="muted">—</span>') + '</td>' +
           '<td class="muted">' + ingediend + '</td>';
