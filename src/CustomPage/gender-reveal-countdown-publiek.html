@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jongen of meisje? — Familie Nicasens</title>
+<title>Jongen of meisje? - Familie Nicasens</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -85,8 +85,8 @@
     </svg>
     <p class="eyebrow voice">Kenneth, Zora en Juul</p>
     <h1 class="main voice">Broer of Zus?</h1>
-    <p class="subtitle voice">En dan we komen het te weten over: … </br>
-Wat leuk dat jullie meevolgen en even benieuwd zijn als ons!</p>
+    <p class="subtitle voice">We komen het te weten over: … </p>
+
   </div>
 
   <div class="countdown" id="countdown-block">
@@ -96,6 +96,7 @@ Wat leuk dat jullie meevolgen en even benieuwd zijn als ons!</p>
     <div><div class="num voice" id="d-secs">00</div><div class="label">seconden</div></div>
   </div>
   <p class="date-line" id="date-line"></p>
+  <p class="subtitle voice">Wat leuk dat jullie meevolgen en even benieuwd zijn als ons!</p>
 
   <div class="balloon-zone" id="balloon-zone">
     <svg id="b1" width="90" height="130" viewBox="0 0 90 130">
@@ -120,16 +121,10 @@ Wat leuk dat jullie meevolgen en even benieuwd zijn als ons!</p>
 
   <div class="reveal-block" id="reveal-block">
     <p class="word voice" id="reveal-word"></p>
-    <p class="sub">de hele familie is compleet</p>
+    <p class="sub">De hele familie is compleet</p>
   </div>
 
-  <div class="family-row" id="family-row">
-    <div class="person"><div class="initial voice">K</div><div class="name">Kenneth</div></div>
-    <div class="sep"></div>
-    <div class="person"><div class="initial voice">Z</div><div class="name">Zora</div></div>
-    <div class="sep"></div>
-    <div class="person"><div class="initial voice">J</div><div class="name">Juul</div></div>
-  </div>
+  
 </div>
 
 <script>
@@ -264,7 +259,7 @@ Wat leuk dat jullie meevolgen en even benieuwd zijn als ons!</p>
         var block = document.getElementById('reveal-block');
         block.style.display = 'block';
         var word = document.getElementById('reveal-word');
-        word.textContent = isBoy ? 'het is een broertje!' : 'het is een zusje!';
+        word.textContent = isBoy ? 'Het is een broertje!' : 'Het is een zusje!';
         word.style.color = isBoy ? '#3E6280' : '#8A3F5C';
 
         document.getElementById('family-row').style.display = 'flex';
