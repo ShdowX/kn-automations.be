@@ -154,6 +154,25 @@
     font-size: 12px;
     flex-shrink: 0;
   }
+  .doc-preview {
+    background: #FAF8F2;
+    border: 1px solid #E3DDCB;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-top: 14px;
+    display: none;
+  }
+  .doc-preview label { margin-bottom: 10px; display: block; }
+  .doc-text {
+    font-size: 12px;
+    color: #2B2620;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .doc-text p { margin-bottom: 8px; }
+  .doc-text p:last-child { margin-bottom: 0; }
   .hidden { display: none; }
 </style>
 </head>
@@ -214,6 +233,10 @@
     <div class="download-row hidden" id="download-row">
       <button id="preview-countdown">bekijk countdown-pagina</button>
       <button id="download-countdown" class="secondary">download als html</button>
+    </div>
+    <div class="doc-preview" id="doc-preview">
+      <label>document zonder geslacht — dit zien gasten na ontgrendeling</label>
+      <div class="doc-text" id="doc-text"></div>
     </div>
   </div>
 
@@ -396,6 +419,16 @@
         a.click();
         document.body.removeChild(a);
       };
+
+      if (cleanedDoc) {
+        var safe = cleanedDoc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        document.getElementById('doc-text').innerHTML = safe
+          .split(/\n{2,}/)
+          .filter(function(p) { return p.trim(); })
+          .map(function(p) { return '<p>' + p.replace(/\n/g, '<br>') + '</p>'; })
+          .join('');
+        document.getElementById('doc-preview').style.display = 'block';
+      }
 
       genStatus.textContent = 'klaar. kopieer de link hieronder en deel hem met iedereen.';
       genStatus.className = 'status success';
