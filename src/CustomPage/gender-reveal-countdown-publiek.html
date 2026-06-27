@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jongen of meisje? — Familie Nicasens</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #EDE6D6;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .voice { font-family: 'Cormorant Garamond', serif; }
+
+  .card {
+    width: 100%;
+    max-width: 560px;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2.5rem;
+    background: #F6F1E7;
+    border-radius: 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(60, 48, 20, 0.12);
+  }
+  .frame { position: absolute; inset: 18px; border: 0.5px solid #B8923F; border-radius: 8px; pointer-events: none; }
+  .eyebrow { font-size: 12px; color: #8B6F35; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
+  h1.main { font-size: 30px; font-weight: 500; color: #2B2620; margin-bottom: 8px; }
+  .subtitle { font-size: 15px; color: #786A50; margin-bottom: 36px; font-style: italic; }
+
+  .countdown { display: flex; gap: 0; margin-bottom: 12px; border: 0.5px solid #B8923F; border-radius: 6px; overflow: hidden; position: relative; z-index: 1; }
+  .countdown > div { text-align: center; padding: 18px 20px; border-right: 0.5px solid #D9C9A0; min-width: 64px; }
+  .countdown > div:last-child { border-right: none; }
+  .countdown .num { font-size: 28px; font-weight: 500; color: #2B2620; font-family: 'Cormorant Garamond', serif; }
+  .countdown .label { font-size: 10px; color: #8B6F35; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 6px; }
+  .date-line { font-size: 12px; color: #A89B7A; letter-spacing: 1px; margin-top: 8px; }
+
+  .balloon-zone { position: relative; height: 240px; width: 100%; margin-top: 12px; display: none; }
+  .balloon-zone svg { position: absolute; bottom: 0; }
+  #b1 { left: 50%; transform: translateX(-130px); }
+  #b2 { left: 50%; transform: translateX(-50px); bottom: 16px; }
+  #b3 { left: 50%; transform: translateX(60px); bottom: 4px; }
+
+  .reveal-block { display: none; position: relative; z-index: 1; }
+  .reveal-block .word { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 500; margin: 16px 0 6px; }
+  .reveal-block .sub { font-size: 13px; color: #786A50; letter-spacing: 1px; }
+
+  .family-row { display: flex; align-items: center; gap: 18px; margin-top: 32px; position: relative; z-index: 1; }
+  .family-row .person { text-align: center; }
+  .family-row .initial { width: 38px; height: 38px; border-radius: 50%; border: 0.5px solid #B8923F; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 14px; color: #8B6F35; margin: 0 auto 6px; }
+  .family-row .name { font-size: 11px; color: #786A50; }
+  .family-row .sep { width: 16px; height: 0.5px; background: #D9C9A0; }
+
+  #confetti-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
+
+  @media (max-width: 480px) {
+    .card { padding: 3rem 1.5rem; min-height: 560px; }
+    h1.main { font-size: 24px; }
+    .countdown > div { padding: 14px 10px; min-width: 50px; }
+    .countdown .num { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card" id="main-card">
+  <div id="confetti-layer"></div>
+  <div class="frame"></div>
+
+  <div id="pre-reveal">
+    <svg width="56" height="56" viewBox="0 0 56 56" style="margin-bottom: 18px;">
+      <circle cx="28" cy="28" r="26" fill="none" stroke="#B8923F" stroke-width="0.6"/>
+      <path d="M28 14 L31 22 L40 22 L33 28 L36 38 L28 32 L20 38 L23 28 L16 22 L25 22 Z" fill="none" stroke="#8B6F35" stroke-width="1"/>
+    </svg>
+    <p class="eyebrow voice">Kenneth, Zora en Juul</p>
+    <h1 class="main voice">jongen of meisje?</h1>
+    <p class="subtitle voice">het grote feest begint over</p>
+  </div>
+
+  <div class="countdown" id="countdown-block">
+    <div><div class="num voice" id="d-days">00</div><div class="label">dagen</div></div>
+    <div><div class="num voice" id="d-hours">00</div><div class="label">uren</div></div>
+    <div><div class="num voice" id="d-mins">00</div><div class="label">minuten</div></div>
+    <div><div class="num voice" id="d-secs">00</div><div class="label">seconden</div></div>
+  </div>
+  <p class="date-line" id="date-line"></p>
+
+  <div class="balloon-zone" id="balloon-zone">
+    <svg id="b1" width="90" height="130" viewBox="0 0 90 130">
+      <line x1="45" y1="92" x2="45" y2="128" stroke="#B8923F" stroke-width="1"/>
+      <ellipse id="b1-body" cx="45" cy="48" rx="38" ry="46" fill="#C9B89A"/>
+      <path d="M37 92 L53 92 L45 102 Z" fill="#C9B89A" id="b1-knot"/>
+      <ellipse cx="32" cy="28" rx="9" ry="13" fill="white" opacity="0.3"/>
+    </svg>
+    <svg id="b2" width="100" height="145" viewBox="0 0 100 145">
+      <line x1="50" y1="102" x2="50" y2="143" stroke="#B8923F" stroke-width="1"/>
+      <ellipse id="b2-body" cx="50" cy="54" rx="42" ry="52" fill="#D8A9BD"/>
+      <path d="M41 102 L59 102 L50 113 Z" fill="#D8A9BD" id="b2-knot"/>
+      <ellipse cx="35" cy="30" rx="10" ry="15" fill="white" opacity="0.3"/>
+    </svg>
+    <svg id="b3" width="80" height="118" viewBox="0 0 80 118">
+      <line x1="40" y1="84" x2="40" y2="116" stroke="#B8923F" stroke-width="1"/>
+      <ellipse id="b3-body" cx="40" cy="42" rx="34" ry="42" fill="#C9B89A"/>
+      <path d="M33 84 L47 84 L40 94 Z" fill="#C9B89A" id="b3-knot"/>
+      <ellipse cx="28" cy="24" rx="8" ry="12" fill="white" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <div class="reveal-block" id="reveal-block">
+    <p class="word voice" id="reveal-word"></p>
+    <p class="sub">de hele familie is compleet</p>
+  </div>
+
+  <div class="family-row" id="family-row">
+    <div class="person"><div class="initial voice">K</div><div class="name">Kenneth</div></div>
+    <div class="sep"></div>
+    <div class="person"><div class="initial voice">Z</div><div class="name">Zora</div></div>
+    <div class="sep"></div>
+    <div class="person"><div class="initial voice">J</div><div class="name">Juul</div></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var ENCRYPTED_PAYLOAD = "89cM2I1wXY6j7yCZ:t7gQYl32MIiKsS0ftu9nVuseuAIrQSXKcqFkafmZm48gijZxWijNxPpKkmcxxPmZtiAtmD8=";
+
+  async function deriveKey(password) {
+    var enc = new TextEncoder();
+    var keyMaterial = await crypto.subtle.importKey(
+      'raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveKey']
+    );
+    return crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt: enc.encode('nicasens-reveal-salt'), iterations: 100000, hash: 'SHA-256' },
+      keyMaterial,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['decrypt']
+    );
+  }
+
+  function b64ToBytes(b64) {
+    var bin = atob(b64);
+    var arr = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return arr;
+  }
+
+  async function decryptPayload(password) {
+    var parts = ENCRYPTED_PAYLOAD.split(':');
+    var iv = b64ToBytes(parts[0]);
+    var ciphertext = b64ToBytes(parts[1]);
+    var key = await deriveKey(password);
+    var plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, ciphertext);
+    var dec = new TextDecoder();
+    return JSON.parse(dec.decode(plainBuf));
+  }
+
+  (async function autoUnlock() {
+    try {
+      var payload = await decryptPayload("Nicasens$01");
+      startCountdown(payload.g, payload.t);
+    } catch (err) {
+      console.error('Kon de reveal-data niet laden:', err);
+    }
+  })();
+
+  function startCountdown(gender, isoTime) {
+    var target = new Date(isoTime);
+    var isBoy = gender === 'boy';
+    var done = false;
+
+    document.getElementById('date-line').textContent = target.toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' }) + ' · ' + target.toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' }) + ' uur';
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      if (done) return;
+      var now = new Date();
+      var diff = target - now;
+      if (diff <= 0) {
+        done = true;
+        clearInterval(interval);
+        startParty(isBoy);
+        return;
+      }
+      document.getElementById('d-days').textContent = pad(Math.floor(diff / 86400000));
+      document.getElementById('d-hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+      document.getElementById('d-mins').textContent = pad(Math.floor((diff % 3600000) / 60000));
+      document.getElementById('d-secs').textContent = pad(Math.floor((diff % 60000) / 1000));
+    }
+    tick();
+    var interval = setInterval(tick, 1000);
+  }
+
+  function spawnConfetti(colors, count) {
+    var layer = document.getElementById('confetti-layer');
+    for (var i = 0; i < count; i++) {
+      var piece = document.createElement('div');
+      var c = colors[Math.floor(Math.random() * colors.length)];
+      var size = 6 + Math.random() * 8;
+      piece.style.position = 'absolute';
+      piece.style.width = size + 'px';
+      piece.style.height = (size * 0.4) + 'px';
+      piece.style.background = c;
+      piece.style.left = (Math.random() * 100) + '%';
+      piece.style.top = '-20px';
+      piece.style.opacity = '0.95';
+      piece.style.borderRadius = '2px';
+      var rot = Math.random() * 360;
+      piece.style.transform = 'rotate(' + rot + 'deg)';
+      piece.style.transition = 'top ' + (1.6 + Math.random() * 1.2) + 's cubic-bezier(0.4,0,0.6,1), opacity 2.6s ease-in';
+      layer.appendChild(piece);
+      (function(p, rot) {
+        requestAnimationFrame(function() {
+          setTimeout(function() {
+            p.style.top = (70 + Math.random() * 30) + '%';
+            p.style.transform = 'rotate(' + (rot + 180 + Math.random() * 180) + 'deg)';
+            p.style.opacity = '0';
+          }, 20 + Math.random() * 300);
+        });
+        setTimeout(function() { p.remove(); }, 3200);
+      })(piece, rot);
+    }
+  }
+
+  function startParty(isBoy) {
+    document.getElementById('pre-reveal').style.display = 'none';
+    document.getElementById('countdown-block').style.display = 'none';
+    document.getElementById('date-line').style.display = 'none';
+    document.getElementById('family-row').style.display = 'none';
+    document.getElementById('balloon-zone').style.display = 'block';
+
+    setTimeout(function() {
+      var color = isBoy ? '#7FA9C9' : '#D98FA8';
+      ['b1', 'b2', 'b3'].forEach(function(id) {
+        var svg = document.getElementById(id);
+        svg.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+        var current = svg.style.transform || '';
+        svg.style.transform = current + ' scale(1.4)';
+      });
+
+      setTimeout(function() {
+        ['b1', 'b2', 'b3'].forEach(function(id) {
+          document.getElementById(id).style.opacity = '0';
+          document.getElementById(id + '-body').setAttribute('fill', color);
+          document.getElementById(id + '-knot').setAttribute('fill', color);
+        });
+
+        var palette = isBoy ? ['#7FA9C9', '#A9C7D8', '#B8923F', '#F6F1E7'] : ['#D98FA8', '#D8A9BD', '#B8923F', '#F6F1E7'];
+        spawnConfetti(palette, 90);
+
+        var block = document.getElementById('reveal-block');
+        block.style.display = 'block';
+        var word = document.getElementById('reveal-word');
+        word.textContent = isBoy ? 'het is een jongen!' : 'het is een meisje!';
+        word.style.color = isBoy ? '#3E6280' : '#8A3F5C';
+
+        document.getElementById('family-row').style.display = 'flex';
+
+        setTimeout(function() { spawnConfetti(isBoy ? ['#7FA9C9', '#B8923F'] : ['#D98FA8', '#B8923F'], 50); }, 500);
+        setTimeout(function() { spawnConfetti(isBoy ? ['#A9C7D8', '#B8923F'] : ['#D8A9BD', '#B8923F'], 50); }, 1000);
+        setTimeout(function() { spawnConfetti(palette, 60); }, 1700);
+      }, 350);
+    }, 600);
+  }
+})();
+</script>
+
+</body>
+</html>
