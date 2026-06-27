@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doe jouw gokje — Familie Nicasens</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #EDE6D6;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+  .voice { font-family: 'Cormorant Garamond', serif; }
+
+  .card {
+    width: 100%;
+    max-width: 520px;
+    background: #F6F1E7;
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 20px 60px rgba(60, 48, 20, 0.12);
+    position: relative;
+    overflow: hidden;
+  }
+  .frame { position: absolute; inset: 14px; border: 0.5px solid #B8923F; border-radius: 8px; pointer-events: none; }
+  .eyebrow { font-size: 11px; color: #8B6F35; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; text-align: center; }
+  h1.main { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 500; color: #2B2620; margin-bottom: 6px; text-align: center; }
+  .subtitle { font-size: 14px; color: #786A50; font-style: italic; text-align: center; margin-bottom: 32px; font-family: 'Cormorant Garamond', serif; }
+
+  fieldset { border: none; margin-bottom: 20px; }
+  legend, label.field-label {
+    display: block;
+    font-size: 11px;
+    color: #8B6F35;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="time"],
+  textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #D9C9A0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    color: #2B2620;
+    transition: border-color 0.15s;
+  }
+  input:focus, textarea:focus { outline: none; border-color: #B8923F; }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .row { display: flex; gap: 12px; }
+  .row > fieldset { flex: 1; }
+
+  .gender-toggle { display: flex; gap: 10px; }
+  .gender-opt {
+    flex: 1;
+    padding: 18px 12px;
+    border: 1px solid #D9C9A0;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    user-select: none;
+  }
+  .gender-opt input[type="radio"] { display: none; }
+  .gender-opt .opt-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    display: block;
+    color: #786A50;
+    transition: color 0.2s;
+  }
+  .gender-opt .opt-sub {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #A89B7A;
+    display: block;
+    margin-top: 4px;
+    transition: color 0.2s;
+  }
+  .gender-opt.selected-boy { border-color: #7FA9C9; background: #EBF2F7; }
+  .gender-opt.selected-boy .opt-label { color: #3E6280; }
+  .gender-opt.selected-boy .opt-sub { color: #7FA9C9; }
+  .gender-opt.selected-girl { border-color: #D98FA8; background: #F9EFF3; }
+  .gender-opt.selected-girl .opt-label { color: #8A3F5C; }
+  .gender-opt.selected-girl .opt-sub { color: #D98FA8; }
+
+  .divider { height: 0.5px; background: #E3DDCB; margin: 24px 0; }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 13px;
+    border-radius: 8px;
+    border: none;
+    background: #8B6F35;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.15s;
+  }
+  button[type="submit"]:hover { background: #7A612E; }
+  button[type="submit"]:disabled { background: #C9BFA0; cursor: not-allowed; }
+
+  .error-msg { font-size: 12px; color: #A32D2D; margin-top: 8px; min-height: 16px; }
+
+  .thanks-card {
+    width: 100%;
+    max-width: 520px;
+    background: #F6F1E7;
+    border-radius: 16px;
+    padding: 4rem 2.5rem;
+    box-shadow: 0 20px 60px rgba(60, 48, 20, 0.12);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    display: none;
+  }
+  .thanks-card .big { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 500; color: #2B2620; margin: 16px 0 10px; }
+  .thanks-card .msg { font-size: 14px; color: #786A50; font-style: italic; font-family: 'Cormorant Garamond', serif; }
+
+  @media (max-width: 480px) {
+    body { padding: 24px 16px; }
+    .card { padding: 2.5rem 1.5rem; }
+    h1.main { font-size: 24px; }
+    .row { flex-direction: column; gap: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card" id="form-card">
+  <div class="frame"></div>
+
+  <p class="eyebrow voice">Kenneth, Zora en Juul</p>
+  <h1 class="main">doe jouw gokje</h1>
+  <p class="subtitle">wat denk jij dat het wordt?</p>
+
+  <form name="babygokje" data-netlify="true" netlify-honeypot="bot-field" id="guess-form" novalidate>
+    <input type="hidden" name="form-name" value="babygokje" />
+    <p style="display:none"><label>Niet invullen: <input name="bot-field" /></label></p>
+
+    <fieldset>
+      <legend>jouw naam</legend>
+      <input type="text" name="naam" placeholder="Voornaam (en achternaam)" required />
+    </fieldset>
+
+    <fieldset>
+      <legend>jouw gokje</legend>
+      <div class="gender-toggle">
+        <label class="gender-opt" id="opt-boy">
+          <input type="radio" name="geslacht" value="jongen" required />
+          <span class="opt-label">Jongen</span>
+          <span class="opt-sub">broertje</span>
+        </label>
+        <label class="gender-opt" id="opt-girl">
+          <input type="radio" name="geslacht" value="meisje" />
+          <span class="opt-label">Meisje</span>
+          <span class="opt-sub">zusje</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="divider"></div>
+
+    <div class="row">
+      <fieldset>
+        <legend>geboortedatum</legend>
+        <input type="date" name="geboortedatum" required />
+      </fieldset>
+      <fieldset>
+        <legend>geboortetijd</legend>
+        <input type="time" name="geboortetijd" />
+      </fieldset>
+    </div>
+
+    <div class="row">
+      <fieldset>
+        <legend>gewicht (gram)</legend>
+        <input type="number" name="gewicht" placeholder="3500" min="1000" max="6000" step="10" />
+      </fieldset>
+      <fieldset>
+        <legend>lengte (cm)</legend>
+        <input type="number" name="lengte" placeholder="50" min="30" max="70" step="1" />
+      </fieldset>
+    </div>
+
+    <fieldset>
+      <legend>naamssuggestie</legend>
+      <input type="text" name="naam_suggestie" placeholder="Welke naam zou jij kiezen?" />
+    </fieldset>
+
+    <fieldset>
+      <legend>berichtje (optioneel)</legend>
+      <textarea name="bericht" placeholder="Een wens, een grappige voorspelling, …"></textarea>
+    </fieldset>
+
+    <button type="submit" id="submit-btn">versturen</button>
+    <p class="error-msg" id="error-msg"></p>
+  </form>
+</div>
+
+<div class="thanks-card" id="thanks-card">
+  <div class="frame"></div>
+  <svg width="48" height="48" viewBox="0 0 48 48" style="margin: 0 auto;">
+    <circle cx="24" cy="24" r="22" fill="none" stroke="#B8923F" stroke-width="0.6"/>
+    <path d="M14 24 L21 31 L34 17" fill="none" stroke="#8B6F35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <p class="big">gokje ontvangen!</p>
+  <p class="msg" id="thanks-name"></p>
+</div>
+
+<script>
+(function() {
+  var boyOpt  = document.getElementById('opt-boy');
+  var girlOpt = document.getElementById('opt-girl');
+
+  boyOpt.addEventListener('click', function() {
+    boyOpt.classList.add('selected-boy');
+    girlOpt.classList.remove('selected-girl');
+  });
+  girlOpt.addEventListener('click', function() {
+    girlOpt.classList.add('selected-girl');
+    boyOpt.classList.remove('selected-boy');
+  });
+
+  document.getElementById('guess-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var form = this;
+    var errorEl = document.getElementById('error-msg');
+    var btn = document.getElementById('submit-btn');
+    errorEl.textContent = '';
+
+    var naam = form.querySelector('[name="naam"]').value.trim();
+    var geslacht = form.querySelector('[name="geslacht"]:checked');
+    var datum = form.querySelector('[name="geboortedatum"]').value;
+
+    if (!naam) { errorEl.textContent = 'Vul jouw naam in.'; return; }
+    if (!geslacht) { errorEl.textContent = 'Kies jongen of meisje.'; return; }
+    if (!datum) { errorEl.textContent = 'Kies een geboortedatum.'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'versturen…';
+
+    try {
+      var body = new URLSearchParams(new FormData(form)).toString();
+      var resp = await fetch(window.location.pathname, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body
+      });
+      if (!resp.ok) throw new Error('status ' + resp.status);
+      document.getElementById('form-card').style.display = 'none';
+      var thanksCard = document.getElementById('thanks-card');
+      thanksCard.style.display = 'block';
+      document.getElementById('thanks-name').textContent = 'Bedankt ' + naam + ', we laten je weten hoe het afloopt!';
+    } catch(err) {
+      errorEl.textContent = 'Er ging iets mis. Probeer het opnieuw.';
+      btn.disabled = false;
+      btn.textContent = 'versturen';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

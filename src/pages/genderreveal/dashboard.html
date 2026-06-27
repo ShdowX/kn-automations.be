@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gokjes dashboard — Familie Nicasens</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #EDE6D6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px;
+    gap: 20px;
+  }
+  .voice { font-family: 'Cormorant Garamond', serif; }
+
+  /* ---- Lock screen ---- */
+  .lock-card {
+    width: 100%;
+    max-width: 400px;
+    background: #F6F1E7;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(60, 48, 20, 0.12);
+    position: relative;
+    overflow: hidden;
+  }
+  .frame { position: absolute; inset: 14px; border: 0.5px solid #B8923F; border-radius: 8px; pointer-events: none; }
+  .eyebrow { font-size: 11px; color: #8B6F35; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
+  .lock-card h1 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #2B2620; margin-bottom: 6px; }
+  .lock-card p.hint { font-size: 12px; color: #A89B7A; margin-bottom: 20px; font-style: italic; }
+  .lock-card input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #D9C9A0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    color: #2B2620;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .lock-card input:focus { outline: none; border-color: #B8923F; }
+  .lock-card button {
+    width: 100%;
+    padding: 11px;
+    border-radius: 8px;
+    border: none;
+    background: #8B6F35;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .lock-error { color: #A32D2D; font-size: 12px; margin-top: 8px; min-height: 16px; }
+  .lock-hint-link { font-size: 11px; color: #A89B7A; margin-top: 12px; display: block; text-decoration: none; }
+  .lock-hint-link:hover { color: #8B6F35; }
+
+  /* ---- Dashboard ---- */
+  .dash-wrap { width: 100%; max-width: 860px; display: none; }
+
+  .stats-row { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .stat-card {
+    flex: 1;
+    min-width: 140px;
+    background: #F6F1E7;
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 20px rgba(60, 48, 20, 0.08);
+    border: 0.5px solid #E3DDCB;
+    text-align: center;
+  }
+  .stat-card .num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 500; color: #2B2620; display: block; }
+  .stat-card .lbl { font-size: 10px; color: #8B6F35; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; display: block; }
+  .stat-card.boy .num { color: #3E6280; }
+  .stat-card.girl .num { color: #8A3F5C; }
+
+  .table-card {
+    background: #F6F1E7;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(60, 48, 20, 0.10);
+    overflow: hidden;
+    border: 0.5px solid #E3DDCB;
+  }
+  .table-header {
+    padding: 18px 24px;
+    border-bottom: 0.5px solid #E3DDCB;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .table-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: #2B2620; }
+  .table-header .refresh-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid #D9C9A0;
+    background: transparent;
+    font-size: 12px;
+    color: #786A50;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 10px;
+    color: #8B6F35;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 0.5px solid #E3DDCB;
+    white-space: nowrap;
+    background: #FAF8F2;
+  }
+  td {
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #2B2620;
+    border-bottom: 0.5px solid #F0EAD6;
+    vertical-align: top;
+    max-width: 180px;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #FAF8F2; }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .badge-boy { background: #EBF2F7; color: #3E6280; border: 1px solid #B8D4E8; }
+  .badge-girl { background: #F9EFF3; color: #8A3F5C; border: 1px solid #E8B8CC; }
+  .muted { color: #A89B7A; font-style: italic; }
+  .bericht-cell { font-size: 12px; color: #786A50; font-style: italic; max-width: 200px; }
+  .empty-state { padding: 48px 24px; text-align: center; color: #A89B7A; font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 16px; }
+
+  .loading { padding: 48px 24px; text-align: center; color: #A89B7A; font-size: 13px; }
+
+  @media (max-width: 600px) {
+    body { padding: 20px 12px; }
+    .stat-card .num { font-size: 28px; }
+    td, th { padding: 10px 10px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Lock screen -->
+<div class="lock-card" id="lock-card">
+  <div class="frame"></div>
+  <p class="eyebrow voice">privé</p>
+  <h1>gokjes dashboard</h1>
+  <p class="hint">Voer je Netlify personal access token in om de gokjes te bekijken.</p>
+  <input type="password" id="token-input" placeholder="netlify access token" autocomplete="off" />
+  <button id="unlock-btn">openen</button>
+  <p class="lock-error" id="lock-error"></p>
+  <a class="lock-hint-link" href="https://app.netlify.com/user/applications#personal-access-tokens" target="_blank" rel="noopener">
+    token aanmaken via Netlify &rsaquo;
+  </a>
+</div>
+
+<!-- Dashboard -->
+<div class="dash-wrap" id="dash-wrap">
+
+  <div class="stats-row" id="stats-row">
+    <div class="stat-card">
+      <span class="num voice" id="stat-total">—</span>
+      <span class="lbl">gokjes</span>
+    </div>
+    <div class="stat-card boy">
+      <span class="num voice" id="stat-boy">—</span>
+      <span class="lbl">jongen</span>
+    </div>
+    <div class="stat-card girl">
+      <span class="num voice" id="stat-girl">—</span>
+      <span class="lbl">meisje</span>
+    </div>
+    <div class="stat-card">
+      <span class="num voice" id="stat-weight">—</span>
+      <span class="lbl">gem. gewicht</span>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-header">
+      <h2>alle gokjes</h2>
+      <button class="refresh-btn" id="refresh-btn">vernieuwen</button>
+    </div>
+    <div class="table-wrap">
+      <div class="loading" id="loading">gokjes laden…</div>
+      <table id="guess-table" style="display:none">
+        <thead>
+          <tr>
+            <th>naam</th>
+            <th>geslacht</th>
+            <th>datum</th>
+            <th>tijd</th>
+            <th>gewicht</th>
+            <th>lengte</th>
+            <th>naam suggestie</th>
+            <th>bericht</th>
+            <th>ingediend</th>
+          </tr>
+        </thead>
+        <tbody id="guess-body"></tbody>
+      </table>
+      <div class="empty-state" id="empty-state" style="display:none">nog geen gokjes ontvangen</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var FORM_NAME = 'babygokje';
+  var token = sessionStorage.getItem('netlify_dash_token');
+
+  if (token) unlock(token);
+
+  document.getElementById('unlock-btn').addEventListener('click', function() {
+    var t = document.getElementById('token-input').value.trim();
+    if (!t) { document.getElementById('lock-error').textContent = 'Voer een token in.'; return; }
+    unlock(t);
+  });
+  document.getElementById('token-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') document.getElementById('unlock-btn').click();
+  });
+
+  document.getElementById('refresh-btn').addEventListener('click', function() {
+    loadSubmissions(token);
+  });
+
+  async function unlock(t) {
+    document.getElementById('lock-error').textContent = '';
+    try {
+      var site = await findSite(t);
+      if (!site) throw new Error('site niet gevonden');
+      token = t;
+      sessionStorage.setItem('netlify_dash_token', t);
+      sessionStorage.setItem('netlify_site_id', site.id);
+      document.getElementById('lock-card').style.display = 'none';
+      document.getElementById('dash-wrap').style.display = 'block';
+      loadSubmissions(t);
+    } catch(err) {
+      document.getElementById('lock-error').textContent = 'Token niet geldig of site niet gevonden.';
+    }
+  }
+
+  async function findSite(t) {
+    var cachedId = sessionStorage.getItem('netlify_site_id');
+    if (cachedId) return { id: cachedId };
+    var resp = await fetch('https://api.netlify.com/api/v1/sites?filter=all&per_page=100', {
+      headers: { Authorization: 'Bearer ' + t }
+    });
+    if (!resp.ok) throw new Error('auth failed');
+    var sites = await resp.json();
+    var site = sites.find(function(s) {
+      return (s.url && s.url.includes('kn-automations')) ||
+             (s.name && s.name.includes('kn-automations')) ||
+             (s.custom_domain && s.custom_domain.includes('kn-automations'));
+    });
+    return site || null;
+  }
+
+  async function loadSubmissions(t) {
+    var siteId = sessionStorage.getItem('netlify_site_id');
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('guess-table').style.display = 'none';
+    document.getElementById('empty-state').style.display = 'none';
+
+    try {
+      var formsResp = await fetch('https://api.netlify.com/api/v1/sites/' + siteId + '/forms', {
+        headers: { Authorization: 'Bearer ' + t }
+      });
+      var forms = await formsResp.json();
+      var form = forms.find(function(f) { return f.name === FORM_NAME; });
+
+      if (!form) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('empty-state').style.display = 'block';
+        return;
+      }
+
+      var subsResp = await fetch('https://api.netlify.com/api/v1/forms/' + form.id + '/submissions?per_page=1000', {
+        headers: { Authorization: 'Bearer ' + t }
+      });
+      var subs = await subsResp.json();
+
+      document.getElementById('loading').style.display = 'none';
+      renderDashboard(subs);
+    } catch(err) {
+      document.getElementById('loading').textContent = 'Kon gokjes niet laden.';
+    }
+  }
+
+  function renderDashboard(subs) {
+    var total = subs.length;
+    var boys  = subs.filter(function(s) { return (s.data.geslacht || '').toLowerCase() === 'jongen'; }).length;
+    var girls = subs.filter(function(s) { return (s.data.geslacht || '').toLowerCase() === 'meisje'; }).length;
+    var weights = subs.map(function(s) { return parseInt(s.data.gewicht); }).filter(function(w) { return !isNaN(w) && w > 0; });
+    var avgWeight = weights.length ? Math.round(weights.reduce(function(a, b) { return a + b; }, 0) / weights.length) : null;
+
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-boy').textContent   = boys  + (total ? ' (' + Math.round(boys  / total * 100) + '%)' : '');
+    document.getElementById('stat-girl').textContent  = girls + (total ? ' (' + Math.round(girls / total * 100) + '%)' : '');
+    document.getElementById('stat-weight').textContent = avgWeight ? avgWeight + 'g' : '—';
+
+    if (total === 0) {
+      document.getElementById('empty-state').style.display = 'block';
+      return;
+    }
+
+    var tbody = document.getElementById('guess-body');
+    tbody.innerHTML = '';
+
+    subs.slice().sort(function(a, b) { return new Date(b.created_at) - new Date(a.created_at); })
+      .forEach(function(s) {
+        var d = s.data;
+        var geslacht = (d.geslacht || '').toLowerCase();
+        var badge = geslacht === 'jongen'
+          ? '<span class="badge badge-boy">Jongen</span>'
+          : geslacht === 'meisje'
+            ? '<span class="badge badge-girl">Meisje</span>'
+            : '<span class="muted">—</span>';
+
+        var datum = d.geboortedatum
+          ? new Date(d.geboortedatum).toLocaleDateString('nl-BE', { day: 'numeric', month: 'short', year: 'numeric' })
+          : '<span class="muted">—</span>';
+
+        var ingediend = new Date(s.created_at).toLocaleDateString('nl-BE', { day: 'numeric', month: 'short' })
+          + ' ' + new Date(s.created_at).toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' });
+
+        var row = document.createElement('tr');
+        row.innerHTML =
+          '<td>' + esc(d.naam || '') + '</td>' +
+          '<td>' + badge + '</td>' +
+          '<td>' + datum + '</td>' +
+          '<td>' + (d.geboortetijd ? esc(d.geboortetijd) : '<span class="muted">—</span>') + '</td>' +
+          '<td>' + (d.gewicht ? esc(d.gewicht) + 'g' : '<span class="muted">—</span>') + '</td>' +
+          '<td>' + (d.lengte ? esc(d.lengte) + 'cm' : '<span class="muted">—</span>') + '</td>' +
+          '<td>' + (d.naam_suggestie ? esc(d.naam_suggestie) : '<span class="muted">—</span>') + '</td>' +
+          '<td class="bericht-cell">' + (d.bericht ? esc(d.bericht) : '<span class="muted">—</span>') + '</td>' +
+          '<td class="muted">' + ingediend + '</td>';
+        tbody.appendChild(row);
+      });
+
+    document.getElementById('guess-table').style.display = 'table';
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+})();
+</script>
+
+</body>
+</html>
