@@ -286,11 +286,17 @@
         headers: { Authorization: 'Bearer ' + t }
       });
       var forms = await formsResp.json();
-      var form = forms.find(function(f) { return f.name === FORM_NAME; });
+      var form = forms.find(function(f) { return f.name && f.name.toLowerCase() === FORM_NAME.toLowerCase(); });
 
       if (!form) {
         document.getElementById('loading').style.display = 'none';
-        document.getElementById('empty-state').style.display = 'block';
+        var emptyEl = document.getElementById('empty-state');
+        if (forms.length === 0) {
+          emptyEl.textContent = 'Netlify heeft nog geen formulieren gedetecteerd. Push een deploy en probeer opnieuw.';
+        } else {
+          emptyEl.textContent = 'Formulier "' + FORM_NAME + '" niet gevonden. Gevonden: ' + forms.map(function(f) { return f.name; }).join(', ');
+        }
+        emptyEl.style.display = 'block';
         return;
       }
 

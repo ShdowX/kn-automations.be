@@ -149,7 +149,7 @@
   </div>
   <p class="date-line" id="date-line"></p>
   <p class="subtitle voice" id="warm-msg">Wat leuk dat jullie meevolgen en even benieuwd zijn als ons!</p>
-  <a href="/genderreveal/gokje" class="gokje-link" id="gokje-link" style="display:none">waag een gokje &rsaquo;</a>
+  <a href="/genderreveal/gokje" class="gokje-link" id="gokje-link">waag een gokje &rsaquo;</a>
 
   <div class="reveal-prompt" id="reveal-prompt">
     <p class="eyebrow voice">het is zover!</p>
@@ -326,6 +326,7 @@
     document.getElementById('countdown-block').style.display = 'none';
     document.getElementById('date-line').style.display = 'none';
     document.getElementById('warm-msg').style.display = 'none';
+    document.getElementById('gokje-link').style.display = 'none';
     document.getElementById('balloon-zone').style.display = 'block';
 
     var color = (isBoy === true) ? '#7FA9C9' : '#D98FA8';
