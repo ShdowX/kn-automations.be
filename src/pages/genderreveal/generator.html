@@ -298,8 +298,42 @@
 
   function detectGender(text) {
     var lower = text.toLowerCase();
-    var boyTerms = ['mannelijk', 'jongetje', 'geslacht: jongen', 'male fetus'];
-    var girlTerms = ['vrouwelijk', 'meisje', 'geslacht: meisje', 'female fetus'];
+
+    var boyTerms = [
+      // Dutch
+      'mannelijk', 'jongetje', 'broertje', 'zoontje',
+      'geslacht: jongen', 'geslacht: m', 'geslacht: man',
+      'geslacht:m', 'geslacht:jongen',
+      'het is een jongen', 'het is een jongetje', 'het is een broertje',
+      'foetus: mannelijk', 'foetus mannelijk', 'foetus:mannelijk',
+      'kind: jongen', 'kind: mannelijk', 'kind:jongen',
+      // English
+      'male fetus', 'male foetus',
+      'sex: male', 'sex:male', 'sex: m', 'sex:m',
+      'gender: male', 'gender:male',
+      'fetal sex: male', 'foetal sex: male',
+      'it\'s a boy', 'its a boy', 'baby boy',
+      // Symbol
+      '♂'
+    ];
+
+    var girlTerms = [
+      // Dutch
+      'vrouwelijk', 'meisje', 'zusje', 'dochtertje',
+      'geslacht: meisje', 'geslacht: v', 'geslacht: vrouw',
+      'geslacht:v', 'geslacht:meisje',
+      'het is een meisje', 'het is een zusje', 'het is een dochtertje',
+      'foetus: vrouwelijk', 'foetus vrouwelijk', 'foetus:vrouwelijk',
+      'kind: meisje', 'kind: vrouwelijk', 'kind:meisje',
+      // English
+      'female fetus', 'female foetus',
+      'sex: female', 'sex:female', 'sex: f', 'sex:f',
+      'gender: female', 'gender:female',
+      'fetal sex: female', 'foetal sex: female',
+      'it\'s a girl', 'its a girl', 'baby girl',
+      // Symbol
+      '♀'
+    ];
 
     var boyScore = 0, girlScore = 0;
     boyTerms.forEach(function(t) { if (lower.indexOf(t) !== -1) boyScore++; });
@@ -371,13 +405,27 @@
 
   function cleanDocumentText(text) {
     return text
+      // Dutch sex field patterns
+      .replace(/geslacht\s*:\s*(jongen|meisje|man|vrouw|mannelijk|vrouwelijk)\b/gi, 'geslacht: [verborgen]')
+      .replace(/geslacht\s*:\s*(m|v)\b/gi, 'geslacht: [verborgen]')
+      .replace(/kind\s*:\s*(jongen|meisje|mannelijk|vrouwelijk)\b/gi, 'kind: [verborgen]')
+      .replace(/foetus\s*:?\s*(mannelijk|vrouwelijk)\b/gi, 'foetus: [verborgen]')
+      // Dutch standalone gender words
       .replace(/\b(mannelijk|vrouwelijk)\b/gi, '[verborgen]')
-      .replace(/geslacht\s*:\s*(jongen|meisje|man|vrouw)\b/gi, 'geslacht: [verborgen]')
-      .replace(/geslacht\s*:\s*(m|v)\b/g, 'geslacht: [verborgen]')
-      .replace(/\b(male|female)\s+fetus\b/gi, '[verborgen] fetus')
+      .replace(/\b(jongetje|broertje|zoontje)\b/gi, '[verborgen]')
+      .replace(/\b(zusje|dochtertje)\b/gi, '[verborgen]')
+      // Dutch full phrases
+      .replace(/het\s+is\s+een\s+(jongen|meisje|jongetje|zusje|broertje|dochtertje|zoontje)\b/gi, 'het is een [verborgen]')
+      // English sex/gender field patterns
+      .replace(/\b(male|female)\s+(fetus|foetus)\b/gi, '[verborgen] $2')
       .replace(/\bsex\s*:\s*(male|female|m|f)\b/gi, 'sex: [verborgen]')
       .replace(/\bgender\s*:\s*(male|female|m|f)\b/gi, 'gender: [verborgen]')
-      .replace(/\b(jongetje)\b/gi, '[verborgen]');
+      .replace(/\bfo?etal\s+sex\s*:\s*(male|female|m|f)\b/gi, 'fetal sex: [verborgen]')
+      // English full phrases
+      .replace(/\bit[''']?s\s+a\s+(boy|girl)\b/gi, "it's a [verborgen]")
+      .replace(/\bbaby\s+(boy|girl)\b/gi, 'baby [verborgen]')
+      // Symbols
+      .replace(/[♂♀]/g, '[verborgen]');
   }
 
   document.getElementById('generate-btn').addEventListener('click', async function() {
