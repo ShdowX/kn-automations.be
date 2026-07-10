@@ -20,40 +20,6 @@
   }
   .voice { font-family: 'Cormorant Garamond', serif; }
 
-  .reveal-prompt {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    position: relative;
-    z-index: 1;
-    text-align: center;
-  }
-  .reveal-prompt input {
-    padding: 11px 14px;
-    border: 1px solid #D9C9A0;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    color: #2B2620;
-    background: white;
-    width: 200px;
-    text-align: center;
-  }
-  .reveal-prompt input:focus { outline: none; border-color: #B8923F; }
-  .reveal-prompt button {
-    padding: 11px 28px;
-    border-radius: 8px;
-    border: none;
-    background: #8B6F35;
-    color: white;
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-  }
-  .reveal-prompt button:hover { background: #7A612E; }
-  .reveal-error { color: #A32D2D; font-size: 12px; min-height: 16px; }
-
   .card {
     width: 100%;
     max-width: 560px;
@@ -151,14 +117,6 @@
   <p class="subtitle voice" id="warm-msg">Wat leuk dat jullie meevolgen en even benieuwd zijn als ons!</p>
   <a href="/genderreveal/gokje" class="gokje-link" id="gokje-link">waag een gokje &rsaquo;</a>
 
-  <div class="reveal-prompt" id="reveal-prompt">
-    <p class="eyebrow voice">het is zover!</p>
-    <h2 class="main voice" style="font-size: 26px; margin-bottom: 4px;">onthul het geslacht</h2>
-    <input type="password" id="reveal-pw-input" placeholder="wachtwoord" autocomplete="off" />
-    <button id="reveal-unlock-btn">onthullen</button>
-    <p class="reveal-error" id="reveal-error"></p>
-  </div>
-
   <div class="balloon-zone" id="balloon-zone">
     <svg id="b1" width="90" height="130" viewBox="0 0 90 130">
       <line x1="45" y1="92" x2="45" y2="128" stroke="#B8923F" stroke-width="1"/>
@@ -192,50 +150,29 @@
 (function() {
   var FALLBACK_DATE = '2026-07-19T19:00:00';
 
-  async function deriveKey(password) {
-    var enc = new TextEncoder();
-    var keyMaterial = await crypto.subtle.importKey(
-      'raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveKey']
-    );
-    return crypto.subtle.deriveKey(
-      { name: 'PBKDF2', salt: enc.encode('nicasens-reveal-salt'), iterations: 100000, hash: 'SHA-256' },
-      keyMaterial,
-      { name: 'AES-GCM', length: 256 },
-      false,
-      ['decrypt']
-    );
-  }
-
-  function b64ToBytes(b64) {
-    var bin = atob(b64);
-    var arr = new Uint8Array(bin.length);
-    for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
-    return arr;
-  }
-
-  async function decryptPayload(password, encryptedPayload) {
-    var parts = encryptedPayload.split(':');
-    var iv = b64ToBytes(parts[0]);
-    var ciphertext = b64ToBytes(parts[1]);
-    var key = await deriveKey(password);
-    var plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, ciphertext);
-    return JSON.parse(new TextDecoder().decode(plainBuf));
-  }
-
-  // Store hash payload silently — used only at reveal time
-  var hashPayload = null;
+  // Load payload from URL hash (base64 JSON) or localStorage
+  var storedPayload = null;
   if (window.location.hash.length > 1) {
-    try { hashPayload = decodeURIComponent(window.location.hash.slice(1)); } catch(e) {}
+    try {
+      storedPayload = JSON.parse(atob(decodeURIComponent(window.location.hash.slice(1))));
+      localStorage.setItem('nicasens-reveal-payload', JSON.stringify(storedPayload));
+    } catch(e) {}
   }
-  if (hashPayload) localStorage.setItem('nicasens-reveal-payload', hashPayload);
-  var storedPayload = hashPayload || localStorage.getItem('nicasens-reveal-payload');
+  if (!storedPayload) {
+    try {
+      var ls = localStorage.getItem('nicasens-reveal-payload');
+      if (ls) storedPayload = JSON.parse(ls);
+    } catch(e) {}
+  }
 
-  // Countdown is always publicly visible — no lock screen on load
   document.getElementById('main-card').style.display = 'flex';
-  startCountdown(FALLBACK_DATE);
+  var revealTime = (storedPayload && storedPayload.t) ? storedPayload.t : FALLBACK_DATE;
+  var revealGender = storedPayload ? storedPayload.g : null;
+  startCountdown(revealTime, revealGender);
 
-  function startCountdown(isoTime) {
+  function startCountdown(isoTime, gender) {
     var target = new Date(isoTime);
+    var isBoy = gender === 'boy';
     var done = false;
 
     document.getElementById('date-line').textContent =
@@ -251,11 +188,7 @@
       if (diff <= 0) {
         done = true;
         clearInterval(interval);
-        if (storedPayload) {
-          showRevealPrompt();
-        } else {
-          startParty(null);
-        }
+        startParty(gender !== null ? isBoy : null);
         return;
       }
       document.getElementById('d-days').textContent  = pad(Math.floor(diff / 86400000));
@@ -265,31 +198,6 @@
     }
     tick();
     var interval = setInterval(tick, 1000);
-  }
-
-  function showRevealPrompt() {
-    document.getElementById('pre-reveal').style.display = 'none';
-    document.getElementById('countdown-block').style.display = 'none';
-    document.getElementById('date-line').style.display = 'none';
-    document.getElementById('warm-msg').style.display = 'none';
-    document.getElementById('reveal-prompt').style.display = 'flex';
-
-    function tryReveal() {
-      var pw = document.getElementById('reveal-pw-input').value;
-      var errEl = document.getElementById('reveal-error');
-      errEl.textContent = '';
-      decryptPayload(pw, storedPayload).then(function(payload) {
-        document.getElementById('reveal-prompt').style.display = 'none';
-        startParty(payload.g === 'boy');
-      }).catch(function() {
-        errEl.textContent = 'verkeerd wachtwoord, probeer opnieuw';
-      });
-    }
-
-    document.getElementById('reveal-unlock-btn').addEventListener('click', tryReveal);
-    document.getElementById('reveal-pw-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') tryReveal();
-    });
   }
 
   function spawnConfetti(colors, count) {
