@@ -440,7 +440,7 @@
           setTimeout(function() { document.getElementById('copy-url-btn').textContent = 'kopieer'; }, 2000);
         });
       };
-      document.getElementById('share-box').classList.remove('hidden');
+      document.getElementById('share-box').style.display = 'block';
 
       document.getElementById('preview-countdown').onclick = function() {
         window.open(shareUrl, '_blank');
