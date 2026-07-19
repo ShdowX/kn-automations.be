@@ -765,7 +765,11 @@
     }
 
     cloud.innerHTML = sorted.map(function (item) {
-      var by = item.subs.map(function (s) { return g(s, 'naam') || '?'; }).join(', ');
+      var seenNames = {};
+      var by = item.subs
+        .map(function (s) { return g(s, 'naam') || '?'; })
+        .filter(function (n) { if (seenNames[n]) return false; seenNames[n] = true; return true; })
+        .join(', ');
       var byShort = by.length > 30 ? by.slice(0, 28) + '…' : by;
       return '<button class="name-chip" data-name="' + esc(item.display) + '">'
         + '<span>' + esc(item.display) + '</span>'
