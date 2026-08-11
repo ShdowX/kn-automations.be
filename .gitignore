@@ -34,3 +34,6 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Local planning pages
+src/pages/blog-roadmap.astro

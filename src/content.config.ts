@@ -9,7 +9,7 @@ const posts = defineCollection({
     date: z.coerce.date(),
     category: z.string(),
     readTime: z.string(),
-    visual: z.enum(['v1', 'v2', 'v3', 'v4', 'v5', 'v6']).default('v1'),
+    visual: z.enum(['v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8']).default('v1'),
     featured: z.boolean().default(false),
     lang: z.enum(['en', 'nl']).default('en'),
   }),
