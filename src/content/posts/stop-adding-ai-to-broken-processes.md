@@ -26,13 +26,13 @@ Because if the process was unclear before AI, it will still be unclear after AI.
 
 This is the uncomfortable part. AI is an amplifier.
 If your process is well designed, AI can make it faster, smarter and more scalable. If your process is broken, AI can make the broken parts more visible, and sometimes more dangerous.
-A approval flow with too many exceptions remains a bad approval flow. A SharePoint site with unclear ownership remains unclear. A service desk process without proper categorisation still produces poor reporting.
+An approval flow with too many exceptions remains a bad approval flow. A SharePoint site with unclear ownership remains unclear. A service desk process without proper categorisation still produces poor reporting.
 Adding AI on top of that does not solve the root cause. It creates a shiny interface around the same friction.
 
 
 ## Start With Work, Not Tools
 
-TThe better question is not: "Where can we add AI?"
+The better question is not: "Where can we add AI?"
 The better question is: "How should this work happen if we could design it again today?"
 That small shift changes everything. You stop thinking about AI as a feature and start thinking about AI as part of the operating model.
 Maybe the answer is an agent. Maybe it is a Power Automate flow. Maybe it is a better form, cleaner data, a clearer owner or fewer approval steps.
